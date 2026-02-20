@@ -1,0 +1,14 @@
+# robots.txt for Keyboard Tracker
+# https://keyboardtracker.com
+
+User-agent: *
+Allow: /
+
+# API endpoints should not be crawled by search engines
+Disallow: /api/
+
+# Admin/internal paths (when implemented)
+Disallow: /admin/
+Disallow: /dashboard/private/
+
+Sitemap: https://keyboardtracker.com/sitemap.xml

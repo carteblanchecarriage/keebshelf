@@ -1,0 +1,22 @@
+{
+  "name": "keyboard-tracker",
+  "version": "1.0.0",
+  "description": "Mechanical keyboard group buy tracker with real product URLs",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "scrape": "node scraper/index.js",
+    "scrape:enhanced": "node scraper/scraper-v2.js",
+    "dev": "nodemon api/index.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "express": "^4.18.0",
+    "jsdom": "^23.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
