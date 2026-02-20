@@ -504,6 +504,41 @@
             transform: translateX(4px);
         }
         
+        /* Load More Button */
+        .load-more-btn {
+            grid-column: 1 / -1;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: var(--paper-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .load-more-btn:hover {
+            border-color: var(--accent);
+            background: var(--paper);
+        }
+        
+        .load-more-btn span:first-child {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+        }
+        
+        .load-more-count {
+            font-size: 0.75rem;
+            color: var(--faded);
+        }
+        
         /* Proposal Cards */
         .proposal-card {
             background: var(--paper-dark);
@@ -790,8 +825,10 @@
                         url: v.url
                     }));
                     
-                    // Render
-                    renderItems(collection.items, document.getElementById('currentShelf'));
+                    // Render (paginated)
+                    displayedItems = collection.items;
+                    currentBatch = 0;
+                    renderItems(displayedItems, document.getElementById('currentShelf'));
                     renderProposals(collection.proposals, document.getElementById('proposalShelf'));
                     renderCurators(collection.curators, document.getElementById('curatorShelf'));
                     document.getElementById('acquisitionCount').textContent = `${collection.items.length} items`;
@@ -850,8 +887,10 @@
                     url: v.url
                 })) || [];
                 
-                // Render
-                renderItems(collection.items, document.getElementById('currentShelf'));
+                // Render (paginated)
+                displayedItems = collection.items;
+                currentBatch = 0;
+                renderItems(displayedItems, document.getElementById('currentShelf'));
                 renderProposals(collection.proposals, document.getElementById('proposalShelf'));
                 renderCurators(collection.curators, document.getElementById('curatorShelf'));
                 document.getElementById('acquisitionCount').textContent = `${collection.items.length} items`;
@@ -862,8 +901,10 @@
                 console.log('Using fallback data...');
                 loadFallbackData();
                 
-                // Render fallback data
-                renderItems(collection.items, document.getElementById('currentShelf'));
+                // Render fallback data (paginated)
+                displayedItems = collection.items;
+                currentBatch = 0;
+                renderItems(displayedItems, document.getElementById('currentShelf'));
                 renderProposals(collection.proposals, document.getElementById('proposalShelf'));
                 renderCurators(collection.curators, document.getElementById('curatorShelf'));
                 document.getElementById('acquisitionCount').textContent = `${collection.items.length} items`;
@@ -1042,8 +1083,13 @@
             images.forEach(img => imageObserver.observe(img));
         }
         
-        function renderItems(items, container) {
-            if (items.length === 0) {
+        // Track displayed items for pagination
+        let displayedItems = [];
+        let currentBatch = 0;
+        const ITEMS_PER_BATCH = 50;
+        
+        function renderItems(items, container, append = false) {
+            if (items.length === 0 && !append) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">◫</div>
@@ -1053,8 +1099,13 @@
                 return;
             }
             
-            container.innerHTML = items.map((item, idx) => `
-                <article class="item" style="animation-delay: ${idx * 0.05}s">
+            // Calculate batch
+            const startIdx = append ? currentBatch * ITEMS_PER_BATCH : 0;
+            const endIdx = Math.min(startIdx + ITEMS_PER_BATCH, items.length);
+            const batchItems = items.slice(startIdx, endIdx);
+            
+            const html = batchItems.map((item, idx) => `
+                <article class="item" style="animation-delay: ${(startIdx + idx) * 0.03}s">
                     <div class="item-image-wrap">
                         ${item.image ? `<img data-src="${item.image}" alt="${item.name}">` : ''}
                         <div class="item-peek">Click to examine</div>
@@ -1077,8 +1128,36 @@
                 </article>
             `).join('');
             
+            if (append) {
+                // Remove existing load more button
+                const existingBtn = container.querySelector('.load-more-btn');
+                if (existingBtn) existingBtn.remove();
+                container.insertAdjacentHTML('beforeend', html);
+            } else {
+                container.innerHTML = html;
+            }
+            
+            // Add "Load More" button if there are more items
+            if (endIdx < items.length) {
+                const remaining = items.length - endIdx;
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="load-more-btn" onclick="loadMoreItems()">
+                        <span>Load ${Math.min(ITEMS_PER_BATCH, remaining)} more items</span>
+                        <span class="load-more-count">(${remaining} remaining)</span>
+                    </div>
+                `);
+            }
+            
             // Trigger lazy loading for new images
             setupLazyLoading();
+            
+            // Update current batch
+            currentBatch = append ? currentBatch + 1 : 1;
+        }
+        
+        function loadMoreItems() {
+            const container = document.getElementById('currentShelf');
+            renderItems(displayedItems, container, true);
         }
         
         function renderProposals(proposals, container) {
@@ -1121,7 +1200,9 @@
         
         // Initialize
         function init() {
-            renderItems(collection.items, document.getElementById('currentShelf'));
+            displayedItems = collection.items;
+            currentBatch = 0;
+            renderItems(displayedItems, document.getElementById('currentShelf'));
             renderProposals(collection.proposals, document.getElementById('proposalShelf'));
             renderCurators(collection.curators, document.getElementById('curatorShelf'));
             
@@ -1146,7 +1227,9 @@
                       )
                     : collection.items;
                 
-                renderItems(filtered, document.getElementById('currentShelf'));
+                displayedItems = filtered;
+                currentBatch = 0;
+                renderItems(displayedItems, document.getElementById('currentShelf'));
                 document.getElementById('acquisitionCount').textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
             }, 150);
         });
@@ -1166,7 +1249,9 @@
                     filtered = collection.items.filter(i => i.category === filter);
                 }
                 
-                renderItems(filtered, document.getElementById('currentShelf'));
+                displayedItems = filtered;
+                currentBatch = 0;
+                renderItems(displayedItems, document.getElementById('currentShelf'));
                 document.getElementById('acquisitionCount').textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
             });
         });
