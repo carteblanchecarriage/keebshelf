@@ -109,6 +109,15 @@ async function scrapeShopify(vendorKey, vendorConfig) {
           productType.includes('keyboard');
         
         if (isKeyboardRelated) {
+          // Check availability - skip sold out products
+          const variant = product.variants?.[0];
+          const isAvailable = variant?.available !== false && variant?.inventory_quantity !== 0;
+          
+          if (!isAvailable) {
+            console.log(`    ⚠️ Skipping sold out: ${product.title}`);
+            return; // Skip this product
+          }
+          
           // Determine category - check for cases first
           let category = 'accessories';
           const priceNum = parseFloat(product.variants?.[0]?.price || '0');
@@ -187,6 +196,15 @@ async function scrapeShopifyCollections(vendorConfig) {
           const title = product.title.toLowerCase();
           const productType = (product.product_type || '').toLowerCase();
           const tags = product.tags?.map(t => t.toLowerCase()) || [];
+          
+          // Check availability - skip sold out products
+          const variant = product.variants?.[0];
+          const isAvailable = variant?.available !== false && variant?.inventory_quantity !== 0;
+          
+          if (!isAvailable) {
+            console.log(`    ⚠️ Skipping sold out: ${product.title}`);
+            return; // Skip this product
+          }
           
           // Determine category - check for cases first
           let category = collection.includes('keycap') ? 'keycaps' : 

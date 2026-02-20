@@ -118,17 +118,33 @@
         }
         
         function processData(data) {
-            collection.items = (data.allProducts || []).map((item, idx) => ({
-                id: idx + 1,
-                name: item.name,
-                origin: item.vendor,
-                category: item.category || 'keyboard',
-                price: item.price,
-                status: item.status || 'active',
-                image: item.image,
-                url: item.affiliateUrl || item.url,
-                description: item.description || ''
-            }));
+            collection.items = (data.allProducts || [])
+                .filter(item => {
+                    // Filter out sold out or unavailable products
+                    const status = (item.status || '').toLowerCase();
+                    const isAvailable = status !== 'sold_out' && 
+                                       status !== 'soldout' && 
+                                       status !== 'unavailable' &&
+                                       status !== 'discontinued' &&
+                                       status !== 'out_of_stock' &&
+                                       status !== 'oos';
+                    
+                    if (!isAvailable) {
+                        console.log(`Filtering out unavailable item: ${item.name} (${status})`);
+                    }
+                    return isAvailable;
+                })
+                .map((item, idx) => ({
+                    id: idx + 1,
+                    name: item.name,
+                    origin: item.vendor,
+                    category: item.category || 'keyboard',
+                    price: item.price,
+                    status: item.status || 'active',
+                    image: item.image,
+                    url: item.affiliateUrl || item.url,
+                    description: item.description || ''
+                }));
             
             displayedItems = collection.items;  // Initialize displayed items
             displayData();
