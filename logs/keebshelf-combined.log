@@ -1,0 +1,30 @@
+2026-02-20 16:44:05 -05:00: 🎹 Keyboard Tracker API running on port 3003
+2026-02-20 16:44:05 -05:00: 📊 Real data from: /home/klondike/Desktop/keyboard-tracker/data/keyboard-data.json
+2026-02-20 16:44:05 -05:00: 🔄 Auto-reload: Every 5 minutes
+2026-02-20 16:44:05 -05:00: 🚫 Default filter: Excludes archived, sold_out, unavailable items
+2026-02-20 16:44:05 -05:00: 📈 Revenue Projection: $1400/month
+2026-02-20 16:44:05 -05:00: 
+2026-02-20 16:44:05 -05:00: Endpoints:
+2026-02-20 16:44:05 -05:00:    GET /health
+2026-02-20 16:44:05 -05:00:    GET /api/groupbuys
+2026-02-20 16:44:05 -05:00:    GET /api/groupbuys/:id
+2026-02-20 16:44:05 -05:00:    GET /api/interest-checks
+2026-02-20 16:44:05 -05:00:    GET /api/search?q=query
+2026-02-20 16:44:05 -05:00:    GET /api/vendors
+2026-02-20 16:44:05 -05:00:    GET /api/pricing
+2026-02-20 16:44:05 -05:00:    GET /api/revenue
+2026-02-20 16:44:05 -05:00: 
+2026-02-20 16:44:05 -05:00: Query params:
+2026-02-20 16:44:05 -05:00:    ?includeUnavailable=true - Show archived/sold out items
+2026-02-20 16:44:05 -05:00:    ?status=active - Filter by status
+2026-02-20 16:44:05 -05:00:    ?category=keyboard - Filter by category
+2026-02-20 16:44:05 -05:00:    ?vendor=NovelKeys - Filter by vendor
+2026-02-20 16:49:05 -05:00: 🔄 Data reloaded at 2026-02-20T21:49:05.069Z
+2026-02-20 16:54:05 -05:00: 🔄 Data reloaded at 2026-02-20T21:54:05.060Z
+2026-02-20 16:59:05 -05:00: 🔄 Data reloaded at 2026-02-20T21:59:05.060Z
+2026-02-20 17:04:05 -05:00: 🔄 Data reloaded at 2026-02-20T22:04:05.061Z
+2026-02-20 17:09:05 -05:00: 🔄 Data reloaded at 2026-02-20T22:09:05.060Z
+2026-02-20 17:14:05 -05:00: 🔄 Data reloaded at 2026-02-20T22:14:05.062Z
+2026-02-20 17:19:05 -05:00: 🔄 Data reloaded at 2026-02-20T22:19:05.064Z
+2026-02-20 17:24:05 -05:00: 🔄 Data reloaded at 2026-02-20T22:24:05.065Z
+2026-02-20 17:29:05 -05:00: 🔄 Data reloaded at 2026-02-20T22:29:05.065Z

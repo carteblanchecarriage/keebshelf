@@ -39,18 +39,58 @@ app.get('/health', (req, res) => {
   res.json({ 
     status: 'ok', 
     timestamp: new Date().toISOString(),
-    version: '1.0.0',
+    version: '1.1.0',
     dataSource: 'live-scraper',
-    lastUpdated: db.metadata?.scrapedAt || 'unknown'
+    lastUpdated: db.metadata?.scrapedAt || 'unknown',
+    filters: {
+      defaultExcludes: ['archived', 'sold_out', 'unavailable', 'discontinued'],
+      note: 'By default, unavailable items are filtered out. Use ?includeUnavailable=true to show all.'
+    }
   });
 });
 
+// Filter helper - removes archived/unavailable items by default
+function filterAvailableItems(items, includeUnavailable = false) {
+  if (includeUnavailable) return items;
+  
+  const excludedStatuses = ['archived', 'sold_out', 'unavailable', 'discontinued', 'ended', 'closed'];
+  
+  return items.filter(item => {
+    // Check explicit status field
+    if (item.status && excludedStatuses.includes(item.status.toLowerCase())) {
+      return false;
+    }
+    
+    // Check availability flag (NovelKeys, Shopify style)
+    if (item.available === false) {
+      return false;
+    }
+    
+    // Check inventory (0 or negative inventory = unavailable)
+    if (item.inventory !== undefined && item.inventory <= 0) {
+      return false;
+    }
+    
+    // Check for "sold out" or "archived" in name/description
+    const nameDesc = `${item.name || ''} ${item.description || ''}`.toLowerCase();
+    if (nameDesc.includes('[sold out]') || nameDesc.includes('(archived)') || 
+        nameDesc.includes('[unavailable]') || nameDesc.includes('discontinued')) {
+      return false;
+    }
+    
+    return true;
+  });
+}
+
 // Get all group buys (includes allProducts from enhanced scraper)
 app.get('/api/groupbuys', (req, res) => {
-  const { status, category, vendor } = req.query;
+  const { status, category, vendor, includeUnavailable } = req.query;
   
   // Use allProducts if available (from enhanced scraper) otherwise groupBuys
   let results = db.allProducts || db.groupBuys || [];
+  
+  // Filter out archived/unavailable items by default
+  results = filterAvailableItems(results, includeUnavailable === 'true');
   
   if (status) {
     results = results.filter(gb => gb.status === status);
@@ -68,7 +108,11 @@ app.get('/api/groupbuys', (req, res) => {
     count: results.length,
     data: results,
     source: db.metadata?.sources ? 'enhanced-scraper' : 'legacy-scraper',
-    lastUpdated: db.metadata?.scrapedAt
+    lastUpdated: db.metadata?.scrapedAt,
+    filters: {
+      excludedStatuses: includeUnavailable ? [] : ['archived', 'sold_out', 'unavailable', 'discontinued'],
+      activeStatuses: ['active', 'gathering_interest', 'pre_order', 'in_stock']
+    }
   });
 });
 
@@ -83,7 +127,12 @@ app.get('/api/groupbuys/:id', (req, res) => {
 
 // Get interest checks
 app.get('/api/interest-checks', (req, res) => {
-  const results = db.interestChecks || [];
+  const { includeUnavailable } = req.query;
+  let results = db.interestChecks || [];
+  
+  // Filter out archived/unavailable items by default
+  results = filterAvailableItems(results, includeUnavailable === 'true');
+  
   res.json({
     count: results.length,
     data: results,
@@ -93,22 +142,26 @@ app.get('/api/interest-checks', (req, res) => {
 
 // Search across everything
 app.get('/api/search', (req, res) => {
-  const { q } = req.query;
+  const { q, includeUnavailable } = req.query;
   if (!q) {
     return res.status(400).json({ error: 'Query parameter required' });
   }
   
   const searchTerm = q.toLowerCase();
   
-  const groupBuyResults = db.groupBuys?.filter(gb => 
+  let groupBuyResults = db.groupBuys?.filter(gb => 
     gb.name.toLowerCase().includes(searchTerm) ||
     gb.description?.toLowerCase().includes(searchTerm) ||
     gb.vendor.toLowerCase().includes(searchTerm)
   ) || [];
   
-  const icResults = db.interestChecks?.filter(ic =>
+  let icResults = db.interestChecks?.filter(ic =>
     ic.name.toLowerCase().includes(searchTerm)
   ) || [];
+  
+  // Filter out archived/unavailable by default
+  groupBuyResults = filterAvailableItems(groupBuyResults, includeUnavailable === 'true');
+  icResults = filterAvailableItems(icResults, includeUnavailable === 'true');
   
   res.json({
     query: q,
@@ -116,7 +169,8 @@ app.get('/api/search', (req, res) => {
       groupBuys: groupBuyResults,
       interestChecks: icResults,
       total: groupBuyResults.length + icResults.length
-    }
+    },
+    filters: includeUnavailable ? {} : { excluded: 'archived, sold_out, unavailable items' }
   });
 });
 
@@ -184,7 +238,8 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`🎹 Keyboard Tracker API running on port ${PORT}`);
   console.log(`📊 Real data from: ${DATA_FILE}`);
   console.log(`🔄 Auto-reload: Every 5 minutes`);
-  console.log(`\n📈 Revenue Projection: $${db.revenueProjection?.totalMonthly || 0}/month`);
+  console.log(`🚫 Default filter: Excludes archived, sold_out, unavailable items`);
+  console.log(`📈 Revenue Projection: $${db.revenueProjection?.totalMonthly || 0}/month`);
   console.log(`\nEndpoints:`);
   console.log(`   GET /health`);
   console.log(`   GET /api/groupbuys`);
@@ -194,4 +249,9 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`   GET /api/vendors`);
   console.log(`   GET /api/pricing`);
   console.log(`   GET /api/revenue`);
+  console.log(`\nQuery params:`);
+  console.log(`   ?includeUnavailable=true - Show archived/sold out items`);
+  console.log(`   ?status=active - Filter by status`);
+  console.log(`   ?category=keyboard - Filter by category`);
+  console.log(`   ?vendor=NovelKeys - Filter by vendor`);
 });
