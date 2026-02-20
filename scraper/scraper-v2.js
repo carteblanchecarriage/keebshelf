@@ -499,8 +499,34 @@ async function runEnhancedScraper() {
   const interestChecks = await scrapeGeekhackIC();
   
   // Combine into final dataset
+  
+  // Filter out products with placeholder/no images
+  const BAD_IMAGE_PATTERNS = [
+    'your-image.jpg',
+    'placeholder',
+    'no-image',
+    'missing',
+    'default',
+    'coming-soon'
+  ];
+  
+  const hasValidImage = (product) => {
+    const image = product.image || '';
+    const isBadImage = BAD_IMAGE_PATTERNS.some(pattern => 
+      image.toLowerCase().includes(pattern.toLowerCase())
+    );
+    return image && image.startsWith('http') && !isBadImage;
+  };
+  
+  const validProducts = allProducts.filter(hasValidImage);
+  const skippedProducts = allProducts.length - validProducts.length;
+  
+  if (skippedProducts > 0) {
+    console.log(`   ⚠️  Filtered out ${skippedProducts} products with bad/missing images`);
+  }
+  
   const finalData = {
-    groupBuys: allProducts.slice(0, 20), // Top products for demo
+    groupBuys: validProducts.slice(0, 20), // Top products for demo
     interestChecks: interestChecks,
     redditPosts: redditPosts.filter(p => p.type === 'group_buy'),
     vendors: Object.values(VENDORS).map(v => ({
@@ -508,18 +534,19 @@ async function runEnhancedScraper() {
       url: v.baseUrl,
       commission: v.commission,
       categories: v.categories,
-      activeGroupBuys: allProducts.filter(p => p.vendor === v.name).length
+      activeGroupBuys: validProducts.filter(p => p.vendor === v.name).length
     })),
     metadata: {
       scrapedAt: new Date().toISOString(),
-      totalProducts: allProducts.length,
+      totalProducts: validProducts.length,
+      totalIgnored: skippedProducts,
       totalInterestChecks: interestChecks.length,
       totalVendors: Object.keys(VENDORS).length,
       totalRedditPosts: redditPosts.length,
       sources: ['shopify', 'drop_api', 'reddit', 'geekhack']
     },
     // Include all products for dashboard use
-    allProducts: allProducts
+    allProducts: validProducts
   };
   
   // Calculate revenue projection
@@ -547,6 +574,10 @@ async function runEnhancedScraper() {
   console.log('\n📊 SCRAPING COMPLETE:');
   console.log(`   Duration: ${duration}s`);
   console.log(`   Products Scraped: ${allProducts.length}`);
+  console.log(`   Products After Filter: ${validProducts.length}`);
+  if (skippedProducts > 0) {
+    console.log(`   Filtered (bad images): ${skippedProducts}`);
+  }
   console.log(`   Interest Checks: ${interestChecks.length}`);
   console.log(`   Reddit Posts: ${redditPosts.length}`);
   console.log(`\n💰 REVENUE PROJECTION:`);
