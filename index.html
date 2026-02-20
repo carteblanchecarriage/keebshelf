@@ -798,6 +798,11 @@
         // Fetch real data from API
         let collection = { items: [], proposals: [], curators: [] };
         
+        // Pagination variables (must be declared before processData)
+        let displayedItems = [];
+        let currentBatch = 0;
+        const ITEMS_PER_BATCH = 50;
+        
         // localStorage cache configuration
         const CACHE_KEY = 'keebshelf_data';
         const CACHE_TIMESTAMP_KEY = 'keebshelf_data_timestamp';
@@ -1170,11 +1175,6 @@
             
             images.forEach(img => imageObserver.observe(img));
         }
-        
-        // Track displayed items for pagination
-        let displayedItems = [];
-        let currentBatch = 0;
-        const ITEMS_PER_BATCH = 50;
         
         function renderItems(items, container, append = false) {
             if (items.length === 0 && !append) {
