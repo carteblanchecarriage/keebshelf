@@ -175,9 +175,6 @@ async function scrapeDrop() {
   }
 }
 
-// Import enhanced scraper functions
-const { runEnhancedScraper } = require('./scraper-v2');
-
 // Backward compatible scraper - can run in legacy or enhanced mode
 async function runScraper(enhanced = true) {
   if (enhanced) {
