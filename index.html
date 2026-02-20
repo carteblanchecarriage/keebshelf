@@ -43,7 +43,10 @@
         .item-action:hover { background: var(--accent); color: white; }
         .load-more-btn { grid-column: 1 / -1; padding: 1.5rem; text-align: center; cursor: pointer; border: 2px dashed var(--border); border-radius: 8px; }
         .load-more-btn:hover { border-color: var(--accent); }
-        footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--faded); font-size: 0.875rem; }
+        .chip { display: inline-block; padding: 0.5rem 1rem; margin: 0.25rem; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; transition: all 0.2s; }
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .filter-wrap { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; border-bottom: 1px solid var(--border); }
     </style>
 </head>
 <body>
@@ -62,6 +65,14 @@
 
     <div class="search-wrap">
         <input type="search" class="search-input" id="searchInput" placeholder="Search keyboards, keycaps, switches...">
+    </div>
+
+    <div class="filter-wrap">
+        <span class="chip active" data-filter="all">All</span>
+        <span class="chip" data-filter="keyboard">Keyboards</span>
+        <span class="chip" data-filter="case">Cases</span>
+        <span class="chip" data-filter="switches">Switches</span>
+        <span class="chip" data-filter="keycaps">Keycaps</span>
     </div>
 
     <main class="main">
@@ -211,7 +222,33 @@
             }
             currentBatch = 0;
             displayData();
+            updateActiveChip('all');
         });
+        
+        // Filter chips
+        document.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const filter = chip.dataset.filter;
+                
+                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                
+                if (filter === 'all') {
+                    displayedItems = collection.items;
+                } else {
+                    displayedItems = collection.items.filter(item => item.category === filter);
+                }
+                
+                currentBatch = 0;
+                displayData();
+            });
+        });
+        
+        function updateActiveChip(filter) {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            const activeChip = document.querySelector(`.chip[data-filter="${filter}"]`);
+            if (activeChip) activeChip.classList.add('active');
+        }
         
         loadData();
     </script>
