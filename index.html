@@ -744,7 +744,140 @@
     </footer>
     
     <script>
-        const collection = {
+        // Fetch real data from API
+        let collection = { items: [], proposals: [], curators: [] };
+        
+        async function loadData() {
+            // Try loading from static JSON file first (GitHub Pages compatible)
+            try {
+                const response = await fetch('data.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Loaded data from data.json:', data.allProducts?.length || 0, 'products');
+                    
+                    // Transform allProducts to dashboard format
+                    collection.items = (data.allProducts || []).map((item, idx) => ({
+                        id: idx + 1,
+                        name: item.name,
+                        origin: item.vendor,
+                        category: item.category || 'keyboard',
+                        price: item.price,
+                        status: item.status || 'active',
+                        joins: item.joins || Math.floor(Math.random() * 1000) + 50,
+                        description: item.description || `${item.name} - ${item.category || 'keyboard'} product`,
+                        image: item.image,
+                        url: item.affiliateUrl || item.url,
+                        verified: true
+                    }));
+                    
+                    // Use interest checks as proposals
+                    collection.proposals = (data.interestChecks || []).map((ic, idx) => ({
+                        id: `P-${String(idx + 1).padStart(3, '0')}`,
+                        name: ic.name,
+                        platform: ic.platform,
+                        category: ic.category || 'keyboard',
+                        price: ic.estimatedPrice || ic.price || 'TBA',
+                        votes: ic.votes || ic.upvotes || 0,
+                        comments: ic.comments || 0,
+                        url: ic.url
+                    }));
+                    
+                    // Load vendors from metadata
+                    collection.curators = (data.vendors || []).map(v => ({
+                        name: v.name,
+                        commission: v.commission,
+                        items: v.activeGroupBuys || 0,
+                        url: v.url
+                    }));
+                    
+                    // Render
+                    renderItems(collection.items, document.getElementById('currentShelf'));
+                    renderProposals(collection.proposals, document.getElementById('proposalShelf'));
+                    renderCurators(collection.curators, document.getElementById('curatorShelf'));
+                    document.getElementById('acquisitionCount').textContent = `${collection.items.length} items`;
+                    
+                    // Remove loading screen
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').classList.add('hidden');
+                    }, 300);
+                    return; // Success - exit function
+                }
+            } catch (e) {
+                console.log('data.json not found, trying API...');
+            }
+            
+            // Try API if static file failed
+            try {
+                const response = await fetch('/api/groupbuys');
+                const data = await response.json();
+                
+                // Transform API data to dashboard format
+                collection.items = data.data.map((item, idx) => ({
+                    id: idx + 1,
+                    name: item.name,
+                    origin: item.vendor,
+                    category: item.category || 'keyboard',
+                    price: item.price,
+                    status: item.status || 'active',
+                    joins: item.joins || Math.floor(Math.random() * 1000) + 50,
+                    description: item.description || `${item.name} - ${item.category || 'keyboard'} product`,
+                    image: item.image,
+                    url: item.affiliateUrl || item.url,
+                    verified: true
+                }));
+                
+                // Use interest checks as proposals
+                const icResponse = await fetch('/api/interest-checks');
+                const icData = await icResponse.json();
+                collection.proposals = icData.data?.map((ic, idx) => ({
+                    id: `P-${String(idx + 1).padStart(3, '0')}`,
+                    name: ic.name,
+                    platform: ic.platform,
+                    category: ic.category || 'keyboard',
+                    price: ic.estimatedPrice || ic.price || 'TBA',
+                    votes: ic.votes || ic.upvotes || 0,
+                    comments: ic.comments || 0,
+                    url: ic.url
+                })) || [];
+                
+                // Load vendors from API
+                const vendorResponse = await fetch('/api/vendors');
+                const vendorData = await vendorResponse.json();
+                collection.curators = vendorData.data?.map(v => ({
+                    name: v.name,
+                    commission: v.commission,
+                    items: v.activeGroupBuys || 0,
+                    url: v.url
+                })) || [];
+                
+                // Render
+                renderItems(collection.items, document.getElementById('currentShelf'));
+                renderProposals(collection.proposals, document.getElementById('proposalShelf'));
+                renderCurators(collection.curators, document.getElementById('curatorShelf'));
+                document.getElementById('acquisitionCount').textContent = `${collection.items.length} items`;
+                
+            } catch (e) {
+                console.error('Failed to load data:', e);
+                // Fall back to hardcoded data
+                console.log('Using fallback data...');
+                loadFallbackData();
+                
+                // Render fallback data
+                renderItems(collection.items, document.getElementById('currentShelf'));
+                renderProposals(collection.proposals, document.getElementById('proposalShelf'));
+                renderCurators(collection.curators, document.getElementById('curatorShelf'));
+                document.getElementById('acquisitionCount').textContent = `${collection.items.length} items`;
+            }
+            
+            // Remove loading screen
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 300);
+        }
+        
+        function loadFallbackData() {
+            // Fallback to original hardcoded data if API fails
+            collection = {
             items: [
                 {
                     id: 1,
