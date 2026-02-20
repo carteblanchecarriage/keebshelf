@@ -99,7 +99,25 @@ async function scrapeShopify(vendorKey, vendorConfig) {
           title.includes('switch') ||
           productType.includes('keyboard');
         
-        if (isKeyboardRelated) {
+        // Skip standalone cases (not full keyboards) - check title, type, tags, and price
+        const priceNum = parseFloat(product.variants?.[0]?.price || '0');
+        const isStandaloneCase = 
+          (title.includes(' case') || productType.includes('case')) && 
+          !title.includes('keyboard') && 
+          !title.includes('ready to use');
+        const isTopOrBottomCase = title.includes('top case') || title.includes('bottom case') || 
+                                   title.includes('top case') || title.includes('bottom case');
+        const isCaseByTag = tags.some(t => t === 'case' || t === 'cases') && 
+                           !title.includes('keyboard') && 
+                           !title.includes('ready to use');
+        // Filter out likely cases priced under $80 without "keyboard" or "ready to use" in title
+        const isLikelyCaseByPrice = priceNum < 80 && 
+                                    !title.includes('keyboard') && 
+                                    !title.includes('ready to use') &&
+                                    !title.includes('switch') &&
+                                    !title.includes('keycap');
+        
+        if (isKeyboardRelated && !isStandaloneCase && !isTopOrBottomCase && !isCaseByTag && !isLikelyCaseByPrice) {
           // Determine category
           let category = 'accessories';
           if (title.includes('keyboard') || productType.includes('keyboard')) category = 'keyboard';
@@ -161,6 +179,36 @@ async function scrapeShopifyCollections(vendorConfig) {
       
       if (response.data && response.data.products) {
         response.data.products.forEach(product => {
+          const title = product.title.toLowerCase();
+          const productType = (product.product_type || '').toLowerCase();
+          const tags = product.tags?.map(t => t.toLowerCase()) || [];
+          
+          // Skip standalone cases (check title, type, and tags)
+          const isStandaloneCase = 
+            (title.includes(' case') || productType.includes('case')) && 
+            !title.includes('keyboard') && 
+            !title.includes('ready to use');
+          const isTopOrBottomCase = title.includes('top case') || title.includes('bottom case');
+          const isCaseByTag = tags.some(t => t === 'case' || t === 'cases') && 
+                             !title.includes('keyboard') && 
+                             !title.includes('ready to use');
+          
+          if (isStandaloneCase || isTopOrBottomCase || isCaseByTag) {
+            return; // Skip this product
+          }
+          
+          // Filter out likely cases priced under $80 without "keyboard" or "ready to use" in title
+          const priceNum = parseFloat(product.variants?.[0]?.price || '0');
+          const isLikelyCaseByPrice = priceNum < 80 && 
+                                      !title.includes('keyboard') && 
+                                      !title.includes('ready to use') &&
+                                      !title.includes('switch') &&
+                                      !title.includes('keycap');
+          
+          if (isLikelyCaseByPrice) {
+            return; // Skip this product
+          }
+          
           const category = collection.includes('keycap') ? 'keycaps' : 
                           collection.includes('switch') ? 'switches' : 'keyboard';
           
