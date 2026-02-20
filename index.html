@@ -885,75 +885,40 @@
         }
         
         async function loadData() {
-            // Try cache first
-            const cached = getCachedData();
-            if (cached) {
-                processData(cached);
-                return;
-            }
+            console.log('🚀 Loading data...');
             
-            // Try loading from static JSON file first (GitHub Pages compatible)
             try {
-                const response = await fetch('data.json');
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Loaded data from data.json:', data.allProducts?.length || 0, 'products');
-                    
-                    // Cache for next time
-                    setCachedData(data);
-                    
-                    processData(data);
+                // Try cache first
+                console.log('Checking localStorage cache...');
+                const cached = getCachedData();
+                if (cached) {
+                    console.log('Using cached data');
+                    processData(cached);
                     return;
                 }
-            } catch (e) {
-                console.log('data.json not found, trying API...');
-            }
-            
-            // Try API if static file failed
-            try {
-                const response = await fetch('/api/groupbuys');
+                
+                // Fetch data.json
+                console.log('Fetching data.json...');
+                const response = await fetch('data.json');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
                 const data = await response.json();
+                console.log('Loaded data:', data.allProducts?.length || 0, 'products');
                 
-                const processedData = {
-                    allProducts: data.data || [],
-                    interestChecks: [],
-                    vendors: []
-                };
+                // Cache and process
+                setCachedData(data);
+                processData(data);
                 
-                try {
-                    const icResponse = await fetch('/api/interest-checks');
-                    const icData = await icResponse.json();
-                    processedData.interestChecks = icData.data || [];
-                } catch (e) {
-                    console.log('No interest checks from API');
-                }
-                
-                try {
-                    const vendorResponse = await fetch('/api/vendors');
-                    const vendorData = await vendorResponse.json();
-                    processedData.vendors = vendorData.data || [];
-                } catch (e) {
-                    console.log('No vendors from API');
-                }
-                
-                setCachedData(processedData);
-                processData(processedData);
-                return;
-            } catch (e) {
-                console.error('API failed:', e);
+            } catch (err) {
+                console.error('❌ Error loading data:', err);
+                document.querySelector('.loading-text').innerHTML = 
+                    '<p style="color:red;">Error loading data. Check console (F12) for details.</p>';
             }
-            
-            // Use fallback data
-            console.log('Using fallback data...');
-            loadFallbackData();
-            
-            // Render fallback data
-            displayedItems = collection.items;
-            currentBatch = 0;
-            renderItems(displayedItems, document.getElementById('currentShelf'));
-            renderProposals(collection.proposals, document.getElementById('proposalShelf'));
-            renderCurators(collection.curators, document.getElementById('curatorShelf'));
-            document.getElementById('acquisitionCount').textContent = `${collection.items.length} items`;
+        }
             
             // Remove loading screen
             setTimeout(() => {
