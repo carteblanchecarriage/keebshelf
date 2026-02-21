@@ -200,6 +200,7 @@ Each keyboard gets a score 0-100:
 - Compare multiple keyboards
 - "Show me alternatives" button
 - Advanced filters (wireless, RGB, etc.)
+- **Wizard for Accessories** — Filter gaskets, lubricants, hardware packs, tools (miscellaneous category)
 
 ---
 

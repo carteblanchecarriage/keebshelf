@@ -86,6 +86,9 @@
 
 ### 📝 MEDIUM PRIORITY (Next Sprint)
 
+- [ ] **Add Miscellaneous category** — Include gaskets, hardware packs, lubricants, tools, desk mats, and other accessories that don't fit keyboards/switches/keycaps
+- [ ] **Update scraper for misc items** — Scrape vendors for gaskets, lube, hardware from KBDfans, NovelKeys, etc.
+- [ ] **Add filter chips** — "Misc" or "Accessories" category alongside Keyboards/Switches/Keycaps
 - [ ] Add "Sort by Price" dropdown
 - [ ] Create "Sale" badge for discounted items  
 - [ ] Add product ratings (fake data for now)
