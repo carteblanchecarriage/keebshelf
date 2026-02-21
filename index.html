@@ -238,6 +238,35 @@
         .chip.active { background: var(--accent); color: white; border-color: var(--accent); }
         .filter-wrap { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; border-bottom: 1px solid var(--border); }
 
+        /* Fade-in animation for items */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .item {
+            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+        /* Stagger animation delays for grid items */
+        .item:nth-child(1) { animation-delay: 0.05s; }
+        .item:nth-child(2) { animation-delay: 0.1s; }
+        .item:nth-child(3) { animation-delay: 0.15s; }
+        .item:nth-child(4) { animation-delay: 0.2s; }
+        .item:nth-child(5) { animation-delay: 0.25s; }
+        .item:nth-child(6) { animation-delay: 0.3s; }
+        .item:nth-child(7) { animation-delay: 0.35s; }
+        .item:nth-child(8) { animation-delay: 0.4s; }
+        .item:nth-child(9) { animation-delay: 0.45s; }
+        .item:nth-child(10) { animation-delay: 0.5s; }
+        .item:nth-child(11) { animation-delay: 0.55s; }
+        .item:nth-child(12) { animation-delay: 0.6s; }
+
         /* Back to Top Button */
         .back-to-top {
             position: fixed;
