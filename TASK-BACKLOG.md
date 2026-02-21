@@ -16,7 +16,7 @@
 - [x] **Task 1: Create wizard HTML container** — Added modal/section to index.html with step containers, nav buttons, progress indicator
 - [x] **Task 2: Add wizard styling** — Large option cards with hover effects, selected states (✓ badge, gradient), fade-in animations, responsive grid
 - [x] **Task 3: Step 1 - Use Case** — COMPLETED: "What will you use this keyboard for?" with Gaming/Office/Creative/General options, icon placeholders, auto-advance after 400ms
-- [ ] **Task 4: Step 2 - Noise Level** — "What's your workspace?" Quiet/Medium/Loud with switch education
+- [x] **Task 4: Step 2 - Noise Level** — COMPLETED: "What's your workspace?" with switch education (Linear reds for quiet, Tactile browns for medium, Clicky blues for loud)
 - [ ] **Task 5: Step 3 - Size** — "What's your desk space?" 60%/75%/Full-size with visual comparison
 - [ ] **Task 6: Step 4 - Hot-swap** — "Want to customize later?" Yes/Maybe/No/Don't know
 - [ ] **Task 7: Step 5 - Budget** — Budget slider/segments: Under $100/$100-200/$200-300/$300+
