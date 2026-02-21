@@ -1,14 +1,19 @@
-# robots.txt for Keyboard Tracker
-# https://keyboardtracker.com
-
 User-agent: *
 Allow: /
 
-# API endpoints should not be crawled by search engines
+# Disallow API endpoints and private data
 Disallow: /api/
+Disallow: /tools/
+Disallow: /logs/
+Disallow: /.env
 
-# Admin/internal paths (when implemented)
-Disallow: /admin/
-Disallow: /dashboard/private/
+# Sitemap location
+Sitemap: https://carteblanchecarriage.github.io/keebshelf/sitemap.xml
 
-Sitemap: https://keyboardtracker.com/sitemap.xml
+# Crawl rate (optional - search engines may ignore)
+Crawl-delay: 10
+
+# Explicitly allow important pages
+Allow: /guide/
+Allow: /blog.html
+Allow: /dashboard/
