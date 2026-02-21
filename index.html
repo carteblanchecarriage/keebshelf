@@ -860,7 +860,34 @@
                         </div>
                     </div>
                 </div>
-                <div id="wizard-step-3" class="wizard-step" data-step="3" style="display: none;"></div>
+                <div id="wizard-step-3" class="wizard-step" data-step="3" style="display: none;">
+                    <div class="wizard-step-number">Step 3 of 5</div>
+                    <h3 class="wizard-question">What size works for your desk?</h3>
+                    <p class="wizard-subtitle">Compact saves space, full-size has a numpad. Pick what fits your setup.</p>
+                    
+                    <div class="wizard-options-grid">
+                        <div class="wizard-option-card" data-value="compact" onclick="selectWizardOption(3, 'compact')">
+                            <div class="wizard-icon" style="color: #3498db; font-size: 0.9rem;">[60%]</div>
+                            <h4 class="wizard-option-title">Compact</h4>
+                            <p class="wizard-option-desc">60-65% layout. Minimal, portable, perfect for small desks.</p>
+                        </div>
+                        <div class="wizard-option-card" data-value="balanced" onclick="selectWizardOption(3, 'balanced')">
+                            <div class="wizard-icon" style="color: #9b59b6; font-size: 0.9rem;">[75%]</div>
+                            <h4 class="wizard-option-title">Balanced</h4>
+                            <p class="wizard-option-desc">75-80% layout. Function keys, arrows. Most popular choice.</p>
+                        </div>
+                        <div class="wizard-option-card" data-value="fullsize" onclick="selectWizardOption(3, 'fullsize')">
+                            <div class="wizard-icon" style="color: #27ae60; font-size: 0.9rem;">[100%]</div>
+                            <h4 class="wizard-option-title">Full Size</h4>
+                            <p class="wizard-option-desc">100% layout with numpad. Desktop use, data entry, accounting.</p>
+                        </div>
+                        <div class="wizard-option-card" data-value="unsure" onclick="selectWizardOption(3, 'unsure')">
+                            <div class="wizard-icon" style="color: #7f8c8d;">[?]</div>
+                            <h4 class="wizard-option-title">Not Sure</h4>
+                            <p class="wizard-option-desc">Show me popular options across all sizes.</p>
+                        </div>
+                    </div>
+                </div>
                 <div id="wizard-step-4" class="wizard-step" data-step="4" style="display: none;"></div>
                 <div id="wizard-step-5" class="wizard-step" data-step="5" style="display: none;"></div>
                 <div id="wizard-results" style="display: none;"></div>
