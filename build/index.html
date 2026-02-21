@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build a Custom Mechanical Keyboard: Step-by-Step Guide | Keebshelf</title>
+    <meta name="description" content="Complete step-by-step guide to building your first custom mechanical keyboard. Tools you need, assembly process, and troubleshooting.">
+    <link rel="canonical" href="https://carteblanchecarriage.github.io/keebshelf/build/">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --paper: #fdfcf8; --paper-dark: #f7f6f2; --ink: #1a1a1a; --accent: #c4a35a; --faded: #6b6b6b; --border: #e8e8e8; --success: #16a34a; }
+        body { font-family: Georgia, serif; background: var(--paper); color: #333; line-height: 1.7; }
+        .nav { background: var(--ink); padding: 1rem 2rem; }
+        .nav-inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; }
+        .nav a { color: white; text-decoration: none; }
+        .hero { background: var(--ink); color: white; padding: 4rem 2rem; text-align: center; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 1rem; }
+        .hero p { color: #ccc; max-width: 600px; margin: 0 auto; }
+        .content { max-width: 700px; margin: 0 auto; padding: 3rem 2rem; }
+        .step { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .step-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .step-number { width: 40px; height: 40px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+        .step h3 { margin: 0; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .tool-item { background: var(--paper-dark); padding: 1rem; border-radius: 8px; }
+        .tool-item h4 { margin-bottom: 0.25rem; }
+        .tool-item p { font-size: 0.9rem; color: var(--faded); margin: 0; }
+        .warning { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; margin: 1rem 0; }
+        .tip { background: #dbeafe; border-left: 4px solid var(--blue); padding: 1rem; margin: 1rem 0; }
+        .checklist { list-style: none; }
+        .checklist li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+        .checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--accent); }
+        .section-title { font-size: 1.8rem; margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--accent); }
+        .cta-box { background: var(--paper-dark); border: 2px solid var(--accent); border-radius: 12px; padding: 2rem; text-align: center; margin: 3rem 0; }
+        .btn { display: inline-block; background: var(--accent); color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../"><strong>Keebshelf</strong></a>
+            <a href="../">← Back to Dashboard</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>How to Build a Custom Keyboard</h1>
+        <p>Your first custom build: what you need, how to do it, and what to avoid. No soldering required (if you don't want to).</p>
+    </header>
+
+    <main class="content">
+
+        <section>
+            <h2 class="section-title">What You'll Need</h2>
+            
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <h4>🎁 Keyboard Kit</h4>
+                    <p>Case + PCB + Plate (usually sold together)</p>
+                </div>
+                <div class="tool-item">
+                    <h4>🔘 Switches</h4>
+                    <p>70-110 depending on layout</p>
+                </div>
+                <div class="tool-item">
+                    <h4>🔤 Keycaps</h4>
+                    <p>Match your layout size</p>
+                </div>
+                <div class="tool-item">
+                    <h4>🔧 Switch Puller</h4>
+                    <p>$5, essential for hot-swap</p>
+                </div>
+                <div class="tool-item">
+                    <h4>🗜️ Keycap Puller</h4>
+                    <p>Often included with keycaps</p>
+                </div>
+                <div class="tool-item">
+                    <h4>🧴 Lube (Optional)</h4>
+                    <p>Krytox 205g0 + brush</p>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Important:</strong> Get a <strong>hot-swap PCB</strong> for your first build. This lets you push switches in without soldering. Soldering is a skill you can learn later.
+            </div>
+        </section>
+
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h3>Test Your PCB</h3>
+            </div>
+            
+            <p>Before installing anything, test that the PCB works. This saves you from disassembling later if there's an issue.</p>
+            
+            <ol style="margin: 1rem 0; padding-left: 1.5rem;">
+                <li>Plug the PCB into your computer (USB-C or USB-A)</li>
+                <li>Go to a keyboard tester site (search "keyboard tester")</li>
+                <li>Use tweezers or a paperclip to touch the two metal holes where a switch would go</li>
+                <li>The tester should register a keypress</li>
+                <li>Test multiple spots, especially edge keys</li>
+            </ol>
+
+            <div class="tip">
+                <strong>💡 Pro Tip:</strong> If a key doesn't register, check if the hotswap socket is damaged. You can usually fix it with a quick solder touch-up, but email the vendor if it's a new kit.
+            </div>
+        </section>
+
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h3>Install Stabilizers</h3>
+            </div>
+            
+            <p>Stabilizers go under the big keys: Spacebar, Enter, Shift, Backspace, and sometimes the + key on the numpad.</p>
+            
+            <ol style="margin: 1rem 0; padding-left: 1.5rem;">
+                <li>Unclip the stabilizer wire from the housing</li>
+                <li>Slide the housing into the PCB mount points</li>
+                <li>Clip the wire back in</li>
+                <li>Repeat for all stabilizer positions</li>
+            </ol>
+
+            <div class="warning">
+                <strong>⚠️ Common Mistake:</strong> Make sure the stabilizer wire is <strong>facing the correct direction</strong>. The curve should face toward the spacebar, not away from it.
+            </div>
+        </section>
+
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h3>Install Switches</h3>
+            </div>
+            
+            <p>Time to populate the board. With hot-swap, you just push them in. (If soldering, this is where you'd solder each pin).</p>
+            
+            <ol style="margin: 1rem 0; padding-left: 1.5rem;">
+                <li>Align the switch pins with the holes in the PCB</li>
+                <li>Make sure both pins are straight (if bent, gently straighten with pliers)</li>
+                <li>Push straight down with firm pressure until you hear/feel a click</li>
+                <li>The switch should sit flush with the plate</li>
+                <li>Do all switches, leaving the stabilized keys for last</li>
+            </ol>
+
+            <div class="tip">
+                <strong>💡 Pro Tip:>When pushing switches, support the back of the PCB with your other hand. This prevents bending the board.
+            </div>
+        </section>
+
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h3>Test Everything Again</h3>
+            </div>
+            
+            <p>Before closing up the case, test every single key again. It's much easier to fix issues now than after assembly.</p>
+            
+            <ul class="checklist">
+                <li>Plug in the keyboard</li>
+                <li>Open a keyboard tester</li>
+                <li>Press every key, one by one</li>
+                <li>Test the spacebar, enter, shift (stabilized keys)</li>
+                <li>Check that no keys are "chattering" (registering twice)</li>
+            </ul>
+        </section>
+
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h3>Put It in the Case</h3>
+            </div>
+            
+            <p>Now assemble the case. Process varies by case type, but generally:</p>
+            
+            <ol style="margin: 1rem 0; padding-left: 1.5rem;">
+                <li>Place any case foam (if your kit came with it)</li>
+                <li>Lower the completed PCB/plate assembly into the case</li>
+                <li>Secure with screws (usually comes with the case)</li>
+                <li>Don't overtighten - just snug</li>
+            </ol>
+        </section>
+
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <h3>Install Keycaps</h3>
+            </div>
+            
+            <p>The satisfying final step. Be gentle - keycaps can crack if forced.</p>
+            
+            <ol style="margin: 1rem 0; padding-left: 1.5rem;">
+                <li>Start with stabilized keys first (they're hardest)</li>
+                <li>Align the + shape with the stem</li>
+                <li>Push straight down with even pressure</li>
+                <li>Do the rest in whatever order works for you</li>
+            </ol>
+
+            <div class="tip">
+                <strong>💡 Pro Tip:</strong> If a keycap feels stuck, don't force it. The stabilizer might not be seated right. Remove the cap and reseat the stabilizer wire.
+            </div>
+        </section>
+
+        <div class="cta-box">
+            <h2>Ready to Order Parts?</h2>
+            <p>Browse our live inventory to find cases, PCBs, switches, and keycaps in stock.</p>
+            <a href="../" class="btn">Browse Components →</a>
+        </div>
+
+        <footer style="text-align: center; padding: 3rem; color: var(--faded);">
+            <p><a href="../">Back to Dashboard</a> · <a href="../beginner/">Beginner's Guide</a> · <a href="../switches/">Switch Guide</a></p>
+        </footer>
+
+    </main>
+</body>
+</html>

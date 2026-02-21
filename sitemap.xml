@@ -40,7 +40,29 @@
         <priority>0.85</priority>
     </url>
     
-    <!-- Blog Posts -->
+    <!-- Switch Guide -->
+    <url>
+        <loc>https://carteblanchecarriage.github.io/keebshelf/switches/</loc>
+        <lastmod>2025-02-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    
+    <!-- Build Guide -->
+    <url>
+        <loc>https://carteblanchecarriage.github.io/keebshelf/build/</loc>
+        <lastmod>2025-02-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    
+    <!-- Price Alerts -->
+    <url>
+        <loc>https://carteblanchecarriage.github.io/keebshelf/price-alerts/</loc>
+        <lastmod>2025-02-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
     <url>
         <loc>https://carteblanchecarriage.github.io/keebshelf/blog.html</loc>
         <lastmod>2025-02-20</lastmod>
