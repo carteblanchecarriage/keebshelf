@@ -675,6 +675,56 @@
         </div>
     </div>
 
+    <!-- Keyboard Finder Wizard Modal -->
+    <div id="wizardModal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="wizard-title"
+         style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000; align-items: center; justify-content: center;"
+         onclick="closeWizardModal(event)">
+        <div role="document"
+             style="background: var(--paper); border-radius: 12px; max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);"
+             onclick="event.stopPropagation()">
+            
+            <!-- Wizard Header -->
+            <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--paper-dark);">
+                <h2 id="wizard-title" style="font-size: 1.25rem; margin: 0;">Find Your Perfect Keyboard</h2>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span id="wizard-progress-text" style="font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; color: var(--faded);">Step 1 of 5</span>
+                    <button onclick="closeWizardModal()"
+                            aria-label="Close wizard"
+                            style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--faded); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.2s;">×</button>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div style="height: 3px; background: var(--border);">
+                <div id="wizard-progress-bar" style="height: 100%; background: var(--accent); width: 20%; transition: width 0.3s ease;"></div>
+            </div>
+
+            <!-- Wizard Content -->
+            <div id="wizard-content" style="padding: 2rem;">
+                <!-- Step containers (populated by JavaScript) -->
+                <div id="wizard-step-1" class="wizard-step" data-step="1"></div>
+                <div id="wizard-step-2" class="wizard-step" data-step="2" style="display: none;"></div>
+                <div id="wizard-step-3" class="wizard-step" data-step="3" style="display: none;"></div>
+                <div id="wizard-step-4" class="wizard-step" data-step="4" style="display: none;"></div>
+                <div id="wizard-step-5" class="wizard-step" data-step="5" style="display: none;"></div>
+                <div id="wizard-results" style="display: none;"></div>
+            </div>
+
+            <!-- Wizard Footer Navigation -->
+            <div style="padding: 1.5rem 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--paper-dark);">
+                <button id="wizard-back" onclick="wizardPrevStep()" style="padding: 0.75rem 1.5rem; background: none; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.9rem; color: var(--ink); opacity: 0.5; pointer-events: none; transition: all 0.2s;">Back</button>
+                
+                <div style="display: flex; gap: 0.5rem;">
+                    <button id="wizard-skip" onclick="closeWizardModal()" style="padding: 0.75rem 1.5rem; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 0.9rem; color: var(--faded); text-decoration: underline;">Skip wizard</button>
+                    <button id="wizard-next" onclick="wizardNextStep()" style="padding: 0.75rem 2rem; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.9rem; font-weight: 500; transition: all 0.2s;">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Subscribe Modal -->
     <div id="subscribeModal" 
          role="dialog" 
@@ -1100,13 +1150,99 @@
             updateThemeUI();
         }
 
+        // Wizard Navigation
+        let currentWizardStep = 1;
+        const totalWizardSteps = 5;
+        const wizardData = {}; // Store user selections
+
+        function openWizardModal() {
+            document.getElementById('wizardModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.getElementById('wizardModal').setAttribute('aria-hidden', 'false');
+            // Focus management for accessibility
+            document.getElementById('wizard-title').focus();
+        }
+
+        function closeWizardModal(e) {
+            if (!e || e.target.id === 'wizardModal' || !e.target) {
+                document.getElementById('wizardModal').style.display = 'none';
+                document.body.style.overflow = '';
+                document.getElementById('wizardModal').setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        function updateWizardProgress() {
+            const percentage = (currentWizardStep / totalWizardSteps) * 100;
+            document.getElementById('wizard-progress-bar').style.width = percentage + '%';
+            document.getElementById('wizard-progress-text').textContent = `Step ${currentWizardStep} of ${totalWizardSteps}`;
+            
+            // Update back button visibility
+            const backBtn = document.getElementById('wizard-back');
+            if (currentWizardStep === 1) {
+                backBtn.style.opacity = '0.5';
+                backBtn.style.pointerEvents = 'none';
+            } else {
+                backBtn.style.opacity = '1';
+                backBtn.style.pointerEvents = 'auto';
+            }
+
+            // Update next button text
+            const nextBtn = document.getElementById('wizard-next');
+            if (currentWizardStep === totalWizardSteps) {
+                nextBtn.textContent = 'See Results';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+        }
+
+        function showWizardStep(stepNumber) {
+            // Hide all steps
+            document.querySelectorAll('.wizard-step').forEach(step => {
+                step.style.display = 'none';
+            });
+            // Show current step
+            document.querySelector(`[data-step="${stepNumber}"]`).style.display = 'block';
+            currentWizardStep = stepNumber;
+            updateWizardProgress();
+        }
+
+        function wizardNextStep() {
+            if (currentWizardStep < totalWizardSteps) {
+                showWizardStep(currentWizardStep + 1);
+            } else {
+                // Show results
+                showWizardResults();
+            }
+        }
+
+        function wizardPrevStep() {
+            if (currentWizardStep > 1) {
+                showWizardStep(currentWizardStep - 1);
+            }
+        }
+
+        function showWizardResults() {
+            document.querySelectorAll('.wizard-step').forEach(step => {
+                step.style.display = 'none';
+            });
+            document.getElementById('wizard-results').style.display = 'block';
+            document.getElementById('wizard-next').style.display = 'none';
+            document.getElementById('wizard-progress-text').textContent = 'Your Matches';
+            document.getElementById('wizard-progress-bar').style.width = '100%';
+            // Results will be populated later
+        }
+
+        // Initialize wizard progress on load
+        updateWizardProgress();
+
         // Keyboard shortcut: Press "/" to focus search input
         document.addEventListener('keydown', (e) => {
             // Don't trigger if user is typing in an input, textarea, or modal is open
             if (e.target.tagName === 'INPUT' || 
                 e.target.tagName === 'TEXTAREA' || 
                 e.target.isContentEditable ||
-                document.getElementById('subscribeModal')?.style.display === 'flex') {
+                document.getElementById('subscribeModal')?.style.display === 'flex' ||
+                document.getElementById('wizardModal')?.style.display === 'flex') {
                 return;
             }
             
