@@ -13,7 +13,8 @@
 #### Data Source Tasks
 - [x] **Add Epomaker to scraper** — Add https://epomaker.com as scrapeable source  
 - [x] **Add Epomaker products** — Added TH66 Pro, RT100, SK61, Galaxy80
-- [ ] **Update vendor filters** — Add Epomaker checkbox to filter bar
+- [x] **Update vendor filters** — Add Epomaker checkbox to filter bar
+- [x] **Fix item counts** — Updated 276→12, chip counts to match actual data
 
 #### Content Tasks
 - [ ] **Create FAQ Section** — Add 5 Q&As to homepage (What is a mechanical keyboard? Why custom? Switches explained? Etc.)
