@@ -18,8 +18,8 @@
 - [x] **Task 3: Step 1 - Use Case** — COMPLETED: "What will you use this keyboard for?" with Gaming/Office/Creative/General options, icon placeholders, auto-advance after 400ms
 - [x] **Task 4: Step 2 - Noise Level** — COMPLETED: "What's your workspace?" with switch education (Linear reds for quiet, Tactile browns for medium, Clicky blues for loud)
 - [x] **Task 5: Step 3 - Size** — COMPLETED: "What's your desk space?" with 60%/75%/Full-size options and size indicators [60%], [75%], [100%], [?]
-- [ ] **Task 6: Step 4 - Hot-swap** — "Want to customize later?" Yes/Maybe/No/Don't know
-- [ ] **Task 7: Step 5 - Budget** — Budget slider/segments: Under $100/$100-200/$200-300/$300+
+- [x] **Task 6: Step 4 - Hot-swap** — COMPLETED: "Want to customize switches later?" with educational explanations (hot-swap = no soldering)
+- [ ] **Task 7: Step 5 - Budget** — "What's your budget?" Under $100/$100-200/$200-300/$300+ segments
 - [ ] **Task 8: Results algorithm** — Score keyboards 0-100 based on wizard answers, show top 5-8 matches
 - [ ] **Task 9: Results UI** — Display matches with "✓ Why this fits" badges, learn more links
 - [ ] **Task 10: Launch trigger** — Add "Find My Keyboard" CTA button to hero section
