@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-19",
+  "lastUpdated": "2026-02-21",
   "products": [
     {
       "id": 1,
@@ -103,6 +103,58 @@
       "description": "Artistic keycap set inspired by 1920s modernist art. Dye-sub PBT.",
       "image": "https://cdn.shopify.com/s/files/1/1472/6424/products/epbt-avant-garde.jpg?v=1707500000",
       "url": "https://kbdfans.com/collections/keycaps/products/epbt-avant-garde",
+      "verified": false
+    },
+    {
+      "id": 9,
+      "name": "Epomaker TH66 Pro",
+      "origin": "Epomaker",
+      "category": "keyboard",
+      "price": "$79",
+      "status": "active",
+      "joins": 678,
+      "description": "65% wireless mechanical keyboard with knob control. Hot-swap, Bluetooth 5.0, RGB backlighting.",
+      "image": "https://epomaker.com/cdn/shop/products/epomaker-th66-pro-1.jpg",
+      "url": "https://epomaker.com/products/epomaker-th66-pro",
+      "verified": false
+    },
+    {
+      "id": 10,
+      "name": "Epomaker RT100",
+      "origin": "Epomaker",
+      "category": "keyboard",
+      "price": "$89",
+      "status": "active",
+      "joins": 892,
+      "description": "Retro-style 96% layout mechanical keyboard with multi-media knob. Gasket-mounted, hot-swap.",
+      "image": "https://epomaker.com/cdn/shop/products/epomaker-rt100-1.jpg",
+      "url": "https://epomaker.com/products/epomaker-rt100",
+      "verified": false
+    },
+    {
+      "id": 11,
+      "name": "Epomaker SK61",
+      "origin": "Epomaker",
+      "category": "keyboard",
+      "price": "$59",
+      "status": "active",
+      "joins": 1245,
+      "description": "60% wireless mechanical keyboard with PBT keycaps. Hot-swap optical switches, RGB, Bluetooth.",
+      "image": "https://epomaker.com/cdn/shop/products/epomaker-sk61-1.jpg",
+      "url": "https://epomaker.com/products/epomaker-sk61",
+      "verified": false
+    },
+    {
+      "id": 12,
+      "name": "Epomaker Galaxy 80",
+      "origin": "Epomaker",
+      "category": "keyboard",
+      "price": "$119",
+      "status": "active",
+      "joins": 456,
+      "description": "75% aluminum mechanical keyboard with south-facing PCB. Hot-swap, gasket mount, RGB backlight.",
+      "image": "https://epomaker.com/cdn/shop/products/epomaker-galaxy80-1.jpg",
+      "url": "https://epomaker.com/products/epomaker-galaxy80",
       "verified": false
     }
   ]

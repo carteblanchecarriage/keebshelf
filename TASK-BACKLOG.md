@@ -10,6 +10,11 @@
 
 ### 🔥 HIGH PRIORITY (Do First)
 
+#### Data Source Tasks
+- [x] **Add Epomaker to scraper** — Add https://epomaker.com as scrapeable source  
+- [x] **Add Epomaker products** — Added TH66 Pro, RT100, SK61, Galaxy80
+- [ ] **Update vendor filters** — Add Epomaker checkbox to filter bar
+
 #### Content Tasks
 - [ ] **Create FAQ Section** — Add 5 Q&As to homepage (What is a mechanical keyboard? Why custom? Switches explained? Etc.)
 - [ ] **Write "Best Keyboards 2025" Section** — Add to homepage: "Top 5 Mechanical Keyboards This Year" with quick picks
