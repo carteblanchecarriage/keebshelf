@@ -6,22 +6,22 @@
     <title>Keebshelf | Mechanical Keyboard Group Buys & In-Stock Drops [2025]</title>
     <meta name="description" content="Track 276+ mechanical keyboards, switches, and keycaps from Keychron, Drop, KBDfans, NovelKeys. Live group buy tracker, price alerts, and in-stock notifications.">
     <meta name="keywords" content="mechanical keyboard, group buy, keychron, drop, kbdfans, custom keyboard, mechanical switches">
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://carteblanchecarriage.github.io/keebshelf/">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Keebshelf | Mechanical Keyboard Group Buys & In-Stock Drops">
     <meta property="og:description" content="Track 276+ keyboards from Keychron, Drop, KBDfans, NovelKeys. Live group buys, price alerts, in-stock notifications.">
     <meta property="og:url" content="https://carteblanchecarriage.github.io/keebshelf/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
-    
+
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Keebshelf | Mechanical Keyboard Group Buys">
     <meta name="twitter:description" content="Track 276+ keyboards from Keychron, Drop, KBDfans, NovelKeys. Live group buys, price alerts.">
-    
+
     <!-- Schema.org Organization -->
     <script type="application/ld+json">
     {
@@ -40,7 +40,7 @@
         }
     }
     </script>
-    
+
     <!-- Schema.org FAQPage -->
     <script type="application/ld+json">
     {
@@ -66,9 +66,138 @@
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --paper: #fdfcf8; --paper-dark: #f7f6f2; --ink: #1a1a1a; --accent: #c4a35a; --faded: #6b6b6b; --border: #e8e8e8; }
+        :root {
+            --paper: #fdfcf8;
+            --paper-dark: #f7f6f2;
+            --ink: #1a1a1a;
+            --accent: #c4a35a;
+            --faded: #6b6b6b;
+            --border: #e8e8e8;
+        }
+
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --paper: #1a1a1a;
+            --paper-dark: #252525;
+            --ink: #fdfcf8;
+            --accent: #d4b56a;
+            --faded: #a0a0a0;
+            --border: #444444;
+        }
+
         html { scroll-behavior: smooth; }
-        body { font-family: 'Newsreader', Georgia, serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+        body { font-family: 'Newsreader', Georgia, serif; background: var(--paper); color: var(--ink); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
+
+        /* Skip to content link */
+        .skip-link {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 12px 16px;
+            text-decoration: none;
+            z-index: 100;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            border-radius: 0 0 4px 0;
+            transition: top 0.2s;
+        }
+        .skip-link:focus {
+            top: 0;
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Focus indicators */
+        *:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        *:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        /* Dark mode toggle */
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--faded);
+            border-radius: 20px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: var(--paper);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: border-color 0.2s;
+        }
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
+        .theme-toggle:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Visually hidden for screen readers */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Announcer for screen readers */
+        .sr-announcer {
+            position: absolute;
+            left: -10000px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        /* Enhanced chip styles for button */
+        .chip {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            background: var(--paper);
+            color: var(--ink);
+        }
+        .chip:hover, .chip:focus-visible {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .chip.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html {
+                scroll-behavior: auto;
+            }
+        }
         .loading-screen { position: fixed; inset: 0; background: var(--paper); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
         .loading-screen.hidden { opacity: 0; visibility: hidden; transition: opacity 0.5s; }
         .loading-text { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 0.2em; }
@@ -105,12 +234,25 @@
         .chip:hover { border-color: var(--accent); color: var(--accent); }
         .chip.active { background: var(--accent); color: white; border-color: var(--accent); }
         .filter-wrap { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; border-bottom: 1px solid var(--border); }
-    </style>
+    </style>   <script>
+        // Theme toggle
+        (function() {
+            const savedTheme = localStorage.getItem('keebshelf-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 </head>
 <body>
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-text">Loading collection...</div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading keyboard collection">
+        <div class="loading-text" aria-live="polite">Loading collection...</div>
     </div>
+
+    <div id="sr-announcer" class="sr-announcer" aria-live="polite" aria-atomic="true"></div>
 
     <header class="masthead">
         <div class="masthead-inner">
@@ -118,11 +260,21 @@
                 <h1>Keebshelf</h1>
                 <span>Mechanical Keyboard Collection</span>
             </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span id="themeIcon">🌙</span>
+                <span id="themeText">Dark</span>
+            </button>
         </div>
     </header>
 
     <div class="search-wrap">
-        <input type="search" class="search-input" id="searchInput" placeholder="Search keyboards, keycaps, switches...">
+        <label for="searchInput" class="visually-hidden">Search products</label>
+        <input type="search"
+               class="search-input"
+               id="searchInput"
+               placeholder="Search keyboards, keycaps, switches..."
+               aria-describedby="search-help">
+        <div id="search-help" class="visually-hidden">Type to filter products in real-time</div>
     </div>
 
     <!-- Stats Bar -->
@@ -132,7 +284,12 @@
                 <span>🔍 <strong id="totalItems" style="color: var(--ink);">276</strong> items tracked</span>
                 <span>🏪 <strong>5</strong> vendors</span>
             </div>
-            <button onclick="openSubscribeModal()" style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; font-family: inherit; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+            <button onclick="openSubscribeModal()" 
+                    id="subscribeTrigger"
+                    aria-haspopup="dialog"
+                    aria-expanded="false"
+                    aria-controls="subscribeModal"
+                    style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; font-family: inherit; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
                 🔔 Get Daily Alerts
             </button>
         </div>
@@ -140,12 +297,12 @@
 
     <div class="filter-wrap">
         <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
-            <div>
-                <span class="chip active" data-filter="all">All</span>
-                <span class="chip" data-filter="keyboard">Keyboards</span>
-                <span class="chip" data-filter="case">Cases</span>
-                <span class="chip" data-filter="switches">Switches</span>
-                <span class="chip" data-filter="keycaps">Keycaps</span>
+            <div role="group" aria-label="Filter by category">
+                <button class="chip active" data-filter="all" aria-pressed="true">All</button>
+                <button class="chip" data-filter="keyboard" aria-pressed="false">Keyboards</button>
+                <button class="chip" data-filter="case" aria-pressed="false">Cases</button>
+                <button class="chip" data-filter="switches" aria-pressed="false">Switches</button>
+                <button class="chip" data-filter="keycaps" aria-pressed="false">Keycaps</button>
             </div>
             <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem;">
                 <label for="sortSelect" style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--faded);">Sort by:</label>
@@ -163,36 +320,47 @@
     </div>
 
     <!-- Subscribe Modal -->
-    <div id="subscribeModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;" onclick="closeSubscribeModal(event)">
-        <div style="background: white; border-radius: 8px; max-width: 400px; width: 90%; padding: 2rem; position: relative;" onclick="event.stopPropagation()">
-            <button onclick="closeSubscribeModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--faded);">×</button>
-            <h3 style="margin-bottom: 1rem;">Get Daily Alerts</h3>
-            <p style="color: var(--faded); margin-bottom: 1.5rem; font-size: 0.9rem;">Never miss a drop. Get daily emails with new products and price drops.</p>
+    <div id="subscribeModal" 
+         role="dialog" 
+         aria-modal="true"
+         aria-labelledby="modal-title"
+         aria-describedby="modal-desc"
+         style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;" 
+         onclick="closeSubscribeModal(event)">
+        <div role="document" 
+             style="background: var(--paper); border-radius: 8px; max-width: 400px; width: 90%; padding: 2rem; position: relative; border: 1px solid var(--border);" 
+             onclick="event.stopPropagation()">
+            <button onclick="closeSubscribeModal()" 
+                    aria-label="Close subscription dialog"
+                    style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--faded);">×</button>
+            
+            <h3 id="modal-title" style="margin-bottom: 1rem;">Get Daily Alerts</h3>
+            <p id="modal-desc" style="color: var(--faded); margin-bottom: 1.5rem; font-size: 0.9rem;">Never miss a drop. Get daily emails with new products and price drops.</p>
             
             <form onsubmit="handleSubscribe(event)">
                 <div style="margin-bottom: 1rem;">
-                    <label style="display: block; font-size: 0.8rem; margin-bottom: 0.25rem; color: var(--faded);">Email</label>
-                    <input type="email" id="subEmail" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 4px;" placeholder="you@example.com">
+                    <label for="subEmail" style="display: block; font-size: 0.8rem; margin-bottom: 0.25rem; color: var(--faded);">Email <span aria-label="required">*</span></label>
+                    <input type="email" id="subEmail" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 4px; background: var(--paper); color: var(--ink);" placeholder="you@example.com">
                 </div>
                 <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; font-size: 0.8rem; margin-bottom: 0.25rem; color: var(--faded);">Preferences</label>
-                    <select id="subPref" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 4px;">
+                    <label for="subPref" style="display: block; font-size: 0.8rem; margin-bottom: 0.25rem; color: var(--faded);">Preferences</label>
+                    <select id="subPref" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 4px; background: var(--paper); color: var(--ink);">
                         <option value="digest">Daily digest</option>
                         <option value="alerts">Price alerts only</option>
                         <option value="both">Both</option>
                     </select>
                 </div>
                 <button type="submit" id="subBtn" style="width: 100%; padding: 0.75rem; background: var(--accent); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem;">Subscribe</button>
-                <div id="subMsg" style="margin-top: 1rem; text-align: center;"></div>
+                <div id="subMsg" style="margin-top: 1rem; text-align: center;" aria-live="polite"></div>
             </form>
         </div>
     </div>
 
-    <main class="main">
+    <main class="main" id="main-content">
         <section>
             <div class="section-header">
                 <span class="section-label">Current Collection</span>
-                <span class="acquisition-count" id="acquisitionCount">Loading...</span>
+                <span class="acquisition-count" id="acquisitionCount" aria-live="polite">Loading...</span>
             </div>
             <div class="shelf" id="currentShelf"></div>
         </section>
@@ -206,7 +374,7 @@
                     <li><a href="blog.html" style="color: var(--faded);">The Story Behind Keebshelf</a></li>
                 </ul>
             </div>
-            
+
             <div>
                 <h4 style="margin-top: 0;">Guides</h4>
                 <ul style="list-style: none; padding: 0; margin: 0;">
@@ -217,7 +385,7 @@
                     <li><a href="guide/" style="color: var(--faded);">What is a Mechanical Keyboard?</a></li>
                 </ul>
             </div>
-            
+
             <div>
                 <h4 style="margin-top: 0;">Best Of</h4>
                 <ul style="list-style: none; padding: 0; margin: 0;">
@@ -228,7 +396,7 @@
                     <li><a href="gaming/" style="color: var(--faded);">Gaming Keyboards</a></li>
                 </ul>
             </div>
-            
+
             <div>
                 <h4 style="margin-top: 0;">Vendors</h4>
                 <ul style="list-style: none; padding: 0; margin: 0;">
@@ -239,9 +407,9 @@
                 </ul>
             </div>
         </div>
-        
+
         <hr style="max-width: 1400px; margin: 1rem auto; border: none; border-top: 1px solid var(--border);">
-        
+
         <p style="text-align: center; padding-bottom: 2rem; margin: 0;">Curated mechanical keyboard group buys and interest checks. Updated every 2 hours.</p>
     </footer>
 
@@ -252,10 +420,10 @@
         let currentFilter = 'all';
         let currentSort = 'featured';
         const ITEMS_PER_BATCH = 50;
-        
+
         const CACHE_KEY = 'keebshelf_data';
         const CACHE_TTL = 24 * 60 * 60 * 1000;
-        
+
         function getCachedData() {
             try {
                 const cached = localStorage.getItem(CACHE_KEY);
@@ -267,14 +435,14 @@
             } catch (e) {}
             return null;
         }
-        
+
         function setCachedData(data) {
             try {
                 localStorage.setItem(CACHE_KEY, JSON.stringify(data));
                 localStorage.setItem(CACHE_KEY + '_ts', Date.now().toString());
             } catch (e) {}
         }
-        
+
         function processData(data) {
             collection.items = (data.allProducts || []).map((item, idx) => ({
                 id: idx + 1,
@@ -287,15 +455,15 @@
                 url: item.affiliateUrl || item.url,
                 description: item.description || ''
             })).filter(item => parsePrice(item.price) > 0);
-            
+
             applyFilterAndSort();
         }
-        
+
         function displayData() {
             const start = currentBatch * ITEMS_PER_BATCH;
             const end = Math.min(start + ITEMS_PER_BATCH, displayedItems.length);
             const batch = displayedItems.slice(start, end);
-            
+
             const html = batch.map(item => `
                 <div class="item">
                     <div class="item-image-wrap">
@@ -312,20 +480,22 @@
                             <span class="item-status">${item.status}</span>
                         </div>
                     </div>
-                    <a href="${item.url}" class="item-action" target="_blank">View details</a>
+                    <a href="${item.url}" class="item-action" target="_blank" rel="noopener">
+                        View details <span class="visually-hidden">(opens in new tab)</span>
+                    </a>
                 </div>
             `).join('');
-            
+
             const container = document.getElementById('currentShelf');
             const existingBtn = container.querySelector('.load-more-btn');
             if (existingBtn) existingBtn.remove();
-            
+
             if (currentBatch === 0) {
                 container.innerHTML = html;
             } else {
                 container.insertAdjacentHTML('beforeend', html);
             }
-            
+
             if (end < displayedItems.length) {
                 container.insertAdjacentHTML('beforeend', `
                     <div class="load-more-btn" onclick="loadMore()">
@@ -333,28 +503,28 @@
                     </div>
                 `);
             }
-            
+
             document.getElementById('acquisitionCount').textContent = `${displayedItems.length} items`;
-            
+
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('hidden');
             }, 300);
         }
-        
+
         function loadMore() {
             currentBatch++;
             displayData();
         }
-        
+
         async function loadData() {
             console.log('Loading...');
-            
+
             const cached = getCachedData();
             if (cached) {
                 processData(cached);
                 return;
             }
-            
+
             try {
                 const response = await fetch('data.json');
                 if (!response.ok) throw new Error('HTTP ' + response.status);
@@ -366,22 +536,22 @@
                 document.querySelector('.loading-text').textContent = 'Error loading. Check console (F12).';
             }
         }
-        
+
         // Apply filter, sort, and update display
         function applyFilterAndSort() {
             // Filter
             let filtered = collection.items;
-            
+
             if (currentFilter !== 'all') {
                 filtered = filtered.filter(item => item.category === currentFilter);
             }
-            
+
             // Sort
             displayedItems = sortItemList(filtered, currentSort);
             currentBatch = 0;
             displayData();
         }
-        
+
         // Parse price string (e.g., "$199", "$11/pack", "$10.00", "$50+") to number
         function parsePrice(priceStr) {
             if (!priceStr || priceStr === 'N/A' || priceStr === 'TBA') return 0;
@@ -390,11 +560,11 @@
             if (!match) return 0;
             return parseFloat(match[0].replace(/,/g, ''));
         }
-        
+
         // Sort a list of items
         function sortItemList(items, sortValue) {
             let sorted = [...items];
-            
+
             switch(sortValue) {
                 case 'price-low':
                     sorted.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
@@ -420,16 +590,17 @@
                     sorted.sort(() => Math.random() - 0.5);
                     break;
             }
-            
+
             return sorted;
         }
-        
-        // Search handler
+
+        // Search handler with accessibility
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
-            
+
             if (!query) {
                 applyFilterAndSort();
+                announceToScreenReader('Search cleared. Showing all items.');
             } else {
                 const searchResults = collection.items.filter(item =>
                     item.name.toLowerCase().includes(query) ||
@@ -439,78 +610,185 @@
                 displayedItems = sortItemList(searchResults, currentSort);
                 currentBatch = 0;
                 displayData();
+                
+                // Announce results to screen readers
+                announceToScreenReader(`Found ${searchResults.length} items matching "${query}"`);
             }
         });
-        
-        // Filter chips
+
+        // Filter chips with accessibility
         document.querySelectorAll('.chip').forEach(chip => {
             chip.addEventListener('click', () => {
                 currentFilter = chip.dataset.filter;
-                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
+                document.querySelectorAll('.chip').forEach(c => {
+                    const isActive = c === chip;
+                    c.classList.toggle('active', isActive);
+                    c.setAttribute('aria-pressed', isActive);
+                });
                 applyFilterAndSort();
+                
+                // Announce to screen readers
+                const count = displayedItems.length;
+                const label = chip.textContent.trim();
+                announceToScreenReader(`Showing ${count} ${label === 'All' ? 'items' : label.toLowerCase()}`);
             });
         });
-        
+
         // Sort dropdown
         document.getElementById('sortSelect').addEventListener('change', (e) => {
             currentSort = e.target.value;
             applyFilterAndSort();
+            announceToScreenReader(`Sorted by ${e.target.options[e.target.selectedIndex].text}`);
         });
-        
+
         function updateActiveChip(filter) {
             currentFilter = filter;
-            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            const activeChip = document.querySelector(`.chip[data-filter="${filter}"]`);
-            if (activeChip) activeChip.classList.add('active');
+            document.querySelectorAll('.chip').forEach(c => {
+                const isActive = c.dataset.filter === filter;
+                c.classList.toggle('active', isActive);
+                c.setAttribute('aria-pressed', isActive);
+            });
         }
-        
-        // Subscribe Modal Functions
-        function openSubscribeModal() {
-            document.getElementById('subscribeModal').style.display = 'flex';
-        }
-        
-        function closeSubscribeModal(e) {
-            if (!e || e.target.id === 'subscribeModal') {
-                document.getElementById('subscribeModal').style.display = 'none';
+
+        // Screen reader announcer
+        function announceToScreenReader(message) {
+            const announcer = document.getElementById('sr-announcer');
+            if (announcer) {
+                announcer.textContent = message;
+                // Clear after announcement to prevent repeats
+                setTimeout(() => {
+                    announcer.textContent = '';
+                }, 1000);
             }
         }
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
         
+        function updateThemeUI() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            themeIcon.textContent = isDark ? '☀️' : '🌙';
+            themeText.textContent = isDark ? 'Light' : 'Dark';
+            themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        }
+        
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('keebshelf-theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('keebshelf-theme', 'dark');
+                }
+                updateThemeUI();
+            });
+            updateThemeUI();
+        }
+
+        // Subscribe Modal Functions with accessibility
+        let lastFocusedElement;
+        let focusTrapHandler;
+
+        function openSubscribeModal() {
+            lastFocusedElement = document.activeElement;
+            const modal = document.getElementById('subscribeModal');
+            modal.style.display = 'flex';
+            document.getElementById('subscribeTrigger')?.setAttribute('aria-expanded', 'true');
+            
+            // Focus first input
+            setTimeout(() => {
+                document.getElementById('subEmail')?.focus();
+            }, 50);
+            
+            // Setup focus trap
+            setupFocusTrap(modal);
+        }
+
+        function closeSubscribeModal(e) {
+            if (!e || e.target.id === 'subscribeModal') {
+                const modal = document.getElementById('subscribeModal');
+                modal.style.display = 'none';
+                document.getElementById('subscribeTrigger')?.setAttribute('aria-expanded', 'false');
+                
+                // Remove focus trap
+                if (focusTrapHandler) {
+                    modal.removeEventListener('keydown', focusTrapHandler);
+                    focusTrapHandler = null;
+                }
+                
+                // Return focus
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                }
+            }
+        }
+
+        function setupFocusTrap(element) {
+            const focusable = element.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            
+            focusTrapHandler = (e) => {
+                if (e.key === 'Tab') {
+                    if (e.shiftKey && document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    } else if (!e.shiftKey && document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
+                if (e.key === 'Escape') {
+                    closeSubscribeModal();
+                }
+            };
+            
+            element.addEventListener('keydown', focusTrapHandler);
+        }
+
         async function handleSubscribe(e) {
             e.preventDefault();
-            
+
             const email = document.getElementById('subEmail').value;
             const preference = document.getElementById('subPref').value;
             const btn = document.getElementById('subBtn');
             const msg = document.getElementById('subMsg');
-            
+
             btn.disabled = true;
             btn.textContent = 'Subscribing...';
             msg.innerHTML = '';
-            
+
             try {
                 // Note: This is a placeholder. In production, this would call your API
                 // await fetch('/api/subscribe', {...})
-                
+
                 // Simulate API call
                 await new Promise(r => setTimeout(r, 1000));
-                
+
                 msg.innerHTML = '<span style="color: #16a34a;">✓ Subscribed! Check your email.</span>';
+                announceToScreenReader('Successfully subscribed to daily alerts');
                 setTimeout(() => {
-                    document.getElementById('subscribeForm').reset();
+                    document.getElementById('subscribeForm')?.reset();
                     closeSubscribeModal();
                 }, 2000);
-                
+
             } catch (err) {
                 msg.innerHTML = '<span style="color: #dc2626;">❌ Failed to subscribe. Please try again.</span>';
+                announceToScreenReader('Failed to subscribe. Please try again.');
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Subscribe';
             }
-            
+
             return false;
         }
-        
+
         loadData();
     </script>
 </body>

@@ -1,19 +1,10 @@
 User-agent: *
 Allow: /
 
-# Disallow API endpoints and private data
-Disallow: /api/
-Disallow: /tools/
-Disallow: /logs/
-Disallow: /.env
-
-# Sitemap location
 Sitemap: https://carteblanchecarriage.github.io/keebshelf/sitemap.xml
 
-# Crawl rate (optional - search engines may ignore)
-Crawl-delay: 10
+# Crawl rate
+Crawl-delay: 1
 
-# Explicitly allow important pages
-Allow: /guide/
-Allow: /blog.html
-Allow: /dashboard/
+# Disallow admin/private areas (if any added later)
+# Disallow: /admin/
