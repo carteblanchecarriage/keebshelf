@@ -170,35 +170,3 @@
     ⚠️ Skipping sold out: Onibi
     ⚠️ Skipping sold out: Keycult No. 1/1800 Darling Edition
   ✅ Found 79 products from KBDfans
-🔍 Scraping Reddit for Group Buys...
-   ⏱️  Respecting rate limits: 1 request per second
-  ✅ Found 2 [GB]/[IC] posts
-🔍 Checking Geekhack Interest Checks...
-  ✅ Found 48 active interest checks
-
-📊 SCRAPING COMPLETE:
-   Duration: 20.53s
-   Products Scraped: 280
-   Products After Filter: 280
-   Interest Checks: 48
-   Reddit Posts: 2
-
-💰 REVENUE PROJECTION:
-   Potential Monthly: $1400.00
-
-💾 Data saved to 3 locations:
-   - /home/klondike/Desktop/keyboard-tracker/data/keyboard-data.json
-   - /home/klondike/Desktop/keyboard-tracker/data.json
-   - /home/klondike/Desktop/keyboard-tracker/dashboard/data.json
-
-🔗 SAMPLE REAL PRODUCT URLS:
-   Drop CTRL Mechanical Keyboard
-     → https://drop.com/buy/drop-ctrl-mechanical-keyboard?referer=keyboardtracker
-   Drop ALT Mechanical Keyboard
-     → https://drop.com/buy/drop-alt-mechanical-keyboard?referer=keyboardtracker
-   Drop Holy Panda X Mechanical Switches
-     → https://drop.com/buy/drop-holy-panda-x-mechanical-switches?referer=keyboardtracker
-   Drop SHIFT Mechanical Keyboard
-     → https://drop.com/buy/drop-shift-mechanical-keyboard?referer=keyboardtracker
-   Drop SENSE75 Mechanical Keyboard
-     → https://drop.com/buy/drop-sense75-mechanical-keyboard?referer=keyboardtracker
