@@ -804,7 +804,34 @@
             <!-- Wizard Content -->
             <div id="wizard-content" style="padding: 2rem;">
                 <!-- Step containers (populated by JavaScript) -->
-                <div id="wizard-step-1" class="wizard-step" data-step="1"></div>
+                <div id="wizard-step-1" class="wizard-step" data-step="1">
+                    <div class="wizard-step-number">Step 1 of 5</div>
+                    <h3 class="wizard-question">What will you use this keyboard for?</h3>
+                    <p class="wizard-subtitle">This helps us find the right features for your needs</p>
+                    
+                    <div class="wizard-options-grid">
+                        <div class="wizard-option-card" data-value="gaming" onclick="selectWizardOption(1, 'gaming')">
+                            <div class="wizard-icon" style="color: #e74c3c;">[G]</div>
+                            <h4 class="wizard-option-title">Gaming</h4>
+                            <p class="wizard-option-desc">Fast response, anti-ghosting, RGB lighting</p>
+                        </div>
+                        <div class="wizard-option-card" data-value="office" onclick="selectWizardOption(1, 'office')">
+                            <div class="wizard-icon" style="color: #3498db;">[O]</div>
+                            <h4 class="wizard-option-title">Office / Programming</h4>
+                            <p class="wizard-option-desc">Comfortable for long sessions, ergonomic, quiet</p>
+                        </div>
+                        <div class="wizard-option-card" data-value="creative" onclick="selectWizardOption(1, 'creative')">
+                            <div class="wizard-icon" style="color: #9b59b6;">[C]</div>
+                            <h4 class="wizard-option-title">Creative Work</h4>
+                            <p class="wizard-option-desc">Macros, media controls, precision and consistency</p>
+                        </div>
+                        <div class="wizard-option-card" data-value="general" onclick="selectWizardOption(1, 'general')">
+                            <div class="wizard-icon" style="color: #27ae60;">[X]</div>
+                            <h4 class="wizard-option-title">General Use</h4>
+                            <p class="wizard-option-desc">Versatile, entry-level, all-around performer</p>
+                        </div>
+                    </div>
+                </div>
                 <div id="wizard-step-2" class="wizard-step" data-step="2" style="display: none;"></div>
                 <div id="wizard-step-3" class="wizard-step" data-step="3" style="display: none;"></div>
                 <div id="wizard-step-4" class="wizard-step" data-step="4" style="display: none;"></div>
@@ -1292,6 +1319,24 @@
             } else {
                 nextBtn.textContent = 'Next';
             }
+        }
+
+        // Wizard option selection
+        function selectWizardOption(step, value) {
+            // Store selection
+            wizardData[`step${step}`] = value;
+            
+            // Update UI - remove selected from all cards in this step, add to clicked
+            const stepContainer = document.querySelector(`[data-step="${step}"]`);
+            stepContainer.querySelectorAll('.wizard-option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            stepContainer.querySelector(`[data-value="${value}"]`).classList.add('selected');
+            
+            // Optional: Auto-advance to next step after delay
+            setTimeout(() => {
+                wizardNextStep();
+            }, 400);
         }
 
         function showWizardStep(stepNumber) {
