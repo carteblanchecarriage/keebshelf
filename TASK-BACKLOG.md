@@ -6,19 +6,37 @@
 - Complete it fully, then stage and report
 - If it can't be done in 10 min, it's too big — skip it
 
+## 🔥 NEW PRIORITY: Keyboard Finder Wizard
+
+**Goal:** Build a guided wizard to help users find their perfect keyboard
+**Read full spec:** `~/Desktop/keyboard-tracker/WIZARD-SPEC.md`
+
+### Wizard Tasks (Do These First)
+
+- [ ] **Task 1: Create wizard HTML container** — Add modal/section to index.html with step containers, navigation buttons, progress indicator
+- [ ] **Task 2: Add wizard styling** — Large option cards, progress bar, smooth transitions, responsive design
+- [ ] **Task 3: Step 1 - Use Case** — "What will you use this keyboard for?" Gaming/Office/Creative/General options
+- [ ] **Task 4: Step 2 - Noise Level** — "What's your workspace?" Quiet/Medium/Loud with switch education
+- [ ] **Task 5: Step 3 - Size** — "What's your desk space?" 60%/75%/Full-size with visual comparison
+- [ ] **Task 6: Step 4 - Hot-swap** — "Want to customize later?" Yes/Maybe/No/Don't know
+- [ ] **Task 7: Step 5 - Budget** — Budget slider/segments: Under $100/$100-200/$200-300/$300+
+- [ ] **Task 8: Results algorithm** — Score keyboards 0-100 based on wizard answers, show top 5-8 matches
+- [ ] **Task 9: Results UI** — Display matches with "✓ Why this fits" badges, learn more links
+- [ ] **Task 10: Launch trigger** — Add "Find My Keyboard" CTA button to hero section
+
+---
+
 ## Current Sprint: Content & Growth
 
-### 🔥 HIGH PRIORITY - User Requests (Do First)
+### 🔥 HIGH PRIORITY - User Requests
 
 #### Professional Design Refresh
 - [x] **Fix dark mode card backgrounds** — Replaced hardcoded `white` with `var(--paper)` so cards respect dark theme
 - [x] **Remove excess emojis** — Replaced casual emojis with minimal icons or clean text across ALL pages
 - [x] **Professional header redesign - Remove theme toggle emojis** — Theme toggle now shows clean "Dark"/"Light" text labels only
 - [x] **Improve dark mode toggle** — Created modern sliding toggle with cubic-bezier animation, accent colors, and accessibility
-- [ ] **Professional header redesign - Clean navigation** — Minimal text-based nav instead of icons
+- [x] **Professional header redesign - Clean navigation** — Added text-based nav with Home, Keyboards, Guides, Blog links with hover states and active indicators
 - [ ] **Consistent color palette audit** — Ensure all pages use same brand colors (#1a1a1a, #FAF9F7, #C9A227) (index.html, blog.html, guides/, beginner/)
-- [ ] **Professional header redesign** — Cleaner nav, better spacing, refined typography, remove emoji decorations
-- [ ] **Consistent color palette audit** — Ensure all pages use same brand colors (#1a1a1a, #FAF9F7, #C9A227)
 
 #### Mobile Compatibility Sprint  
 - [ ] **Mobile viewport audit** — Check all pages on mobile widths (320px, 375px, 414px)
@@ -30,11 +48,6 @@
 - [ ] **Quick View Modal** — Click card → modal opens with full product details (image, description, specs, price) without leaving site
 - [ ] **Back button detection** — Use `document.referrer` to show "← Back to Keebshelf" banner on external sites
 - [ ] **Exit intent modal** — When user clicks external link, show "Compare other options first" modal with related products
-
-#### Header & Styling
-- [ ] **Minimal navigation** — Text-based nav instead of emoji icons (Home, Keyboards, Guides, Blog)
-- [ ] **Refined hero section** — Professional subhead, less busy layout
-- [ ] **Consistent footer** — Same footer across all pages with clean links (no emojis)
 
 ### 🔥 HIGH PRIORITY (Original Sprint)
 
@@ -48,8 +61,6 @@
 - [ ] **Create FAQ Section** — Add 5 Q&As to homepage (What is a mechanical keyboard? Why custom? Switches explained? Etc.)
 - [ ] **Write "Best Keyboards 2025" Section** — Add to homepage: "Top 5 Mechanical Keyboards This Year" with quick picks
 - [ ] **Add "Buying Guide" Card** — Create visual card linking to guides section
-- [ ] **Write Newsletter CTA** — Add email signup section (use localStorage to store emails for now)
-- [ ] **Create "Compare" Feature UI** — Add checkbox to cards for comparison (UI only, functionality later)
 
 #### SEO Tasks  
 - [ ] **Optimize Homepage Title** — Change to "Best Mechanical Keyboards 2025 | Compare Prices | Keebshelf"
@@ -63,13 +74,12 @@
 - [ ] **Add Price Range Filter** — Add min/max price inputs to filter bar
 - [ ] **Create "Recently Viewed"** — Store last 6 viewed items in localStorage, show in sidebar
 - [ ] **Add "Share" Button** — Add share button to product cards (copy link)
-- [ ] **Create Category Pills** — Show "Keyboards", "Switches", "Keycaps" filter pills
 
 #### Small UI Polish
-- [ ] **Fix Mobile Filter** — Make filter chips wrap better on mobile
-- [ ] **Add Loading Spinner** — Replace "Loading..." text with animated spinner
+- [x] **Fix Mobile Filter** — Make filter chips wrap better on mobile
+- [x] **Add Loading Spinner** — Replace "Loading..." text with animated spinner
 - [ ] **Improve Empty State** — Better "No results" message with suggestions
-- [ ] **Add Keyboard Shortcut** — Press "/" to focus search input
+- [x] **Add Keyboard Shortcut** — Press "/" to focus search input
 - [ ] **Smooth Scroll Navbar** — Add smooth scroll when clicking nav links
 
 ---
@@ -114,22 +124,10 @@
 - [x] Dark mode toggle
 - [x] Accessibility improvements
 - [x] 3 new guide pages
-
----
-
-## Quick Task Examples
-
-### Good Task (5 min):
-> "Add a 'NEW' badge to product cards for items added in the last 7 days. Add CSS class `.badge-new` and check `item.dateAdded` field."
-
-### Bad Task (too big):
-> "Create a complete wishlist system with localStorage, UI, and persistence." ❌
-
-### Good Task (5 min):  
-> "Add keyboard shortcut: Press '/' to focus search input. Add event listener and call `searchInput.focus()`"
-
-### Bad Task (too big):
-> "Build a complete comparison feature with data storage, UI, and sharing." ❌
+- [x] Remove excess emojis from all pages
+- [x] Fix dark mode card backgrounds
+- [x] Professional header redesign
+- [x] Improve dark mode toggle
 
 ---
 
