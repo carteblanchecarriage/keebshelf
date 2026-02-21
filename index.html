@@ -491,7 +491,7 @@
         <input type="search"
                class="search-input"
                id="searchInput"
-               placeholder="Search keyboards, keycaps, switches..."
+               placeholder="> Keyboard Search (press /)"
                aria-describedby="search-help">
         <div id="search-help" class="visually-hidden">Type to filter products in real-time</div>
     </div>
@@ -1003,6 +1003,27 @@
             });
             updateThemeUI();
         }
+
+        // Keyboard shortcut: Press "/" to focus search input
+        document.addEventListener('keydown', (e) => {
+            // Don't trigger if user is typing in an input, textarea, or modal is open
+            if (e.target.tagName === 'INPUT' || 
+                e.target.tagName === 'TEXTAREA' || 
+                e.target.isContentEditable ||
+                document.getElementById('subscribeModal')?.style.display === 'flex') {
+                return;
+            }
+            
+            if (e.key === '/') {
+                e.preventDefault();
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.focus();
+                    // Scroll search into view if needed
+                    searchInput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+        });
 
         // Subscribe Modal Functions with accessibility
         let lastFocusedElement;
