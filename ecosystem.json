@@ -39,6 +39,20 @@
       "vizion": false,
       "out_file": "./logs/scraper-cron.log",
       "error_file": "./logs/scraper-error.log"
+    },
+    {
+      "name": "keebshelf-ab-test",
+      "script": "./tools/ab-test-runner.js",
+      "cwd": "/home/klondike/Desktop/keyboard-tracker",
+      "instances": 1,
+      "exec_mode": "fork",
+      "autorestart": false,
+      "cron_restart": "*/30 * * * *",
+      "watch": false,
+      "vizion": false,
+      "out_file": "./logs/ab-test-out.log",
+      "error_file": "./logs/ab-test-error.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss Z"
     }
   ]
 }
