@@ -519,8 +519,8 @@
     <div style="background: var(--paper-dark); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem;">
         <div style="max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; justify-content: space-between;">
             <div style="display: flex; gap: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--faded);">
-                <span>🔍 <strong id="totalItems" style="color: var(--ink);">12</strong> items tracked</span>
-                <span>🏪 <strong>6</strong> vendors</span>
+                <span><strong id="totalItems" style="color: var(--ink);">12</strong> items tracked</span>
+                <span><strong>6</strong> vendors</span>
             </div>
             <button onclick="openSubscribeModal()" 
                     id="subscribeTrigger"
@@ -528,7 +528,7 @@
                     aria-expanded="false"
                     aria-controls="subscribeModal"
                     style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; font-family: inherit; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
-                🔔 Get Daily Alerts
+                Get Daily Alerts
             </button>
         </div>
     </div>
@@ -537,27 +537,22 @@
         <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
             <div role="group" aria-label="Filter by category" class="category-pills">
                 <button class="chip active" data-filter="all" aria-pressed="true">
-                    <span class="chip-icon">🏠</span>
                     <span class="chip-label">All</span>
                     <span class="chip-count" data-count="all">12</span>
                 </button>
                 <button class="chip" data-filter="keyboard" aria-pressed="false">
-                    <span class="chip-icon">⌨️</span>
                     <span class="chip-label">Keyboards</span>
                     <span class="chip-count" data-count="keyboard">9</span>
                 </button>
                 <button class="chip" data-filter="case" aria-pressed="false">
-                    <span class="chip-icon">📦</span>
                     <span class="chip-label">Cases</span>
                     <span class="chip-count" data-count="case">0</span>
                 </button>
                 <button class="chip" data-filter="switches" aria-pressed="false">
-                    <span class="chip-icon">🔧</span>
                     <span class="chip-label">Switches</span>
                     <span class="chip-count" data-count="switches">2</span>
                 </button>
                 <button class="chip" data-filter="keycaps" aria-pressed="false">
-                    <span class="chip-icon">🎨</span>
                     <span class="chip-label">Keycaps</span>
                     <span class="chip-count" data-count="keycaps">1</span>
                 </button>
