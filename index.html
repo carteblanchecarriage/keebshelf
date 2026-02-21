@@ -273,6 +273,48 @@
         .chip.active { background: var(--accent); color: white; border-color: var(--accent); }
         .filter-wrap { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; border-bottom: 1px solid var(--border); }
 
+        /* Skeleton Loading Styles */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, var(--paper-dark) 25%, var(--border) 50%, var(--paper-dark) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+        }
+        .skeleton-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .skeleton-image {
+            height: 200px;
+            background: var(--paper-dark);
+        }
+        .skeleton-content {
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .skeleton-text-sm { height: 0.7rem; width: 40%; }
+        .skeleton-text-md { height: 1rem; width: 80%; }
+        .skeleton-text-lg { height: 1rem; width: 60%; }
+        .skeleton-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 0.75rem;
+        }
+        .skeleton-price { height: 1.2rem; width: 30%; }
+        .skeleton-status { height: 0.875rem; width: 25%; }
+
         /* Fade-in animation for items */
         @keyframes fadeInUp {
             from {
@@ -624,8 +666,33 @@
             displayData();
         }
 
+        // Render skeleton loading cards
+        function renderSkeletons(count = 12) {
+            const shelf = document.getElementById('currentShelf');
+            shelf.innerHTML = Array(count).fill(0).map(() => `
+                <div class="skeleton-card item">
+                    <div class="skeleton-image skeleton"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-text-sm skeleton"></div>
+                        <div class="skeleton-text-md skeleton"></div>
+                        <div class="skeleton-text-lg skeleton"></div>
+                        <div class="skeleton-footer">
+                            <div class="skeleton-price skeleton"></div>
+                            <div class="skeleton-status skeleton"></div>
+                        </div>
+                    </div>
+                    <div style="padding: 0.75rem; background: var(--paper-dark); border-top: 1px solid var(--border);">
+                        <div class="skeleton" style="height: 1.25rem; width: 40%; margin: 0 auto;"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         async function loadData() {
             console.log('Loading...');
+
+            // Show skeleton loading state
+            renderSkeletons(12);
 
             const cached = getCachedData();
             if (cached) {
