@@ -145,6 +145,27 @@ async function scrapeShopify(vendorKey, vendorConfig) {
           const productUrl = `${vendorConfig.baseUrl}/products/${product.handle}`;
           const affiliateUrl = `${productUrl}?ref=keyboardtracker`;
           
+          // Clean description - remove JSON metadata, script tags, HTML
+          let cleanDescription = '';
+          if (product.body_html) {
+            cleanDescription = product.body_html
+              // Remove script and style tags completely (including content)
+              .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, '')
+              // Remove HTML comments
+              .replace(/<!--[\s\S]*?-->/g, '')
+              // Remove Shopify SHOGUN image metadata blocks
+              .replace(/\{\s*"__shgImageV3Elements"[\s\S]*?\}\s*\}/g, '')
+              // Remove any __shg* JSON line or block
+              .replace(/\s*\{[\s\S]*?"__shg[^}]+\}[\s\S]*?\}\s*/g, '')
+              // Remove remaining HTML tags
+              .replace(/<[^>]+>/g, '')
+              // Remove excess whitespace
+              .replace(/\s+/g, ' ')
+              .trim()
+              // Limit to 200 characters
+              .substring(0, 200);
+          }
+          
           products.push({
             id: `${vendorKey}-${product.id}`,
             name: product.title,
@@ -156,7 +177,7 @@ async function scrapeShopify(vendorKey, vendorConfig) {
             category: category,
             status: 'active',
             image: product.images?.[0]?.src || null,
-            description: product.body_html?.replace(/<[^>]+>/g, '').substring(0, 200) || '',
+            description: cleanDescription,
             joins: Math.floor(Math.random() * 500) + 50, // Simulated for demo
             scrapedAt: new Date().toISOString(),
             source: 'vendor'
@@ -222,6 +243,27 @@ async function scrapeShopifyCollections(vendorConfig) {
           
           const productUrl = `${vendorConfig.baseUrl}/products/${product.handle}`;
           
+          // Clean description - remove JSON metadata, script tags, HTML
+          let cleanDescription = '';
+          if (product.body_html) {
+            cleanDescription = product.body_html
+              // Remove script and style tags completely (including content)
+              .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, '')
+              // Remove HTML comments
+              .replace(/<!--[\s\S]*?-->/g, '')
+              // Remove Shopify SHOGUN image metadata blocks
+              .replace(/\{\s*"__shgImageV3Elements"[\s\S]*?\}\s*\}/g, '')
+              // Remove any __shg* JSON line or block
+              .replace(/\s*\{[\s\S]*?"__shg[^}]+\}[\s\S]*?\}\s*/g, '')
+              // Remove remaining HTML tags
+              .replace(/<[^>]+>/g, '')
+              // Remove excess whitespace
+              .replace(/\s+/g, ' ')
+              .trim()
+              // Limit to 200 characters
+              .substring(0, 200);
+          }
+          
           products.push({
             id: `${vendorConfig.name}-${product.id}`,
             name: product.title,
@@ -233,7 +275,7 @@ async function scrapeShopifyCollections(vendorConfig) {
             category: category,
             status: 'active',
             image: product.images?.[0]?.src || null,
-            description: product.body_html?.replace(/<[^>]+>/g, '').substring(0, 200) || '',
+            description: cleanDescription,
             joins: Math.floor(Math.random() * 500) + 50,
             scrapedAt: new Date().toISOString()
           });
