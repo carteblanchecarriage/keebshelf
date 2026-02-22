@@ -712,21 +712,31 @@
             transform: scaleX(1);
         }
         
-        .category-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--paper-dark);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
+        .category-image {
+            width: 100%;
+            aspect-ratio: 16/10;
+            border-radius: 12px;
+            overflow: hidden;
             margin-bottom: 1rem;
-            transition: transform 0.3s ease;
+            background: var(--paper-dark);
         }
         
-        .category-card:hover .category-icon {
-            transform: scale(1.1);
+        .category-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .category-card:hover .category-image img {
+            transform: scale(1.05);
+        }
+        
+        .category-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
         
         .category-name {
@@ -761,10 +771,8 @@
                 padding: 1rem;
             }
             
-            .category-icon {
-                width: 48px;
-                height: 48px;
-                font-size: 1.5rem;
+            .category-image {
+                aspect-ratio: 16/9;
             }
             
             .category-name {
@@ -1282,12 +1290,42 @@
             if (!categoryGrid || !allData.length) return;
             
             const categories = [
-                { id: 'keyboard', name: 'Keyboards', icon: '⌨️', desc: 'Complete boards & kits' },
-                { id: 'switches', name: 'Switches', icon: '⚡', desc: 'Mechanical switches' },
-                { id: 'keycaps', name: 'Keycaps', icon: '🔤', desc: 'Caps for every style' },
-                { id: 'artisan', name: 'Artisan Keys', icon: '🎨', desc: 'Handcrafted art' },
-                { id: 'case', name: 'Cases', icon: '📦', desc: 'Keyboard housings' },
-                { id: 'accessories', name: 'Accessories', icon: '🛠️', desc: 'Tools & supplies' }
+                { 
+                    id: 'keyboard', 
+                    name: 'Keyboards', 
+                    image: 'https://images.unsplash.com/photo-1595225476474-87563907a212?w=400&h=300&fit=crop',
+                    desc: 'Complete boards & kits' 
+                },
+                { 
+                    id: 'switches', 
+                    name: 'Switches', 
+                    image: 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400&h=300&fit=crop',
+                    desc: 'Mechanical switches' 
+                },
+                { 
+                    id: 'keycaps', 
+                    name: 'Keycaps', 
+                    image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=300&fit=crop',
+                    desc: 'Caps for every style' 
+                },
+                { 
+                    id: 'artisan', 
+                    name: 'Artisan Keys', 
+                    image: 'https://images.unsplash.com/photo-1541140532154-b024d33b2d3c?w=400&h=300&fit=crop',
+                    desc: 'Handcrafted art' 
+                },
+                { 
+                    id: 'case', 
+                    name: 'Cases', 
+                    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
+                    desc: 'Keyboard housings' 
+                },
+                { 
+                    id: 'accessories', 
+                    name: 'Accessories', 
+                    image: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=400&h=300&fit=crop',
+                    desc: 'Tools & supplies' 
+                }
             ];
             
             // Count products in each category
@@ -1302,10 +1340,14 @@
                 
                 return `
                     <div class="category-card" onclick="filterByCategory('${cat.id}')">
-                        <div class="category-icon">${cat.icon}</div>
-                        <div class="category-name">${cat.name}</div>
-                        <div class="category-count">${count} products</div>
-                        <div class="category-desc">${cat.desc}</div>
+                        <div class="category-image">
+                            <img src="${cat.image}" alt="${cat.name}" loading="lazy">
+                        </div>
+                        <div class="category-info">
+                            <div class="category-name">${cat.name}</div>
+                            <div class="category-count">${count} products</div>
+                            <div class="category-desc">${cat.desc}</div>
+                        </div>
                     </div>
                 `;
             }).join('');
