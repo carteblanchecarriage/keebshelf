@@ -1417,8 +1417,8 @@
                 
                 const jsonData = await response.json();
                 
-                // Extract products from nested structure (supports both flat array and {groupBuys: [...]})
-                const rawData = Array.isArray(jsonData) ? jsonData : (jsonData.groupBuys || jsonData.allProducts || jsonData.products || []);
+                // Extract products from nested structure - prioritize allProducts over groupBuys
+                const rawData = Array.isArray(jsonData) ? jsonData : (jsonData.allProducts || jsonData.groupBuys || jsonData.products || []);
                 
                 // Validation: Check if data is valid array
                 if (!Array.isArray(rawData) || rawData.length === 0) {
