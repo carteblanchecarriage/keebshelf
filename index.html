@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keebshelf - Mechanical Keyboard Tracker</title>
+    <title>Switchyard - Mechanical Keyboard Tracker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
     <style>
@@ -15,46 +15,215 @@
             --accent: #c4a35a;
             --border: #e0ddd5;
         }
-        [data-theme="dark"] {
-            --paper: #1a1a1a;
-            --paper-dark: #252525;
-            --ink: #f5f4f0;
-            --faded: #a0a0a0;
-            --accent: #d4b56a;
-            --border: #333;
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
         
-        .masthead { background: var(--ink); color: var(--paper); padding: 1.5rem 2rem; }
-        .masthead-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-        .brand-lockup { display: flex; align-items: baseline; gap: 1rem; }
-        .brand-lockup h1 { font-family: 'Newsreader', Georgia, serif; font-size: 1.75rem; font-weight: 400; }
-        .brand-lockup span { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--faded); text-transform: uppercase; letter-spacing: 0.1em; }
+        /* ============================================
+           HEADER STYLES - REDESIGNED
+           ============================================ */
+        .masthead { 
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: var(--paper); 
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
         
-        .main-nav { display: flex; align-items: center; gap: 2rem; }
-        .nav-link { color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; transition: color 0.2s; }
-        .nav-link:hover, .nav-link.active { color: white; }
+        .masthead-top {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
         
-        .theme-toggle { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 0.5rem 1rem; cursor: pointer; color: var(--paper); font-family: 'JetBrains Mono', monospace; }
+        .brand-lockup { 
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--paper);
+        }
         
-        .search-wrap { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); }
-        .search-input { width: 100%; padding: 1rem 1rem 1rem 3rem; border: 2px solid var(--border); border-radius: 12px; font-family: inherit; font-size: 1rem; background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b6b6b' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E") no-repeat 1rem center; background-size: 20px; }
-        .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(196, 163, 90, 0.15); }
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent) 0%, #b8944f 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 2px 8px rgba(196, 163, 90, 0.3);
+        }
         
-        .filter-wrap { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; border-bottom: 1px solid var(--border); }
-        .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .chip { padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; transition: all 0.2s; background: var(--paper); }
-        .chip:hover { border-color: var(--accent); }
-        .chip.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .brand-text { display: flex; flex-direction: column; }
+        .brand-text h1 { 
+            font-family: 'Newsreader', Georgia, serif; 
+            font-size: 1.5rem; 
+            font-weight: 600;
+            line-height: 1;
+            margin: 0;
+        }
+        .brand-text span { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.65rem; 
+            color: rgba(255,255,255,0.5); 
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 0.15rem;
+        }
         
-        .stats-bar { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; gap: 2rem; font-size: 0.875rem; color: var(--faded); border-bottom: 1px solid var(--border); }
+        .header-search {
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .header-search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.08) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E") no-repeat 0.75rem center;
+            background-size: 16px;
+            color: white;
+            transition: all 0.2s;
+        }
+        
+        .header-search-input::placeholder { color: rgba(255,255,255,0.4); }
+        .header-search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background-color: rgba(255,255,255,0.12);
+        }
+        
+        .main-nav { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.25rem;
+        }
+        
+        .nav-link { 
+            color: rgba(255,255,255,0.7); 
+            text-decoration: none; 
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        
+        .nav-link:hover { 
+            color: white;
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .nav-link.active { 
+            color: var(--accent);
+            background: rgba(196, 163, 90, 0.15);
+        }
+        
+        .nav-link .nav-icon {
+            font-size: 1em;
+            opacity: 0.8;
+        }
+        
+        /* Browse Button with Dropdown */
+        .browse-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, #b8944f 100%);
+            color: #1a1a1a !important;
+            font-weight: 600 !important;
+            padding: 0.6rem 1rem !important;
+        }
+        
+        .browse-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(196, 163, 90, 0.4);
+        }
+        
+        /* Subheader with Filters */
+        .subheader {
+            background: var(--paper);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .subheader-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .filter-chips {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-chip {
+            padding: 0.35rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            transition: all 0.2s;
+            background: white;
+            color: var(--ink);
+        }
+        
+        .filter-chip:hover { border-color: var(--accent); }
+        .filter-chip.active { 
+            background: var(--ink); 
+            color: white; 
+            border-color: var(--ink);
+        }
+        
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .header-search { display: none; }
+        }
+        
+        @media (max-width: 768px) {
+            .masthead-top { padding: 0.75rem 1rem; }
+            .main-nav { display: none; }
+            .mobile-menu-toggle { display: block; }
+            .brand-text h1 { font-size: 1.25rem; }
+            .brand-icon { width: 36px; height: 36px; font-size: 1.25rem; }
+            .subheader-inner { padding: 0.5rem 1rem; overflow-x: auto; }
+            .filter-chips { flex-wrap: nowrap; }
+        }
+        
+        .stats-bar { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; display: flex; gap: 2rem; font-size: 0.875rem; color: var(--faded); }
         
         .shelf-wrap { max-width: 1400px; margin: 0 auto; padding: 2rem; }
         .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         .item { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
         .item:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: var(--accent); }
-        [data-theme="dark"] .item { background: var(--paper-dark); }
         .item-image-wrap { height: 180px; background: var(--paper-dark); overflow: hidden; }
         .item-image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .item:hover .item-image-wrap img { transform: scale(1.05); }
@@ -71,62 +240,165 @@
         .load-more-btn { padding: 0.75rem 2rem; background: var(--paper-dark); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-family: 'JetBrains Mono', monospace; }
         .load-more-btn:hover { background: var(--accent); color: white; }
 
-        /* Floating Widget */
+        /* ============================================
+           FLOATING WIZARD WIDGET STYLES (TASK 2)
+           ============================================ */
+        
+        /* Pulse glow animation for FAB attention */
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 4px 12px rgba(196, 163, 90, 0.4); }
-            50% { box-shadow: 0 6px 20px rgba(196, 163, 90, 0.6), 0 0 0 4px rgba(196, 163, 90, 0.2); }
+            0%, 100% { 
+                box-shadow: 0 4px 12px rgba(196, 163, 90, 0.4);
+            }
+            50% { 
+                box-shadow: 0 6px 20px rgba(196, 163, 90, 0.6), 0 0 0 4px rgba(196, 163, 90, 0.1);
+            }
         }
+        
+        /* Badge pulse animation */
         @keyframes pulse-badge {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
         }
+        
+        /* Subtle float animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        /* Widget container */
         .wizard-widget {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 24px;
+            right: 24px;
             z-index: 999;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Inter', sans-serif;
         }
+        
+        /* Floating Action Button (FAB) - Collapsed State */
         .wizard-toggle {
             width: 64px;
             height: 64px;
             border-radius: 50%;
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent) 0%, #b8944f 100%);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(196, 163, 90, 0.4);
+            box-shadow: 0 4px 16px rgba(196, 163, 90, 0.4);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            animation: pulse-glow 2s ease-in-out infinite;
-            border: none;
+            animation: pulse-glow 3s ease-in-out infinite;
+            border: 3px solid transparent;
         }
+        
+        /* FAB Hover Effects */
         .wizard-toggle:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 20px rgba(196, 163, 90, 0.5);
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 0 8px 28px rgba(196, 163, 90, 0.5), 0 0 0 6px rgba(196, 163, 90, 0.15);
             animation: none;
+            border-color: rgba(255, 255, 255, 0.3);
         }
-        .wizard-toggle svg { width: 28px; height: 28px; }
+        
+        .wizard-toggle:active {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 4px 16px rgba(196, 163, 90, 0.4);
+        }
+        
+        /* FAB Focus State (Accessibility) */
+        .wizard-toggle:focus-visible {
+            outline: none;
+            box-shadow: 0 4px 16px rgba(196, 163, 90, 0.4), 0 0 0 4px var(--accent);
+        }
+        
+        /* FAB Icon */
+        .wizard-toggle svg {
+            width: 28px;
+            height: 28px;
+            transition: transform 0.3s ease;
+        }
+        
+        .wizard-toggle:hover svg {
+            transform: rotate(5deg) scale(1.1);
+        }
+        
+        /* FAB Tooltip Label (appears on hover) */
+        .wizard-toggle::before {
+            content: 'Find My Board';
+            position: absolute;
+            right: 72px;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        
+        .wizard-toggle::after {
+            content: '';
+            position: absolute;
+            right: 68px;
+            border: 6px solid transparent;
+            border-left-color: var(--ink);
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.2s ease;
+        }
+        
+        .wizard-toggle:hover::before,
+        .wizard-toggle:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Match Count Badge */
         .match-count {
             position: absolute;
             top: -4px;
             right: -4px;
-            width: 24px;
+            min-width: 24px;
             height: 24px;
+            padding: 0 6px;
             background: var(--ink);
             color: white;
             border-radius: 50%;
-            font-size: 0.65rem;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'JetBrains Mono', monospace;
             border: 2px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
             animation: pulse-badge 2s ease-in-out infinite;
+            z-index: 2;
         }
+        
+        /* Badge variants */
+        .match-count.single-digit {
+            min-width: 22px;
+            height: 22px;
+            font-size: 0.75rem;
+        }
+        
+        .match-count.multi-digit {
+            border-radius: 12px;
+            padding: 0 8px;
+        }
+        
+        /* Stop badge animation on hover */
+        .wizard-toggle:hover .match-count {
+            animation: none;
+        }
+        
+        /* Wizard Panel - Expanded State */
         .wizard-panel {
             position: absolute;
             bottom: 80px;
@@ -134,25 +406,59 @@
             width: 380px;
             max-height: 500px;
             background: var(--paper);
-            border-radius: 12px;
+            border-radius: 16px;
             box-shadow: 0 -10px 40px rgba(0,0,0,0.15), 0 4px 20px rgba(0,0,0,0.1);
             border: 1px solid var(--border);
             opacity: 0;
             transform: scale(0.95) translateY(10px);
             pointer-events: none;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
             display: none;
         }
+        
+        /* Panel visible state */
         .wizard-widget:not(.collapsed) .wizard-panel {
             display: block;
             opacity: 1;
             transform: scale(1) translateY(0);
             pointer-events: auto;
         }
-        [data-theme="dark"] .wizard-widget .wizard-panel {
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.4), 0 4px 20px rgba(0,0,0,0.3);
+        
+        /* ============================================
+           DARK MODE SUPPORT
+           ============================================ */
+        
+        /* Dark mode FAB */
+            background: linear-gradient(135deg, var(--accent) 0%, #c4a35a 100%);
+            box-shadow: 0 4px 16px rgba(212, 181, 106, 0.3);
         }
+        
+            box-shadow: 0 8px 28px rgba(212, 181, 106, 0.4), 0 0 0 6px rgba(212, 181, 106, 0.12);
+        }
+        
+            background: var(--paper-dark);
+            color: var(--ink);
+            border: 1px solid var(--border);
+        }
+        
+            border-left-color: var(--border);
+        }
+        
+        /* Dark mode badge */
+            background: var(--paper);
+            color: var(--ink);
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Dark mode panel */
+            background: var(--paper);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5), 0 4px 20px rgba(0,0,0,0.3);
+            border-color: var(--border);
+        }
+        
+        /* Panel header */
         .wizard-panel-header {
             display: flex;
             align-items: center;
@@ -161,12 +467,18 @@
             border-bottom: 1px solid var(--border);
             background: var(--paper-dark);
         }
+        
+            background: var(--paper-dark);
+            border-color: var(--border);
+        }
+        
         .wizard-panel-title {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.9rem;
             font-weight: 600;
             color: var(--ink);
         }
+        
         .wizard-close {
             background: none;
             border: none;
@@ -178,15 +490,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 4px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
         }
-        .wizard-close:hover { background: var(--border); color: var(--ink); }
+        
+        .wizard-close:hover { 
+            background: var(--border); 
+            color: var(--ink); 
+        }
+        
+            background: var(--border);
+            color: var(--paper);
+        }
+        
         .wizard-panel-content {
             padding: 1.25rem;
             max-height: 400px;
             overflow-y: auto;
         }
-
+        
         /* Wizard Steps */
         .wizard-step { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -195,70 +517,264 @@
         .wizard-options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
         .wizard-option-card { border: 2px solid var(--border); border-radius: 12px; padding: 1rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; gap: 0.5rem; background: var(--paper); position: relative; }
         .wizard-option-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196, 163, 90, 0.15); }
-        .wizard-option-card.selected { border-color: var(--accent); background: linear-gradient(135deg, rgba(196, 163, 90, 0.05) 0%, transparent 100%); }
+            box-shadow: 0 8px 24px rgba(212, 181, 106, 0.1);
+        }
+        .wizard-option-card.selected { border-color: var(--accent); background: linear-gradient(135deg, rgba(196, 163, 90, 0.08) 0%, transparent 100%); }
+            background: linear-gradient(135deg, rgba(212, 181, 106, 0.12) 0%, transparent 100%);
+        }
         .wizard-option-title { font-family: 'Newsreader', Georgia, serif; font-size: 1rem; font-weight: 600; color: var(--ink); margin: 0; }
         .wizard-option-desc { font-size: 0.8rem; color: var(--faded); line-height: 1.4; margin: 0; }
-
+        
         .match-display { text-align: center; padding: 1rem; background: var(--paper-dark); border-radius: 8px; margin-bottom: 1rem; }
         .match-display-count { font-size: 2rem; font-weight: 600; color: var(--accent); }
         .match-display-text { font-size: 0.875rem; color: var(--faded); }
+        
+            background: var(--paper-dark);
+        }
+        
         .active-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
         .filter-chip { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; background: rgba(196, 163, 90, 0.1); border: 1px solid var(--accent); border-radius: 16px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; }
-        .filter-chip button { background: none; border: none; cursor: pointer; font-size: 0.875rem; color: var(--faded); padding: 0; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
-        .clear-filters-btn { padding: 0.5rem 1rem; background: none; border: 1px dashed var(--border); border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--faded); width: 100%; }
+            background: rgba(212, 181, 106, 0.15);
+        }
+        .filter-chip button { background: none; border: none; cursor: pointer; font-size: 0.875rem; color: var(--faded); padding: 0; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
+        .filter-chip button:hover { color: var(--ink); }
+        .clear-filters-btn { padding: 0.5rem 1rem; background: none; border: 1px dashed var(--border); border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--faded); width: 100%; transition: all 0.2s; }
         .clear-filters-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-        footer { background: var(--paper-dark); padding: 3rem 2rem; border-top: 1px solid var(--border); margin-top: 3rem; }
-        .footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-        .footer-section h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--faded); }
-        .footer-section ul { list-style: none; }
-        .footer-section li { margin-bottom: 0.5rem; }
-        .footer-section a { color: var(--ink); text-decoration: none; }
-        .footer-section a:hover { color: var(--accent); }
-
+        
+        /* ============================================
+           MOBILE RESPONSIVENESS
+           ============================================ */
         @media (max-width: 768px) {
             .main-nav { display: none; }
             .shelf { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-            .wizard-panel { width: calc(100vw - 40px); right: -10px; }
+            
+            /* Mobile FAB adjustments */
+            .wizard-widget {
+                bottom: 16px;
+                right: 16px;
+            }
+            
+            .wizard-toggle {
+                width: 56px;
+                height: 56px;
+            }
+            
+            .wizard-toggle svg {
+                width: 24px;
+                height: 24px;
+            }
+            
+            /* Hide tooltip on mobile */
+            .wizard-toggle::before,
+            .wizard-toggle::after {
+                display: none;
+            }
+            
+            /* Full width panel on mobile */
+            .wizard-panel {
+                width: calc(100vw - 32px);
+                right: -8px;
+                max-height: 70vh;
+                bottom: 72px;
+            }
+            
             .wizard-options-grid { grid-template-columns: 1fr; }
+            
+            /* Smaller badge on mobile */
+            .match-count {
+                min-width: 20px;
+                height: 20px;
+                font-size: 0.65rem;
+                top: -2px;
+                right: -2px;
+            }
         }
+
+        /* Shop by Category Section */
+        .shop-categories {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1rem;
+        }
+        
+        .section-title {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--ink);
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .category-card {
+            background: var(--paper);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--ink);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent) 0%, #d4b56a 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+        
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .category-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--paper-dark);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-card:hover .category-icon {
+            transform: scale(1.1);
+        }
+        
+        .category-name {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .category-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--faded);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .category-desc {
+            font-size: 0.85rem;
+            color: var(--faded);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .category-card {
+                padding: 1rem;
+            }
+            
+            .category-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.5rem;
+            }
+            
+            .category-name {
+                font-size: 1rem;
+            }
+        }
+
+        footer { background: var(--ink); color: var(--paper); padding: 3rem 2rem 2rem; margin-top: 3rem; }
+        .footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+        .footer-section h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: rgba(255,255,255,0.6); }
+        .footer-section ul { list-style: none; }
+        .footer-section li { margin-bottom: 0.5rem; }
+        .footer-section a { color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.2s; }
+        .footer-section a:hover { color: var(--accent); }
+        .footer-bottom { max-width: 1400px; margin: 2rem auto 0; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-bottom p { font-size: 0.875rem; color: rgba(255,255,255,0.5); margin: 0; }
+        .footer-bottom-links { display: flex; gap: 1.5rem; }
+        .footer-bottom-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.875rem; }
+        .footer-bottom-links a:hover { color: var(--accent); }
     </style>
 </head>
 <body>
     <header class="masthead">
-        <div class="masthead-inner">
-            <div class="brand-lockup">
-                <h1>Keebshelf</h1>
-                <span>Mechanical Keyboard Collection</span>
+        <div class="masthead-top">
+            <a href="/" class="brand-lockup">
+                <div class="brand-icon">⌨️</div>
+                <div class="brand-text">
+                    <h1>Switchyard</h1>
+                    <span>Group Buy Tracker</span>
+                </div>
+            </a>
+            
+            <div class="header-search">
+                <input type="text" class="header-search-input" id="searchInput" placeholder="Search 400+ products...">
             </div>
+            
             <nav class="main-nav">
-                <a href="/keebshelf/" class="nav-link active">Home</a>
-                <a href="/keebshelf/best/" class="nav-link">Keyboards</a>
-                <a href="/keebshelf/beginner/" class="nav-link">Guides</a>
-                <a href="/keebshelf/blog.html" class="nav-link">Blog</a>
+                <a href="/" class="nav-link active"><span class="nav-icon">🏠</span> Home</a>
+                <a href="/artisan/" class="nav-link"><span class="nav-icon">🎨</span> Artisan</a>
+                <a href="/blog/" class="nav-link"><span class="nav-icon">📝</span> Blog</a>
+                <a href="/beginner/" class="nav-link browse-btn">Browse</a>
             </nav>
-            <button class="theme-toggle" id="themeToggle">Dark</button>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        </div>
+        
+        <div class="subheader">
+            <div class="subheader-inner">
+                <div class="filter-chips" id="filterChips">
+                    <button class="filter-chip active" data-filter="all">All Products</button>
+                    <button class="filter-chip" data-filter="keyboard">⌨️ Boards</button>
+                    <button class="filter-chip" data-filter="switches">⚡ Switches</button>
+                    <button class="filter-chip" data-filter="keycaps">🔤 Keycaps</button>
+                    <button class="filter-chip" data-filter="artisan">🎨 Artisan</button>
+                    <button class="filter-chip" data-filter="case">📦 Cases</button>
+                </div>
+            </div>
         </div>
     </header>
 
-    <div class="search-wrap">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search keyboards, keycaps, switches...">
-    </div>
-
-    <div class="filter-wrap">
-        <div class="chips">
-            <button class="chip active" data-filter="all">All</button>
-            <button class="chip" data-filter="keyboard">Keyboards</button>
-            <button class="chip" data-filter="switches">Switches</button>
-            <button class="chip" data-filter="keycaps">Keycaps</button>
-            <button class="chip" data-filter="case">Cases</button>
+    <!-- Shop by Category Section -->
+    <section class="shop-categories">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="category-grid" id="categoryGrid">
+            <!-- Categories loaded dynamically -->
         </div>
-    </div>
+    </section>
 
     <div class="stats-bar">
         <span><strong id="totalItems">0</strong> items tracked</span>
-        <span><strong>6</strong> vendors</span>
-        <span style="margin-left: auto;">Last updated: Today</span>
+        <span><strong id="vendorCount">—</strong> vendors</span>
+        <span id="lastUpdated" style="margin-left: auto;">Last updated: —</span>
     </div>
 
     <main class="shelf-wrap">
@@ -270,7 +786,7 @@
 
     <!-- Floating Wizard Widget -->
     <div id="keyboard-wizard" class="wizard-widget collapsed">
-        <div class="wizard-toggle" id="wizardToggle" role="button" tabindex="0" aria-label="Find my keyboard">
+        <div class="wizard-toggle" id="wizardToggle" role="button" tabindex="0" aria-label="Find my keyboard" aria-expanded="false">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                 <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"></path>
@@ -281,7 +797,7 @@
         <div class="wizard-panel" id="wizardPanel">
             <div class="wizard-panel-header">
                 <span class="wizard-panel-title">Find My Board</span>
-                <button class="wizard-close" id="wizardClose">×</button>
+                <button class="wizard-close" id="wizardClose" aria-label="Close wizard">×</button>
             </div>
             <div class="wizard-panel-content" id="wizardPanelContent">
                 <!-- Step 1: Use Case -->
@@ -396,62 +912,175 @@
     <footer>
         <div class="footer-inner">
             <div class="footer-section">
-                <h4>Keyboards</h4>
+                <h4>Discover</h4>
                 <ul>
-                    <li><a href="/keebshelf/best/">Best Overall</a></li>
-                    <li><a href="/keebshelf/best-budget/">Budget Picks</a></li>
-                    <li><a href="/keebshelf/best-60-percent/">60% Keyboards</a></li>
+                    <li><a href="/">All Products</a></li>
+                    <li><a href="/artisan/">Artisan Keys 🎨</a></li>
+                    <li><a href="/best/">Best Overall</a></li>
+                    <li><a href="/best-budget/">Budget Picks</a></li>
+                    <li><a href="/best-60-percent/">60% Keyboards</a></li>
+                    <li><a href="/gaming/">Gaming</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>Guides</h4>
+                <h4>Learn</h4>
                 <ul>
-                    <li><a href="/keebshelf/beginner/">Beginner's Guide</a></li>
-                    <li><a href="/keebshelf/switches/">Switch Guide</a></li>
+                    <li><a href="/beginner/">Beginner's Guide</a></li>
+                    <li><a href="/switches/">Switch Guide</a></li>
+                    <li><a href="/glossary/">Glossary</a></li>
+                    <li><a href="/blog.html">Blog</a></li>
                 </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Tools</h4>
+                <ul>
+                    <li><a href="/price-alerts/">Price Alerts</a></li>
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="/api/pricing">API Access</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                    <li><a href="/terms.html">Terms of Service</a></li>
+                    <li><a href="/affiliate-disclosure.html">Affiliate Disclosure</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Switchyard. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="/privacy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/affiliate-disclosure.html">Affiliates</a>
             </div>
         </div>
     </footer>
 
+    <!-- 
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║  PRE-DEPLOYMENT CHECKLIST                                     ║
+    ║  Run: grep -c '"name"' data.json  # Should return > 0        ║
+    ║  Run: node -e "const d=require('./data.json');               ║
+    ║           console.log(d.length, 'products found');"           ║
+    ║  MINIMUM_PRODUCTS_REQUIRED = 1 (see loadData() in script)    ║
+    ╚═══════════════════════════════════════════════════════════════╝
+    -->
     <script>
-        // Theme toggle
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', () => {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            if (isDark) {
-                document.documentElement.removeAttribute('data-theme');
-                themeToggle.textContent = 'Dark';
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = 'Light';
-            }
-        });
-
         // Data and display
         let allData = [];
         let filteredData = [];
         let displayLimit = 12;
 
+        // Minimum products required to show site as "live"
+        const MIN_PRODUCTS_REQUIRED = 1;
+        
         async function loadData() {
             try {
                 const response = await fetch('data.json');
-                const data = await response.json();
-                allData = data.map(item => {
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const jsonData = await response.json();
+                
+                // Extract products from nested structure (supports both flat array and {groupBuys: [...]})
+                const rawData = Array.isArray(jsonData) ? jsonData : (jsonData.groupBuys || jsonData.allProducts || jsonData.products || []);
+                
+                // Validation: Check if data is valid array
+                if (!Array.isArray(rawData) || rawData.length === 0) {
+                    throw new Error('Data is not a valid array or no products found');
+                }
+                
+                // Validation: Check minimum product count
+                if (rawData.length < MIN_PRODUCTS_REQUIRED) {
+                    throw new Error(`Only ${rawData.length} products found. Minimum ${MIN_PRODUCTS_REQUIRED} required.`);
+                }
+                
+                // Validation: Check each product has required fields
+                const validProducts = rawData.filter((item, index) => {
+                    const hasName = item.name && typeof item.name === 'string' && item.name.trim().length > 0;
+                    const hasUrl = item.url && typeof item.url === 'string' && item.url.trim().length > 0;
+                    
+                    if (!hasName) {
+                        console.warn(`Product at index ${index} missing valid name:`, item);
+                    }
+                    if (!hasUrl) {
+                        console.warn(`Product at index ${index} missing valid URL:`, item);
+                    }
+                    
+                    return hasName && hasUrl;
+                });
+                
+                if (validProducts.length < MIN_PRODUCTS_REQUIRED) {
+                    throw new Error(`Only ${validProducts.length} valid products. Minimum ${MIN_PRODUCTS_REQUIRED} required.`);
+                }
+                
+                if (validProducts.length < rawData.length) {
+                    console.warn(`Filtered out ${rawData.length - validProducts.length} invalid products`);
+                }
+                
+                // Process and categorize valid products
+                allData = validProducts.map(item => {
                     if (!item.category) {
                         const name = item.name.toLowerCase();
                         const url = item.url.toLowerCase();
                         if (url.includes('switch') || name.includes('switch')) item.category = 'switches';
+                        else if (url.includes('artisan') || name.includes('artisan') || name.includes('resin') || name.includes('sculpt')) item.category = 'artisan';
                         else if (url.includes('keycap') || name.includes('keycap')) item.category = 'keycaps';
                         else if (url.includes('case') || name.includes('case')) item.category = 'case';
                         else item.category = 'keyboard';
                     }
                     return item;
                 });
+                
                 filteredData = [...allData];
                 displayData();
+                
+                // Log success and update stats
+                console.log(`✅ Loaded ${allData.length} products successfully`);
+                updateStats();
+                renderCategoryCards();
+                
             } catch (error) {
-                console.error('Error loading data:', error);
+                console.error('❌ Data load failed:', error.message);
+                showDataError(error.message);
             }
+        }
+        
+        function showDataError(message) {
+            const shelf = document.getElementById('currentShelf');
+            const statsBar = document.querySelector('.stats-bar');
+            const filterWrap = document.querySelector('.filter-wrap');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            
+            // Hide filters and stats when no data
+            if (statsBar) statsBar.style.display = 'none';
+            if (filterWrap) filterWrap.style.display = 'none';
+            if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+            
+            // Show prominent error in dev mode
+            const isDev = window.location.hostname === 'localhost' || 
+                         window.location.hostname === '127.0.0.1' ||
+                         window.location.protocol === 'file:';
+            
+            shelf.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">⚠️</div>
+                    <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.5rem; color: var(--ink); margin-bottom: 0.5rem;">
+                        ${isDev ? 'Development Mode: No Products Available' : 'Coming Soon'}
+                    </h2>
+                    <p style="color: var(--faded); max-width: 500px; margin: 0 auto; line-height: 1.6;">
+                        ${isDev ? `<code style="background: var(--paper-dark); padding: 0.25rem 0.5rem; border-radius: 4px;">${message}</code><br><br>Check that <strong>data.json</strong> exists and contains valid products with name and url fields.` : 'We\'re preparing our collection. Check back soon!'}
+                    </p>
+                    ${isDev ? `<button onclick="location.reload()" style="margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; font-family: 'JetBrains Mono', monospace;">↻ Retry</button>` : ''}
+                </div>
+            `;
+            
+            // Update stats to show error state
+            document.getElementById('totalItems').textContent = '0';
         }
 
         function formatPrice(price) {
@@ -479,11 +1108,23 @@
 
         function displayData() {
             const shelf = document.getElementById('currentShelf');
+            
+            // Safety check: ensure allData is valid
+            if (!Array.isArray(allData) || allData.length === 0) {
+                showDataError('No products available');
+                return;
+            }
+            
             const limitedData = filteredData.slice(0, displayLimit);
             document.getElementById('totalItems').textContent = filteredData.length;
             
             if (limitedData.length === 0) {
-                shelf.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 3rem; color: var(--faded);">No keyboards found matching your criteria.</p>';
+                shelf.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--faded);">
+                        <p>No keyboards found matching your criteria.</p>
+                        <button onclick="clearWizardFilters()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--accent); color: white; border: none; border-radius: 6px; cursor: pointer;">Clear Filters</button>
+                    </div>
+                `;
             } else {
                 shelf.innerHTML = limitedData.map(createCard).join('');
             }
@@ -495,6 +1136,25 @@
         function loadMore() {
             displayLimit += 12;
             displayData();
+        }
+        
+        function updateStats() {
+            // Count unique vendors
+            const vendors = new Set(allData.map(item => item.vendor).filter(Boolean));
+            document.getElementById('vendorCount').textContent = vendors.size;
+            
+            // Update last updated timestamp
+            const timestamps = allData
+                .map(item => item.scrapedAt || item.updatedAt)
+                .filter(Boolean)
+                .map(t => new Date(t))
+                .filter(d => !isNaN(d));
+            
+            if (timestamps.length > 0) {
+                const latest = new Date(Math.max(...timestamps));
+                const options = { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' };
+                document.getElementById('lastUpdated').textContent = `Last updated: ${latest.toLocaleDateString('en-US', options)}`;
+            }
         }
 
         // Search
@@ -513,10 +1173,64 @@
             displayData();
         });
 
+        // Render category cards
+        function renderCategoryCards() {
+            const categoryGrid = document.getElementById('categoryGrid');
+            if (!categoryGrid || !allData.length) return;
+            
+            const categories = [
+                { id: 'keyboard', name: 'Keyboards', icon: '⌨️', desc: 'Complete boards & kits' },
+                { id: 'switches', name: 'Switches', icon: '⚡', desc: 'Mechanical switches' },
+                { id: 'keycaps', name: 'Keycaps', icon: '🔤', desc: 'Caps for every style' },
+                { id: 'artisan', name: 'Artisan Keys', icon: '🎨', desc: 'Handcrafted art' },
+                { id: 'case', name: 'Cases', icon: '📦', desc: 'Keyboard housings' },
+                { id: 'accessories', name: 'Accessories', icon: '🛠️', desc: 'Tools & supplies' }
+            ];
+            
+            // Count products in each category
+            const counts = {};
+            allData.forEach(item => {
+                counts[item.category] = (counts[item.category] || 0) + 1;
+            });
+            
+            categoryGrid.innerHTML = categories.map(cat => {
+                const count = counts[cat.id] || 0;
+                if (count === 0) return ''; // Skip empty categories
+                
+                return `
+                    <div class="category-card" onclick="filterByCategory('${cat.id}')">
+                        <div class="category-icon">${cat.icon}</div>
+                        <div class="category-name">${cat.name}</div>
+                        <div class="category-count">${count} products</div>
+                        <div class="category-desc">${cat.desc}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Global function for category filtering
+        window.filterByCategory = function(category) {
+            // Update active chip
+            document.querySelectorAll('.filter-chip').forEach(c => {
+                c.classList.remove('active');
+                if (c.dataset.filter === category) {
+                    c.classList.add('active');
+                }
+            });
+            
+            // Filter data
+            filteredData = allData.filter(item => item.category === category);
+            displayLimit = 12;
+            displayData();
+            
+            // Scroll to products
+            document.querySelector('.shelf-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
         // Category filters
-        document.querySelectorAll('.chip').forEach(chip => {
+        document.querySelectorAll('.filter-chip').forEach(chip => {
             chip.addEventListener('click', () => {
-                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
                 chip.classList.add('active');
                 
                 const filter = chip.dataset.filter;
@@ -531,40 +1245,169 @@
             });
         });
 
-        // WIZARD
+        // ============================================
+        // WIZARD EXPAND/COLLAPSE LOGIC (TASK 3)
+        // ============================================
+        
         let currentStep = 1;
         const totalSteps = 4;
         const wizardSelections = {};
         const widget = document.getElementById('keyboard-wizard');
         const toggle = document.getElementById('wizardToggle');
         const closeBtn = document.getElementById('wizardClose');
-
-        // Expand/collapse
-        toggle.addEventListener('click', () => widget.classList.toggle('collapsed'));
-        closeBtn.addEventListener('click', () => widget.classList.add('collapsed'));
+        const panel = document.getElementById('wizardPanel');
         
-        document.addEventListener('click', (e) => {
-            if (!widget.classList.contains('collapsed') && !widget.contains(e.target)) {
-                widget.classList.add('collapsed');
+        // State tracking
+        let isPinned = false;
+        let hoverOpenTimeout = null;
+        let hoverCloseTimeout = null;
+        const HOVER_DELAY = 300; // 300ms per spec
+        const HOVER_CLOSE_DELAY = 400; // Slight delay before closing on mouse leave
+        
+        /**
+         * Expand the wizard widget
+         * @param {boolean} pin - Whether this expansion should be "pinned" (stay open)
+         */
+        function expandWizard(pin = false) {
+            widget.classList.remove('collapsed');
+            toggle.setAttribute('aria-expanded', 'true');
+            isPinned = pin;
+        }
+        
+        /**
+         * Collapse the wizard widget
+         */
+        function collapseWizard() {
+            widget.classList.add('collapsed');
+            toggle.setAttribute('aria-expanded', 'false');
+            isPinned = false;
+            
+            // Clear any pending hover timeouts
+            if (hoverOpenTimeout) {
+                clearTimeout(hoverOpenTimeout);
+                hoverOpenTimeout = null;
+            }
+            if (hoverCloseTimeout) {
+                clearTimeout(hoverCloseTimeout);
+                hoverCloseTimeout = null;
+            }
+        }
+        
+        /**
+         * Toggle the wizard widget state
+         */
+        function toggleWizard() {
+            if (widget.classList.contains('collapsed')) {
+                // Opening via click = PINNED
+                expandWizard(true);
+            } else {
+                // Already open, clicking toggle closes it
+                collapseWizard();
+            }
+        }
+        
+        // CLICK TOGGLE: Opens pinned, or closes if already open
+        toggle.addEventListener('click', toggleWizard);
+        
+        // KEYBOARD ACCESSIBILITY: Enter/Space to toggle
+        toggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleWizard();
             }
         });
         
+        // CLOSE BUTTON: Always closes
+        closeBtn.addEventListener('click', collapseWizard);
+        
+        // CLICK OUTSIDE: Close if clicking outside the widget
+        document.addEventListener('click', (e) => {
+            if (!widget.classList.contains('collapsed') && !widget.contains(e.target)) {
+                collapseWizard();
+            }
+        });
+        
+        // ESCAPE KEY: Close
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') widget.classList.add('collapsed');
+            if (e.key === 'Escape' && !widget.classList.contains('collapsed')) {
+                collapseWizard();
+            }
         });
-
-        // Hover expand
-        let hoverTimeout;
+        
+        // HOVER ON TOGGLE: Expand after 300ms delay (unpinned - will close on mouse leave)
         toggle.addEventListener('mouseenter', () => {
-            hoverTimeout = setTimeout(() => widget.classList.remove('collapsed'), 300);
+            // Clear any pending close timeout
+            if (hoverCloseTimeout) {
+                clearTimeout(hoverCloseTimeout);
+                hoverCloseTimeout = null;
+            }
+            
+            // Only schedule open if currently collapsed
+            if (widget.classList.contains('collapsed')) {
+                hoverOpenTimeout = setTimeout(() => {
+                    expandWizard(false); // Hover-open is NOT pinned
+                }, HOVER_DELAY);
+            }
         });
-        toggle.addEventListener('mouseleave', () => clearTimeout(hoverTimeout));
+        
+        // MOUSE LEAVE TOGGLE: Clear open timeout, schedule close if unpinned
+        toggle.addEventListener('mouseleave', () => {
+            // Clear the open timeout
+            if (hoverOpenTimeout) {
+                clearTimeout(hoverOpenTimeout);
+                hoverOpenTimeout = null;
+            }
+        });
+        
+        // HOVER ON PANEL: Keep open (clear any close timeout)
+        panel.addEventListener('mouseenter', () => {
+            if (hoverCloseTimeout) {
+                clearTimeout(hoverCloseTimeout);
+                hoverCloseTimeout = null;
+            }
+        });
+        
+        // MOUSE LEAVE PANEL: Close if not pinned
+        panel.addEventListener('mouseleave', () => {
+            if (!widget.classList.contains('collapsed') && !isPinned) {
+                hoverCloseTimeout = setTimeout(() => {
+                    collapseWizard();
+                }, HOVER_CLOSE_DELAY);
+            }
+        });
+        
+        // HOVER ON WIDGET (container): Track for coordinated leave
+        widget.addEventListener('mouseenter', () => {
+            // Clear any pending close when entering any part of widget
+            if (hoverCloseTimeout) {
+                clearTimeout(hoverCloseTimeout);
+                hoverCloseTimeout = null;
+            }
+        });
+        
+        // MOUSE LEAVE WIDGET: Handle based on pinned state
+        widget.addEventListener('mouseleave', (e) => {
+            // Only close if not pinned and not hovering over toggle or panel
+            // The individual toggle/panel handlers above manage their own logic
+            if (!isPinned && !widget.classList.contains('collapsed')) {
+                // Small delay to allow moving between toggle and panel
+                hoverCloseTimeout = setTimeout(() => {
+                    collapseWizard();
+                }, HOVER_CLOSE_DELAY);
+            }
+        });
 
         function showWizardStep(step) {
             document.querySelectorAll('.wizard-step').forEach(s => s.style.display = 'none');
             const target = document.querySelector(`[data-step="${step}"]`);
             if (target) target.style.display = 'block';
             currentStep = step;
+            
+            // Scroll panel content to top so the new question is visible
+            const panelContent = document.getElementById('wizardPanelContent');
+            if (panelContent) {
+                panelContent.scrollTop = 0;
+            }
         }
 
         function selectWizardOption(step, value, element) {
@@ -590,6 +1433,12 @@
             document.querySelectorAll('.wizard-step').forEach(s => s.style.display = 'none');
             document.getElementById('wizard-results').style.display = 'block';
             updateActiveFilters();
+            
+            // Scroll panel content to top so results are visible
+            const panelContent = document.getElementById('wizardPanelContent');
+            if (panelContent) {
+                panelContent.scrollTop = 0;
+            }
         }
 
         function applyWizardFilters() {
@@ -667,7 +1516,19 @@
             document.getElementById('matchCount').textContent = count;
             const badge = document.getElementById('wizardMatchCount');
             badge.textContent = count;
-            badge.style.display = count !== allData.length ? 'flex' : 'none';
+            
+            // Update badge visibility and style based on count
+            if (count !== allData.length) {
+                badge.style.display = 'flex';
+                badge.classList.remove('single-digit', 'multi-digit');
+                if (count < 10) {
+                    badge.classList.add('single-digit');
+                } else {
+                    badge.classList.add('multi-digit');
+                }
+            } else {
+                badge.style.display = 'none';
+            }
         }
 
         // Init

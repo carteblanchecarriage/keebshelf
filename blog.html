@@ -10,12 +10,7 @@
         :root { --paper: #fdfcf8; --paper-dark: #f7f6f2; --ink: #1a1a1a; --accent: #c4a35a; --faded: #6b6b6b; --border: #e8e8e8; --link: #2563eb; }
         
         /* Dark mode */
-        [data-theme="dark"] {
-            --paper: #1a1a1a;
-            --paper-dark: #252525;
             --ink: #fdfcf8;
-            --accent: #d4b56a;
-            --faded: #a0a0a0;
             --border: #444444;
             --link: #60a5fa;
         }
@@ -33,7 +28,6 @@
         
         /* Dark mode toggle */
         .theme-toggle { position: fixed; top: 1rem; right: 1rem; background: transparent; border: 1px solid var(--border); border-radius: 20px; padding: 6px 12px; cursor: pointer; font-size: 0.875rem; color: var(--ink); display: flex; align-items: center; gap: 6px; z-index: 50; transition: border-color 0.2s; }
-        [data-theme="dark"] .theme-toggle { color: var(--paper); border-color: var(--faded); }
         .theme-toggle:hover { border-color: var(--accent); }
         
         /* Reduced motion */
@@ -65,11 +59,9 @@
         .cost-table td { padding: 0.75rem; border-bottom: 1px solid var(--border); }
         .cost-table tr:last-child td { border-bottom: 2px solid var(--ink); font-weight: 600; }
         
-        [data-theme="dark"] .cost-table th { background: #252525; }
         
         .note-box { background: var(--paper-dark); padding: 1.25rem; margin: 1.5rem 0; border-radius: 4px; }
         
-        [data-theme="dark"] .note-box { background: #252525; }
         
         .note-box p:last-child { margin-bottom: 0; }
         
@@ -81,19 +73,14 @@
         @media (max-width: 600px) { body { font-size: 1rem; } .article-wrap { padding: 2rem 1.5rem; } h1 { font-size: 1.7rem; } }
     </style>
     <script>
-        // Theme toggle
         (function() {
-            const savedTheme = localStorage.getItem('keebshelf-theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-                document.documentElement.setAttribute('data-theme', 'dark');
             }
         })();
     </script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
         <span id="themeIcon" style="display: inline-block; width: 1em; height: 1em; border: 1.5px solid currentColor; border-radius: 50%; position: relative;"></span>
         <span id="themeText">Dark</span>
     </button>
@@ -218,25 +205,16 @@
         </div>
     </article>
     <script>
-        // Theme toggle
-        const themeToggle = document.getElementById('themeToggle');
         const themeText = document.getElementById('themeText');
         
         function updateThemeUI() {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             if (themeText) {
                 themeText.textContent = isDark ? 'Light' : 'Dark';
             }
         }
         
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                if (isDark) {
-                    document.documentElement.removeAttribute('data-theme');
                     localStorage.setItem('keebshelf-theme', 'light');
                 } else {
-                    document.documentElement.setAttribute('data-theme', 'dark');
                     localStorage.setItem('keebshelf-theme', 'dark');
                 }
                 updateThemeUI();
