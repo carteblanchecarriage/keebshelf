@@ -595,11 +595,9 @@
         }
         
         .active-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-        .filter-chip { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; background: rgba(196, 163, 90, 0.1); border: 1px solid var(--accent); border-radius: 16px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; }
-            background: rgba(212, 181, 106, 0.15);
-        }
-        .filter-chip button { background: none; border: none; cursor: pointer; font-size: 0.875rem; color: var(--faded); padding: 0; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
-        .filter-chip button:hover { color: var(--ink); }
+        .active-filters .filter-chip { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; background: rgba(196, 163, 90, 0.1); border: 1px solid var(--accent); border-radius: 16px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; }
+        .active-filters .filter-chip button { background: none; border: none; cursor: pointer; font-size: 0.875rem; color: var(--faded); padding: 0; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
+        .active-filters .filter-chip button:hover { color: var(--ink); }
         .clear-filters-btn { padding: 0.5rem 1rem; background: none; border: 1px dashed var(--border); border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--faded); width: 100%; transition: all 0.2s; }
         .clear-filters-btn:hover { border-color: var(--accent); color: var(--accent); }
         
