@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keebshelf - Mechanical Keyboard Price Tracker</title>
-    <meta name="description" content="Track mechanical keyboard prices, switches, and keycaps. Get notified when prices drop.">
-    
-    <!-- Fonts -->
+    <title>Keebshelf - Mechanical Keyboard Tracker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --paper: #fdfcf8;
@@ -18,8 +14,6 @@
             --faded: #6b6b6b;
             --accent: #c4a35a;
             --border: #e0ddd5;
-            --success: #059669;
-            --error: #dc2626;
         }
         [data-theme="dark"] {
             --paper: #1a1a1a;
@@ -30,45 +24,37 @@
             --border: #333;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; transition: background 0.3s, color 0.3s; }
+        body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
         
-        /* Header */
         .masthead { background: var(--ink); color: var(--paper); padding: 1.5rem 2rem; }
         .masthead-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
         .brand-lockup { display: flex; align-items: baseline; gap: 1rem; }
-        .brand-lockup h1 { font-family: 'Newsreader', Georgia, serif; font-size: 1.75rem; font-weight: 400; letter-spacing: -0.02em; }
+        .brand-lockup h1 { font-family: 'Newsreader', Georgia, serif; font-size: 1.75rem; font-weight: 400; }
         .brand-lockup span { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--faded); text-transform: uppercase; letter-spacing: 0.1em; }
         
-        /* Navigation */
         .main-nav { display: flex; align-items: center; gap: 2rem; }
-        .nav-link { color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; transition: color 0.2s; }
+        .nav-link { color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; transition: color 0.2s; }
         .nav-link:hover, .nav-link.active { color: white; }
         
-        /* Theme toggle */
         .theme-toggle { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 0.5rem 1rem; cursor: pointer; color: var(--paper); font-family: 'JetBrains Mono', monospace; }
         
-        /* Search */
         .search-wrap { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); }
-        .search-input { width: 100%; padding: 1rem 1rem 1rem 3rem; border: 2px solid var(--border); border-radius: 12px; font-family: inherit; font-size: 1rem; background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b6b6b' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E") no-repeat 1rem center; background-size: 20px; transition: all 0.3s; }
+        .search-input { width: 100%; padding: 1rem 1rem 1rem 3rem; border: 2px solid var(--border); border-radius: 12px; font-family: inherit; font-size: 1rem; background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b6b6b' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E") no-repeat 1rem center; background-size: 20px; }
         .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(196, 163, 90, 0.15); }
         
-        /* Filters */
         .filter-wrap { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; border-bottom: 1px solid var(--border); }
         .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .chip { padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; transition: all 0.2s; background: var(--paper); }
         .chip:hover { border-color: var(--accent); }
         .chip.active { background: var(--accent); color: white; border-color: var(--accent); }
         
-        /* Stats bar */
         .stats-bar { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; gap: 2rem; font-size: 0.875rem; color: var(--faded); border-bottom: 1px solid var(--border); }
         
-        /* Product grid */
         .shelf-wrap { max-width: 1400px; margin: 0 auto; padding: 2rem; }
         .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        
-        /* Product card */
-        .item { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; display: flex; flex-direction: column; }
+        .item { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
         .item:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: var(--accent); }
+        [data-theme="dark"] .item { background: var(--paper-dark); }
         .item-image-wrap { height: 180px; background: var(--paper-dark); overflow: hidden; }
         .item-image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .item:hover .item-image-wrap img { transform: scale(1.05); }
@@ -77,28 +63,15 @@
         .item-name { font-family: 'Newsreader', Georgia, serif; font-size: 1.1rem; line-height: 1.3; }
         .item-meta { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 0.5rem; }
         .item-price { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
-        .item-status { font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; }
-        .item-status.available { background: rgba(5, 150, 105, 0.1); color: var(--success); }
-        .item-status.preorder { background: rgba(196, 163, 90, 0.1); color: var(--accent); }
-        .item-status.soldout { background: rgba(220, 38, 38, 0.1); color: var(--error); }
         
-        /* Buy button */
-        .buy-btn { display: block; padding: 0.75rem; background: var(--ink); color: var(--paper); text-align: center; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; transition: background 0.2s; width: 100%; border: none; cursor: pointer; }
+        .buy-btn { display: block; padding: 0.75rem; background: var(--ink); color: white; text-align: center; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; transition: background 0.2s; }
         .buy-btn:hover { background: var(--accent); }
         
-        /* Load more */
         .load-more { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; text-align: center; }
-        .load-more-btn { padding: 0.75rem 2rem; background: var(--paper-dark); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-family: 'JetBrains Mono', monospace; transition: all 0.2s; }
-        .load-more-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
-        
-        /* Skeleton loading */
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        .skeleton { background: linear-gradient(90deg, var(--paper-dark) 25%, var(--border) 50%, var(--paper-dark) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
-        
-        /* Floating Widget Styles */
+        .load-more-btn { padding: 0.75rem 2rem; background: var(--paper-dark); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-family: 'JetBrains Mono', monospace; }
+        .load-more-btn:hover { background: var(--accent); color: white; }
+
+        /* Floating Widget */
         @keyframes pulse-glow {
             0%, 100% { box-shadow: 0 4px 12px rgba(196, 163, 90, 0.4); }
             50% { box-shadow: 0 6px 20px rgba(196, 163, 90, 0.6), 0 0 0 4px rgba(196, 163, 90, 0.2); }
@@ -128,20 +101,14 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             animation: pulse-glow 2s ease-in-out infinite;
+            border: none;
         }
         .wizard-toggle:hover {
             transform: translateY(-2px) scale(1.05);
             box-shadow: 0 6px 20px rgba(196, 163, 90, 0.5);
             animation: none;
         }
-        .wizard-toggle:focus-visible {
-            outline: 3px solid var(--paper);
-            outline-offset: 3px;
-        }
-        .wizard-toggle svg {
-            width: 28px;
-            height: 28px;
-        }
+        .wizard-toggle svg { width: 28px; height: 28px; }
         .match-count {
             position: absolute;
             top: -4px;
@@ -149,7 +116,7 @@
             width: 24px;
             height: 24px;
             background: var(--ink);
-            color: var(--paper);
+            color: white;
             border-radius: 50%;
             font-size: 0.65rem;
             font-weight: 600;
@@ -168,7 +135,7 @@
             max-height: 500px;
             background: var(--paper);
             border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.15), 0 4px 20px rgba(0,0,0,0.1);
             border: 1px solid var(--border);
             opacity: 0;
             transform: scale(0.95) translateY(10px);
@@ -182,6 +149,9 @@
             opacity: 1;
             transform: scale(1) translateY(0);
             pointer-events: auto;
+        }
+        [data-theme="dark"] .wizard-widget .wizard-panel {
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.4), 0 4px 20px rgba(0,0,0,0.3);
         }
         .wizard-panel-header {
             display: flex;
@@ -209,238 +179,35 @@
             align-items: center;
             justify-content: center;
             border-radius: 4px;
-            transition: all 0.2s;
         }
-        .wizard-close:hover {
-            background: var(--border);
-            color: var(--ink);
-        }
+        .wizard-close:hover { background: var(--border); color: var(--ink); }
         .wizard-panel-content {
             padding: 1.25rem;
             max-height: 400px;
             overflow-y: auto;
         }
-        .wizard-widget .wizard-panel {
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.15), 0 4px 20px rgba(0,0,0,0.1);
-        }
-        [data-theme="dark"] .wizard-widget .wizard-panel {
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.4), 0 4px 20px rgba(0,0,0,0.3);
-        }
-        
+
         /* Wizard Steps */
         .wizard-step { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .wizard-step-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--faded);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.25rem;
-        }
-        .wizard-question {
-            font-family: 'Newsreader', Georgia, serif;
-            font-size: 1.35rem;
-            font-weight: 600;
-            color: var(--ink);
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-        .wizard-subtitle {
-            font-size: 0.95rem;
-            color: var(--faded);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        .wizard-options-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-        .wizard-option-card {
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            background: var(--paper);
-            position: relative;
-            overflow: hidden;
-        }
-        .wizard-option-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(196, 163, 90, 0.15);
-        }
-        .wizard-option-card.selected {
-            border-color: var(--accent);
-            background: linear-gradient(135deg, rgba(196, 163, 90, 0.05) 0%, transparent 100%);
-        }
-        .wizard-option-card.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            width: 24px;
-            height: 24px;
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-        .wizard-option-title {
-            font-family: 'Newsreader', Georgia, serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--ink);
-            margin: 0;
-        }
-        .wizard-option-desc {
-            font-size: 0.875rem;
-            color: var(--faded);
-            line-height: 1.5;
-            margin: 0;
-        }
-        
-        /* Active Filters */
-        .active-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border);
-        }
-        .filter-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            padding: 0.25rem 0.75rem;
-            background: rgba(196, 163, 90, 0.1);
-            border: 1px solid var(--accent);
-            border-radius: 16px;
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .filter-chip button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.875rem;
-            color: var(--faded);
-            padding: 0;
-            width: 16px;
-            height: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .clear-filters-btn {
-            padding: 0.25rem 0.75rem;
-            background: none;
-            border: 1px dashed var(--border);
-            border-radius: 16px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--faded);
-        }
-        .clear-filters-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        
-        /* Match count display */
-        .match-display {
-            text-align: center;
-            padding: 1rem;
-            background: var(--paper-dark);
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-        .match-display-count {
-            font-family: 'Newsreader', Georgia, serif;
-            font-size: 2rem;
-            font-weight: 600;
-            color: var(--accent);
-        }
-        .match-display-text {
-            font-size: 0.875rem;
-            color: var(--faded);
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .wizard-question { font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; text-align: center; }
+        .wizard-subtitle { font-size: 0.95rem; color: var(--faded); margin-bottom: 1.5rem; text-align: center; }
+        .wizard-options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+        .wizard-option-card { border: 2px solid var(--border); border-radius: 12px; padding: 1rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; gap: 0.5rem; background: var(--paper); position: relative; }
+        .wizard-option-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196, 163, 90, 0.15); }
+        .wizard-option-card.selected { border-color: var(--accent); background: linear-gradient(135deg, rgba(196, 163, 90, 0.05) 0%, transparent 100%); }
+        .wizard-option-title { font-family: 'Newsreader', Georgia, serif; font-size: 1rem; font-weight: 600; color: var(--ink); margin: 0; }
+        .wizard-option-desc { font-size: 0.8rem; color: var(--faded); line-height: 1.4; margin: 0; }
 
-        /* Back to top button */
-        .back-to-top {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 48px;
-            height: 48px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 100;
-        }
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        .back-to-top:hover {
-            background: var(--ink);
-            transform: translateY(-2px);
-        }
+        .match-display { text-align: center; padding: 1rem; background: var(--paper-dark); border-radius: 8px; margin-bottom: 1rem; }
+        .match-display-count { font-size: 2rem; font-weight: 600; color: var(--accent); }
+        .match-display-text { font-size: 0.875rem; color: var(--faded); }
+        .active-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .filter-chip { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; background: rgba(196, 163, 90, 0.1); border: 1px solid var(--accent); border-radius: 16px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; }
+        .filter-chip button { background: none; border: none; cursor: pointer; font-size: 0.875rem; color: var(--faded); padding: 0; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+        .clear-filters-btn { padding: 0.5rem 1rem; background: none; border: 1px dashed var(--border); border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--faded); width: 100%; }
+        .clear-filters-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* Loading screen */
-        .loading-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--paper);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: opacity 0.5s;
-        }
-        .loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        @keyframes spinner {
-            to { transform: rotate(360deg); }
-        }
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spinner 1s linear infinite;
-        }
-
-        /* Footer */
         footer { background: var(--paper-dark); padding: 3rem 2rem; border-top: 1px solid var(--border); margin-top: 3rem; }
         .footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
         .footer-section h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--faded); }
@@ -448,45 +215,34 @@
         .footer-section li { margin-bottom: 0.5rem; }
         .footer-section a { color: var(--ink); text-decoration: none; }
         .footer-section a:hover { color: var(--accent); }
-        .footer-bottom { text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--faded); }
 
-        /* Mobile */
         @media (max-width: 768px) {
             .main-nav { display: none; }
-            .masthead-inner { justify-content: space-between; }
             .shelf { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
             .wizard-panel { width: calc(100vw - 40px); right: -10px; }
             .wizard-options-grid { grid-template-columns: 1fr; }
-            .back-to-top { bottom: 90px; }
         }
     </style>
 </head>
 <body>
-    <div class="loading-screen" id="loadingScreen">
-        <div class="spinner"></div>
-        <p style="margin-top: 1rem; font-family: 'JetBrains Mono', monospace; color: var(--faded);">Loading collection...</p>
-    </div>
-
     <header class="masthead">
         <div class="masthead-inner">
             <div class="brand-lockup">
                 <h1>Keebshelf</h1>
                 <span>Mechanical Keyboard Collection</span>
             </div>
-            <nav class="main-nav" aria-label="Main navigation">
+            <nav class="main-nav">
                 <a href="/keebshelf/" class="nav-link active">Home</a>
                 <a href="/keebshelf/best/" class="nav-link">Keyboards</a>
                 <a href="/keebshelf/beginner/" class="nav-link">Guides</a>
                 <a href="/keebshelf/blog.html" class="nav-link">Blog</a>
             </nav>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                <span id="themeText">Dark</span>
-            </button>
+            <button class="theme-toggle" id="themeToggle">Dark</button>
         </div>
     </header>
 
     <div class="search-wrap">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search keyboards, keycaps, switches..." autocomplete="off">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search keyboards, keycaps, switches...">
     </div>
 
     <div class="filter-wrap">
@@ -525,151 +281,101 @@
         <div class="wizard-panel" id="wizardPanel">
             <div class="wizard-panel-header">
                 <span class="wizard-panel-title">Find My Board</span>
-                <button class="wizard-close" id="wizardClose" aria-label="Close wizard">×</button>
+                <button class="wizard-close" id="wizardClose">×</button>
             </div>
-            
             <div class="wizard-panel-content" id="wizardPanelContent">
                 <!-- Step 1: Use Case -->
                 <div id="wizard-step-1" class="wizard-step" data-step="1">
-                    <div class="wizard-step-number">Step 1 of 5</div>
                     <h3 class="wizard-question">What will you use this for?</h3>
-                    <p class="wizard-subtitle">This helps us find the right features for your needs</p>
-                    
+                    <p class="wizard-subtitle">This helps us find the right features</p>
                     <div class="wizard-options-grid">
-                        <div class="wizard-option-card" data-value="gaming" data-step="1" onclick="selectWizardOption(1, 'gaming')">
-                            <div style="font-size: 1.5rem;">🎮</div>
+                        <div class="wizard-option-card" data-value="gaming" onclick="selectWizardOption(1, 'gaming', this)">
                             <h4 class="wizard-option-title">Gaming</h4>
-                            <p class="wizard-option-desc">Fast response times, RGB lighting, macro keys</p>
+                            <p class="wizard-option-desc">Fast response, RGB, macro keys</p>
                         </div>
-                        <div class="wizard-option-card" data-value="office" data-step="1" onclick="selectWizardOption(1, 'office')">
-                            <div style="font-size: 1.5rem;">💼</div>
+                        <div class="wizard-option-card" data-value="office" onclick="selectWizardOption(1, 'office', this)">
                             <h4 class="wizard-option-title">Work</h4>
-                            <p class="wizard-option-desc">Comfortable for long sessions, ergonomic, quiet</p>
+                            <p class="wizard-option-desc">Comfortable, ergonomic, quiet</p>
                         </div>
-                        <div class="wizard-option-card" data-value="creative" data-step="1" onclick="selectWizardOption(1, 'creative')">
-                            <div style="font-size: 1.5rem;">🎨</div>
+                        <div class="wizard-option-card" data-value="creative" onclick="selectWizardOption(1, 'creative', this)">
                             <h4 class="wizard-option-title">Creative</h4>
-                            <p class="wizard-option-desc">Media controls, macro keys, precision</p>
+                            <p class="wizard-option-desc">Media controls, macros, precision</p>
                         </div>
-                        <div class="wizard-option-card" data-value="general" data-step="1" onclick="selectWizardOption(1, 'general')">
-                            <div style="font-size: 1.5rem;">⌨️</div>
-                            <h4 class="wizard-option-title">General Use</h4>
-                            <p class="wizard-option-desc">All-around performer for everyday typing</p>
+                        <div class="wizard-option-card" data-value="general" onclick="selectWizardOption(1, 'general', this)">
+                            <h4 class="wizard-option-title">General</h4>
+                            <p class="wizard-option-desc">All-around performer</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Step 2: Noise -->
                 <div id="wizard-step-2" class="wizard-step" data-step="2" style="display: none;">
-                    <div class="wizard-step-number">Step 2 of 5</div>
                     <h3 class="wizard-question">Your workspace environment?</h3>
                     <p class="wizard-subtitle">Different switches make different sounds</p>
-                    
                     <div class="wizard-options-grid">
-                        <div class="wizard-option-card" data-value="quiet" data-step="2" onclick="selectWizardOption(2, 'quiet')">
-                            <div style="font-size: 1.5rem;">🤫</div>
+                        <div class="wizard-option-card" data-value="quiet" onclick="selectWizardOption(2, 'quiet', this)">
                             <h4 class="wizard-option-title">Shared/Office</h4>
-                            <p class="wizard-option-desc">Need quiet. Linear or silent switches.</p>
+                            <p class="wizard-option-desc">Need quiet. Linear or silent.</p>
                         </div>
-                        <div class="wizard-option-card" data-value="medium" data-step="2" onclick="selectWizardOption(2, 'medium')">
-                            <div style="font-size: 1.5rem;">🏠</div>
+                        <div class="wizard-option-card" data-value="medium" onclick="selectWizardOption(2, 'medium', this)">
                             <h4 class="wizard-option-title">Home Office</h4>
-                            <p class="wizard-option-desc">Some noise OK. Tactile browns work well.</p>
+                            <p class="wizard-option-desc">Some noise OK. Tactile.</p>
                         </div>
-                        <div class="wizard-option-card" data-value="loud" data-step="2" onclick="selectWizardOption(2, 'loud')">
-                            <div style="font-size: 1.5rem;">🔊</div>
+                        <div class="wizard-option-card" data-value="loud" onclick="selectWizardOption(2, 'loud', this)">
                             <h4 class="wizard-option-title">Private Space</h4>
-                            <p class="wizard-option-desc">Clicky blue switches. Satisfying and audible.</p>
+                            <p class="wizard-option-desc">Clicky switches welcome.</p>
                         </div>
-                        <div class="wizard-option-card" data-value="unsure" data-step="2" onclick="selectWizardOption(2, 'unsure')">
-                            <div style="font-size: 1.5rem;">❓</div>
-                            <h4 class="wizard-option-title">Not Sure</h4>
-                            <p class="wizard-option-desc">Show me options for all noise levels.</p>
+                        <div class="wizard-option-card" data-value="any" onclick="selectWizardOption(2, 'any', this)">
+                            <h4 class="wizard-option-title">Any</h4>
+                            <p class="wizard-option-desc">Show me all options.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Step 3: Size -->
                 <div id="wizard-step-3" class="wizard-step" data-step="3" style="display: none;">
-                    <div class="wizard-step-number">Step 3 of 5</div>
                     <h3 class="wizard-question">What keyboard size?</h3>
-                    <p class="wizard-subtitle">Compact saves space, full has a numpad</p>
-                    
+                    <p class="wizard-subtitle">Compact saves space, full has numpad</p>
                     <div class="wizard-options-grid">
-                        <div class="wizard-option-card" data-value="compact" data-step="3" onclick="selectWizardOption(3, 'compact')">
-                            <div style="font-size: 1.5rem; font-family: monospace;">60%</div>
-                            <h4 class="wizard-option-title">Compact</h4>
-                            <p class="wizard-option-desc">60-65%. Minimal, portable, small desks.</p>
+                        <div class="wizard-option-card" data-value="compact" onclick="selectWizardOption(3, 'compact', this)">
+                            <h4 class="wizard-option-title">Compact (60-65%)</h4>
+                            <p class="wizard-option-desc">Minimal, portable, small desks.</p>
                         </div>
-                        <div class="wizard-option-card" data-value="tkl" data-step="3" onclick="selectWizardOption(3, 'tkl')">
-                            <div style="font-size: 1.5rem; font-family: monospace;">80%</div>
-                            <h4 class="wizard-option-title">Tenkeyless</h4>
-                            <p class="wizard-option-desc">No numpad, has arrows and function row.</p>
+                        <div class="wizard-option-card" data-value="tkl" onclick="selectWizardOption(3, 'tkl', this)">
+                            <h4 class="wizard-option-title">TKL (80%)</h4>
+                            <p class="wizard-option-desc">No numpad, has arrows.</p>
                         </div>
-                        <div class="wizard-option-card" data-value="fullsize" data-step="3" onclick="selectWizardOption(3, 'fullsize')">
-                            <div style="font-size: 1.5rem; font-family: monospace;">100%</div>
+                        <div class="wizard-option-card" data-value="fullsize" onclick="selectWizardOption(3, 'fullsize', this)">
                             <h4 class="wizard-option-title">Full Size</h4>
-                            <p class="wizard-option-desc">Includes numpad. Great for data entry.</p>
+                            <p class="wizard-option-desc">Includes numpad.</p>
                         </div>
-                        <div class="wizard-option-card" data-value="any" data-step="3" onclick="selectWizardOption(3, 'any')">
-                            <div style="font-size: 1.5rem;">✓</div>
+                        <div class="wizard-option-card" data-value="any" onclick="selectWizardOption(3, 'any', this)">
                             <h4 class="wizard-option-title">Any Size</h4>
-                            <p class="wizard-option-desc">Show me keyboards of all sizes.</p>
+                            <p class="wizard-option-desc">Show all sizes.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 4: Hot-swap -->
+                <!-- Step 4: Budget -->
                 <div id="wizard-step-4" class="wizard-step" data-step="4" style="display: none;">
-                    <div class="wizard-step-number">Step 4 of 5</div>
-                    <h3 class="wizard-question">Want to customize switches later?</h3>
-                    <p class="wizard-subtitle">Hot-swap lets you change switches without soldering</p>
-                    
-                    <div class="wizard-options-grid">
-                        <div class="wizard-option-card" data-value="hotswap" data-step="4" onclick="selectWizardOption(4, 'hotswap')">
-                            <div style="font-size: 1.5rem;">🔧</div>
-                            <h4 class="wizard-option-title">Yes, Hot-swap</h4>
-                            <p class="wizard-option-desc">Change switches anytime. Great for trying new ones.</p>
-                        </div>
-                        <div class="wizard-option-card" data-value="solder" data-step="4" onclick="selectWizardOption(4, 'solder')">
-                            <div style="font-size: 1.5rem;">🔒</div>
-                            <h4 class="wizard-option-title">No, Soldered</h4>
-                            <p class="wizard-option-desc">Fixed switches. Often more stable and cheaper.</p>
-                        </div>
-                        <div class="wizard-option-card" data-value="any" data-step="4" onclick="selectWizardOption(4, 'any')">
-                            <div style="font-size: 1.5rem;">✓</div>
-                            <h4 class="wizard-option-title">Either Works</h4>
-                            <p class="wizard-option-desc">Show me all options regardless.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 5: Budget -->
-                <div id="wizard-step-5" class="wizard-step" data-step="5" style="display: none;">
-                    <div class="wizard-step-number">Step 5 of 5</div>
                     <h3 class="wizard-question">What's your budget?</h3>
-                    <p class="wizard-subtitle">We'll find the best options in your range</p>
-                    
+                    <p class="wizard-subtitle">We'll find the best in your range</p>
                     <div class="wizard-options-grid">
-                        <div class="wizard-option-card" data-value="budget" data-step="5" onclick="selectWizardOption(5, 'budget')">
-                            <div style="font-size: 1.5rem;">$</div>
+                        <div class="wizard-option-card" data-value="budget" onclick="selectWizardOption(4, 'budget', this)">
                             <h4 class="wizard-option-title">Under $100</h4>
-                            <p class="wizard-option-desc">Great entry-level options that don't compromise.</p>
+                            <p class="wizard-option-desc">Great entry-level options.</p>
                         </div>
-                        <div class="wizard-option-card" data-value="mid" data-step="5" onclick="selectWizardOption(5, 'mid')">
-                            <div style="font-size: 1.5rem;">$$</div>
+                        <div class="wizard-option-card" data-value="mid" onclick="selectWizardOption(4, 'mid', this)">
                             <h4 class="wizard-option-title">$100 - $200</h4>
-                            <p class="wizard-option-desc">Sweet spot for quality and features.</p>
+                            <p class="wizard-option-desc">Sweet spot for quality.</p>
                         </div>
-                        <div class="wizard-option-card" data-value="premium" data-step="5" onclick="selectWizardOption(5, 'premium')">
-                            <div style="font-size: 1.5rem;">$$$</div>
+                        <div class="wizard-option-card" data-value="premium" onclick="selectWizardOption(4, 'premium', this)">
                             <h4 class="wizard-option-title">$200+</h4>
-                            <p class="wizard-option-desc">Premium builds with top-tier switches.</p>
+                            <p class="wizard-option-desc">Premium builds, top switches.</p>
                         </div>
-                        <div class="wizard-option-card" data-value="any" data-step="5" onclick="selectWizardOption(5, 'any')">
-                            <div style="font-size: 1.5rem;">∞</div>
+                        <div class="wizard-option-card" data-value="any" onclick="selectWizardOption(4, 'any', this)">
                             <h4 class="wizard-option-title">Any Price</h4>
-                            <p class="wizard-option-desc">Show me the best regardless of price.</p>
+                            <p class="wizard-option-desc">Show me the best.</p>
                         </div>
                     </div>
                 </div>
@@ -678,20 +384,14 @@
                 <div id="wizard-results" style="display: none;">
                     <div class="match-display">
                         <div class="match-display-count" id="matchCount">0</div>
-                        <div class="match-display-text">keyboards match your criteria</div>
+                        <div class="match-display-text">keyboards match</div>
                     </div>
-                    
-                    <div class="active-filters" id="activeFilters">
-                        <!-- Filter chips will be added here -->
-                    </div>
-                    
+                    <div class="active-filters" id="activeFilters"></div>
                     <button class="clear-filters-btn" onclick="clearWizardFilters()">Clear All Filters</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
     <footer>
         <div class="footer-inner">
@@ -701,7 +401,6 @@
                     <li><a href="/keebshelf/best/">Best Overall</a></li>
                     <li><a href="/keebshelf/best-budget/">Budget Picks</a></li>
                     <li><a href="/keebshelf/best-60-percent/">60% Keyboards</a></li>
-                    <li><a href="/keebshelf/gaming/">Gaming</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -709,181 +408,68 @@
                 <ul>
                     <li><a href="/keebshelf/beginner/">Beginner's Guide</a></li>
                     <li><a href="/keebshelf/switches/">Switch Guide</a></li>
-                    <li><a href="/keebshelf/build/">Build Guide</a></li>
-                    <li><a href="/keebshelf/glossary/">Glossary</a></li>
                 </ul>
             </div>
-            <div class="footer-section">
-                <h4>Vendors</h4>
-                <ul>
-                    <li><a href="https://keychron.com" target="_blank">Keychron</a></li>
-                    <li><a href="https://drop.com" target="_blank">Drop</a></li>
-                    <li><a href="https://kbdfans.com" target="_blank">KBDfans</a></li>
-                    <li><a href="https://novelkeys.com" target="_blank">NovelKeys</a></li>
-                    <li><a href="https://epomaker.com" target="_blank">Epomaker</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2025 Keebshelf. Independent mechanical keyboard tracker.</p>
         </div>
     </footer>
 
     <script>
         // Theme toggle
         const themeToggle = document.getElementById('themeToggle');
-        const themeText = document.getElementById('themeText');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        function setTheme(isDark) {
-            if (isDark) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeText.textContent = 'Light';
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-                themeText.textContent = 'Dark';
-            }
-            localStorage.setItem('keebshelf-theme', isDark ? 'dark' : 'light');
-        }
-        
-        // Initialize theme
-        const savedTheme = localStorage.getItem('keebshelf-theme');
-        if (savedTheme) {
-            setTheme(savedTheme === 'dark');
-        } else if (prefersDark.matches) {
-            setTheme(true);
-        }
-        
         themeToggle.addEventListener('click', () => {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            setTheme(!isDark);
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                themeToggle.textContent = 'Dark';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = 'Light';
+            }
         });
 
-        // Data management
+        // Data and display
         let allData = [];
         let filteredData = [];
         let displayLimit = 12;
-        const CACHE_KEY = 'keebshelf-data';
-        const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
-
-        function getCachedData() {
-            try {
-                const cached = localStorage.getItem(CACHE_KEY);
-                if (cached) {
-                    const { data, timestamp } = JSON.parse(cached);
-                    if (Date.now() - timestamp < CACHE_DURATION) {
-                        return data;
-                    }
-                }
-            } catch (e) {
-                console.error('Cache error:', e);
-            }
-            return null;
-        }
-
-        function setCachedData(data) {
-            try {
-                localStorage.setItem(CACHE_KEY, JSON.stringify({
-                    data,
-                    timestamp: Date.now()
-                }));
-            } catch (e) {
-                console.error('Cache save error:', e);
-            }
-        }
 
         async function loadData() {
-            console.log('Loading...');
-            
-            const cached = getCachedData();
-            if (cached) {
-                console.log('Using cached data');
-                allData = cached;
-                filteredData = [...allData];
-                displayData();
-                hideLoading();
-                return;
-            }
-
             try {
                 const response = await fetch('data.json');
                 const data = await response.json();
-                
-                allData = data.allProducts.map(item => {
+                allData = data.map(item => {
                     if (!item.category) {
-                        if (item.url.includes('switch') || item.name.toLowerCase().includes('switch')) {
-                            item.category = 'switches';
-                        } else if (item.url.includes('keycap') || item.name.toLowerCase().includes('keycap')) {
-                            item.category = 'keycaps';
-                        } else if (item.url.includes('case') || item.name.toLowerCase().includes('case')) {
-                            item.category = 'case';
-                        } else {
-                            item.category = 'keyboard';
-                        }
+                        const name = item.name.toLowerCase();
+                        const url = item.url.toLowerCase();
+                        if (url.includes('switch') || name.includes('switch')) item.category = 'switches';
+                        else if (url.includes('keycap') || name.includes('keycap')) item.category = 'keycaps';
+                        else if (url.includes('case') || name.includes('case')) item.category = 'case';
+                        else item.category = 'keyboard';
                     }
                     return item;
                 });
-                
                 filteredData = [...allData];
-                setCachedData(allData);
                 displayData();
-                
             } catch (error) {
-                console.error('Data load error:', error);
-                document.getElementById('currentShelf').innerHTML = 
-                    '<p style="text-align: center; color: var(--faded); padding: 3rem;">Error loading keyboards. Please refresh.</p>';
-            } finally {
-                hideLoading();
-            }
-        }
-
-        function hideLoading() {
-            document.getElementById('loadingScreen').classList.add('hidden');
-        }
-
-        function getImageUrl(url) {
-            if (!url) return '';
-            try {
-                const urlObj = new URL(url);
-                const domain = urlObj.hostname.replace('www.', '');
-                const path = urlObj.pathname;
-                const hash = btoa(path).slice(0, 8).replace(/[^a-zA-Z0-9]/g, '');
-                return `images/products/${domain}/${hash}.jpg`;
-            } catch (e) {
-                return '';
+                console.error('Error loading data:', error);
             }
         }
 
         function formatPrice(price) {
             if (!price || price === 'N/A') return 'Check Price';
-            if (typeof price === 'string' && price.startsWith('$')) return price;
-            return `$${price}`;
-        }
-
-        function getStatusClass(availability) {
-            if (!availability) return 'available';
-            const status = availability.toLowerCase();
-            if (status.includes('pre-order') || status.includes('preorder') || status.includes('group buy')) return 'preorder';
-            if (status.includes('out of stock') || status.includes('sold out') || status.includes('unavailable')) return 'soldout';
-            return 'available';
+            return price.startsWith('$') ? price : '$' + price;
         }
 
         function createCard(item) {
-            // Use item.image first (actual product image URL), fallback to generated
-            const imageUrl = item.image || getImageUrl(item.url);
-            const statusClass = getStatusClass(item.availability);
-            
             return `
-                <article class="item" data-category="${item.category}" data-vendor="${item.vendor || ''}">
+                <article class="item" data-category="${item.category}">
                     <div class="item-image-wrap">
-                        ${imageUrl ? `<img src="${imageUrl}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'">` : ''}
+                        ${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'">` : ''}
                     </div>
                     <div class="item-info">
                         <div class="item-vendor">${item.vendor || 'Unknown'}</div>
                         <h3 class="item-name">${item.name}</h3>
                         <div class="item-meta">
                             <span class="item-price">${formatPrice(item.price)}</span>
-                            <span class="item-status ${statusClass}">${item.availability || 'In Stock'}</span>
                         </div>
                     </div>
                     <a href="${item.url}" class="buy-btn" target="_blank" rel="noopener">View on Store →</a>
@@ -894,23 +480,16 @@
         function displayData() {
             const shelf = document.getElementById('currentShelf');
             const limitedData = filteredData.slice(0, displayLimit);
-            
             document.getElementById('totalItems').textContent = filteredData.length;
             
             if (limitedData.length === 0) {
-                shelf.innerHTML = '<p style="text-align: center; color: var(--faded); padding: 3rem;">No keyboards found matching your criteria.</p>';
-                document.getElementById('loadMoreContainer').style.display = 'none';
-                return;
-            }
-            
-            shelf.innerHTML = limitedData.map(createCard).join('');
-            
-            const loadMoreContainer = document.getElementById('loadMoreContainer');
-            if (filteredData.length > displayLimit) {
-                loadMoreContainer.style.display = 'block';
+                shelf.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 3rem; color: var(--faded);">No keyboards found matching your criteria.</p>';
             } else {
-                loadMoreContainer.style.display = 'none';
+                shelf.innerHTML = limitedData.map(createCard).join('');
             }
+            
+            document.getElementById('loadMoreContainer').style.display = filteredData.length > displayLimit ? 'block' : 'none';
+            updateMatchCount();
         }
 
         function loadMore() {
@@ -918,38 +497,23 @@
             displayData();
         }
 
-        // Search functionality
+        // Search
         const searchInput = document.getElementById('searchInput');
-        let searchTimeout;
-        
         searchInput.addEventListener('input', (e) => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                const query = e.target.value.toLowerCase();
-                if (query) {
-                    filteredData = allData.filter(item => 
-                        item.name.toLowerCase().includes(query) ||
-                        (item.vendor && item.vendor.toLowerCase().includes(query)) ||
-                        (item.category && item.category.toLowerCase().includes(query))
-                    );
-                } else {
-                    filteredData = [...allData];
-                    applyWizardFilters(); // Re-apply wizard filters
-                }
-                displayLimit = 12;
-                displayData();
-            }, 300);
-        });
-
-        // Keyboard shortcut for search
-        document.addEventListener('keydown', (e) => {
-            if (e.key === '/' && document.activeElement !== searchInput) {
-                e.preventDefault();
-                searchInput.focus();
+            const query = e.target.value.toLowerCase();
+            if (query) {
+                filteredData = allData.filter(item => 
+                    item.name.toLowerCase().includes(query) ||
+                    (item.vendor && item.vendor.toLowerCase().includes(query))
+                );
+            } else {
+                applyWizardFilters();
             }
+            displayLimit = 12;
+            displayData();
         });
 
-        // Category filter
+        // Category filters
         document.querySelectorAll('.chip').forEach(chip => {
             chip.addEventListener('click', () => {
                 document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
@@ -961,409 +525,152 @@
                 } else {
                     filteredData = allData.filter(item => item.category === filter);
                 }
-                
-                applyWizardFilters(); // Re-apply wizard filters
+                applyWizardFilters();
                 displayLimit = 12;
                 displayData();
             });
         });
 
-        // Back to top button
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-        
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // WIZARD FUNCTIONALITY
-        let currentWizardStep = 1;
-        const totalWizardSteps = 5;
-        const wizardData = {};
-
-        // Wizard expand/collapse
+        // WIZARD
+        let currentStep = 1;
+        const totalSteps = 4;
+        const wizardSelections = {};
         const widget = document.getElementById('keyboard-wizard');
         const toggle = document.getElementById('wizardToggle');
         const closeBtn = document.getElementById('wizardClose');
-        let hoverTimeout;
 
-        function expandWizard() {
-            widget.classList.remove('collapsed');
-        }
-
-        function collapseWizard() {
-            widget.classList.add('collapsed');
-        }
-
-        toggle.addEventListener('click', () => {
-            widget.classList.toggle('collapsed');
-        });
-
-        if (closeBtn) {
-            closeBtn.addEventListener('click', collapseWizard);
-        }
-
-        // Hover expand with 300ms delay
-        toggle.addEventListener('mouseenter', () => {
-            hoverTimeout = setTimeout(expandWizard, 300);
-        });
-
-        toggle.addEventListener('mouseleave', () => {
-            clearTimeout(hoverTimeout);
-        });
-
-        // Close on click outside
+        // Expand/collapse
+        toggle.addEventListener('click', () => widget.classList.toggle('collapsed'));
+        closeBtn.addEventListener('click', () => widget.classList.add('collapsed'));
+        
         document.addEventListener('click', (e) => {
             if (!widget.classList.contains('collapsed') && !widget.contains(e.target)) {
-                collapseWizard();
+                widget.classList.add('collapsed');
             }
         });
-
-        // Close on Escape
+        
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !widget.classList.contains('collapsed')) {
-                collapseWizard();
-            }
+            if (e.key === 'Escape') widget.classList.add('collapsed');
         });
 
-        // Wizard step navigation
-        function showWizardStep(stepNumber) {
-            document.querySelectorAll('.wizard-step').forEach(step => {
-                step.style.display = 'none';
-            });
-            
-            const targetStep = document.querySelector(`[data-step="${stepNumber}"]`);
-            if (targetStep) {
-                targetStep.style.display = 'block';
-            }
-            
-            currentWizardStep = stepNumber;
-            updateWizardProgress();
+        // Hover expand
+        let hoverTimeout;
+        toggle.addEventListener('mouseenter', () => {
+            hoverTimeout = setTimeout(() => widget.classList.remove('collapsed'), 300);
+        });
+        toggle.addEventListener('mouseleave', () => clearTimeout(hoverTimeout));
+
+        function showWizardStep(step) {
+            document.querySelectorAll('.wizard-step').forEach(s => s.style.display = 'none');
+            const target = document.querySelector(`[data-step="${step}"]`);
+            if (target) target.style.display = 'block';
+            currentStep = step;
         }
 
-        function updateWizardProgress() {
-            // Update step indicators if we had them
-        }
-
-        function updateMatchDisplay() {
-            const matchCount = document.getElementById('matchCount');
-            const wizardMatchCount = document.getElementById('wizardMatchCount');
-            
-            if (matchCount) {
-                matchCount.textContent = filteredData.length;
-            }
-            if (wizardMatchCount) {
-                wizardMatchCount.textContent = filteredData.length;
-                wizardMatchCount.style.display = filteredData.length !== allData.length ? 'flex' : 'none';
-            }
-        }
-
-        function selectWizardOption(step, value) {
+        function selectWizardOption(step, value, element) {
             // Store selection
-            wizardData[step] = value;
+            wizardSelections[step] = value;
             
-            // Update visual selection
-            document.querySelectorAll(`[data-step="${step}"] .wizard-option-card`).forEach(card => {
-                card.classList.remove('selected');
-            });
-            const selectedCard = document.querySelector(`[data-step="${step}"] [data-value="${value}"]`);
-            if (selectedCard) {
-                selectedCard.classList.add('selected');
-            }
+            // Update UI
+            document.querySelectorAll(`[data-step="${step}"] .wizard-option-card`).forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
             
-            // Apply filters immediately
+            // Apply filters
             applyWizardFilters();
             
-            // Auto-advance after delay unless it's step 5
-            if (step < totalWizardSteps) {
-                setTimeout(() => {
-                    showWizardStep(step + 1);
-                }, 400);
+            // Auto advance
+            if (step < totalSteps) {
+                setTimeout(() => showWizardStep(step + 1), 300);
             } else {
-                // Show results
                 showWizardResults();
             }
         }
 
         function showWizardResults() {
-            document.querySelectorAll('.wizard-step').forEach(step => {
-                step.style.display = 'none';
-            });
+            document.querySelectorAll('.wizard-step').forEach(s => s.style.display = 'none');
             document.getElementById('wizard-results').style.display = 'block';
-            updateActiveFilterChips();
+            updateActiveFilters();
         }
 
         function applyWizardFilters() {
             filteredData = [...allData];
             
-            // Build scoring for each item - rather than strict filtering, we'll score
-            const itemScores = new Map();
-            filteredData.forEach(item => {
-                itemScores.set(item.id, { item, score: 0, matches: [] });
-            });
-            
-            // Step 1: Use case
-            if (wizardData[1]) {
-                const desc = item => (item.description + ' ' + item.name).toLowerCase();
-                if (wizardData[1] === 'gaming') {
-                    // Gaming keyboards: look for RGB, fast, gaming keywords
-                    filteredData.forEach(item => {
-                        const d = desc(item);
-                        let points = 0;
-                        if (d.includes('rgb')) points += 3;
-                        if (d.includes('gaming')) points += 3;
-                        if (d.includes('fast')) points += 2;
-                        if (d.includes('response')) points += 2;
-                        if (d.includes('aluminum')) points += 1; // Premium gaming
-                        if (points > 0) {
-                            itemScores.get(item.id).score += points;
-                            itemScores.get(item.id).matches.push('Gaming');
-                        }
-                    });
-                } else if (wizardData[1] === 'office') {
-                    // Office: look for ergonomic, comfortable, quiet features
-                    filteredData.forEach(item => {
-                        const d = desc(item);
-                        let points = 0;
-                        if (d.includes('ergonomic')) points += 3;
-                        if (d.includes('comfortable')) points += 2;
-                        if (d.includes('office')) points += 2;
-                        if (d.includes('wireless') || d.includes('bluetooth')) points += 2;
-                        if (d.includes('quiet') || d.includes('silent')) points += 2;
-                        if (points > 0) {
-                            itemScores.get(item.id).score += points;
-                            itemScores.get(item.id).matches.push('Office');
-                        }
-                    });
-                } else if (wizardData[1] === 'creative') {
-                    // Creative: look for media controls, macros, knob
-                    filteredData.forEach(item => {
-                        const d = desc(item);
-                        let points = 0;
-                        if (d.includes('knob')) points += 3;
-                        if (d.includes('media')) points += 3;
-                        if (d.includes('macro')) points += 3;
-                        if (d.includes('creative')) points += 2;
-                        if (d.includes('precision')) points += 1;
-                        if (points > 0) {
-                            itemScores.get(item.id).score += points;
-                            itemScores.get(item.id).matches.push('Creative');
-                        }
-                    });
-                }
-            }
-            
-            // Step 2: Noise level (using switch type keywords)
-            if (wizardData[2]) {
-                const desc = item => (item.description + ' ' + item.name).toLowerCase();
-                if (wizardData[2] === 'quiet') {
-                    // Silent switches, linear
-                    filteredData.forEach(item => {
-                        const d = desc(item);
-                        if (d.includes('silent') || d.includes('quiet') || d.includes('linear')) {
-                            itemScores.get(item.id).score += 3;
-                            itemScores.get(item.id).matches.push('Quiet switches');
-                        }
-                    });
-                } else if (wizardData[2] === 'medium') {
-                    // Tactile, standard
-                    filteredData.forEach(item => {
-                        const d = desc(item);
-                        if (d.includes('tactile') && !d.includes('clicky')) {
-                            itemScores.get(item.id).score += 3;
-                            itemScores.get(item.id).matches.push('Tactile');
-                        }
-                    });
-                } else if (wizardData[2] === 'loud') {
-                    // Clicky switches
-                    filteredData.forEach(item => {
-                        const d = desc(item);
-                        if (d.includes('clicky') || d.includes('loud')) {
-                            itemScores.get(item.id).score += 3;
-                            itemScores.get(item.id).matches.push('Clicky');
-                        }
-                    });
-                }
-            }
-            
-            // Step 3: Size
-            if (wizardData[3] && wizardData[3] !== 'any') {
-                const desc = item => (item.description + ' ' + item.name).toLowerCase();
-                filteredData.forEach(item => {
-                    const d = desc(item);
-                    const name = item.name.toLowerCase();
-                    let isMatch = false;
-                    
-                    if (wizardData[3] === 'compact') {
-                        // 60%, 65%, small, compact, portable
-                        if (d.includes('60%') || d.includes('65%') || 
-                            d.includes('compact') || d.includes('portable') ||
-                            d.includes('small desk') || (d.includes('60') && d.includes('%')) ||
-                            d.includes('mini')) {
-                            isMatch = true;
-                            itemScores.get(item.id).matches.push('Compact');
-                        }
-                    } else if (wizardData[3] === 'tkl') {
-                        // 75%, 80%, tkl, tenkeyless
-                        if (d.includes('75%') || d.includes('80%') || d.includes('tkl') || 
-                            d.includes('tenkeyless') || d.includes('ten-keyless') ||
-                            d.includes('75') || d.includes('function keys')) {
-                            isMatch = true;
-                            itemScores.get(item.id).matches.push('TKL');
-                        }
-                    } else if (wizardData[3] === 'fullsize') {
-                        // 100%, full-size, numpad, 96%
-                        if (d.includes('100%') || d.includes('full size') || 
-                            d.includes('full-size') || d.includes('numpad') ||
-                            d.includes('96%') || d.includes('number pad') ||
-                            d.includes('data entry') || 
-                            (name.includes('100') && name.includes('%')) ||
-                            d.includes('rt100')) {
-                            isMatch = true;
-                            itemScores.get(item.id).matches.push('Full-size');
-                        }
-                    }
-                    
-                    if (isMatch) {
-                        itemScores.get(item.id).score += 5;
-                    }
-                });
-            }
-            
-            // Step 4: Hot-swap (look in description)
-            if (wizardData[4] && wizardData[4] !== 'any') {
-                const desc = item => (item.description || '').toLowerCase();
-                filteredData.forEach(item => {
-                    const d = desc(item);
-                    const hasHotSwap = d.includes('hot-swap') || d.includes('hotswap') || 
-                                      d.includes('hot swap') || d.includes('swappable') ||
-                                      d.includes('swappable');
-                    
-                    if (wizardData[4] === 'hotswap' && hasHotSwap) {
-                        itemScores.get(item.id).score += 5;
-                        itemScores.get(item.id).matches.push('Hot-swap');
-                    } else if (wizardData[4] === 'solder' && !hasHotSwap) {
-                        itemScores.get(item.id).score += 3;
-                    }
-                });
-            }
-            
-            // Step 5: Budget - STRICT filter
-            if (wizardData[5] && wizardData[5] !== 'any') {
-                const budgetRanges = {
-                    budget: { min: 0, max: 99, label: 'Under $100' },
-                    mid: { min: 0, max: 200, label: '$100-200' },
-                    premium: { min: 0, max: 10000, label: '$200+' }
+            // Size filter
+            if (wizardSelections[3] && wizardSelections[3] !== 'any') {
+                const sizeMap = {
+                    compact: ['60%', '65%'],
+                    tkl: ['80%', 'tkl', 'tenkeyless', '75%'],
+                    fullsize: ['100%', 'full', '1800']
                 };
-                
-                if (budgetRanges[wizardData[5]]) {
-                    const range = budgetRanges[wizardData[5]];
-                    if (wizardData[5] === 'budget') {
-                        filteredData = filteredData.filter(item => {
-                            const price = parseFloat(item.price?.toString().replace(/[^0-9.]/g, '')) || 0;
-                            return price <= 99;
-                        });
-                    } else if (wizardData[5] === 'mid') {
-                        filteredData = filteredData.filter(item => {
-                            const price = parseFloat(item.price?.toString().replace(/[^0-9.]/g, '')) || 0;
-                            return price >= 100 && price <= 200;
-                        });
-                    } else if (wizardData[5] === 'premium') {
-                        filteredData = filteredData.filter(item => {
-                            const price = parseFloat(item.price?.toString().replace(/[^0-9.]/g, '')) || 0;
-                            return price > 200;
-                        });
-                    }
+                const sizes = sizeMap[wizardSelections[3]];
+                if (sizes) {
+                    filteredData = filteredData.filter(item => {
+                        const name = item.name.toLowerCase();
+                        return sizes.some(s => name.includes(s));
+                    });
                 }
             }
             
-            // Sort by score (highest first), then by price
-            filteredData.sort((a, b) => {
-                const scoreA = itemScores.get(a.id)?.score || 0;
-                const scoreB = itemScores.get(b.id)?.score || 0;
-                if (scoreB !== scoreA) return scoreB - scoreA;
-                
-                // If scores equal, sort by price
-                const priceA = parseFloat(a.price?.toString().replace(/[^0-9.]/g, '')) || 0;
-                const priceB = parseFloat(b.price?.toString().replace(/[^0-9.]/g, '')) || 0;
-                return priceA - priceB;
-            });
-            
-            // Update items with match info
-            filteredData.forEach(item => {
-                const info = itemScores.get(item.id);
-                if (info) {
-                    item.relevanceScore = info.score;
-                    item.matchReasons = info.matches;
-                }
-            });
+            // Budget filter
+            if (wizardSelections[4] && wizardSelections[4] !== 'any') {
+                const ranges = {
+                    budget: [0, 99],
+                    mid: [100, 200],
+                    premium: [201, 10000]
+                };
+                const [min, max] = ranges[wizardSelections[4]] || [0, 10000];
+                filteredData = filteredData.filter(item => {
+                    const price = parseFloat(item.price?.toString().replace(/[^0-9.]/g, '')) || 0;
+                    return price >= min && price <= max;
+                });
+            }
             
             displayLimit = 12;
             displayData();
-            updateMatchDisplay();
-            updateActiveFilterChips();
         }
 
-        function updateActiveFilterChips() {
+        function updateActiveFilters() {
             const container = document.getElementById('activeFilters');
-            if (!container) return;
-            
-            const stepNames = {
-                1: 'Use',
-                2: 'Noise',
-                3: 'Size',
-                4: 'Hot-swap',
-                5: 'Budget'
-            };
-            
-            const chips = Object.entries(wizardData).map(([step, value]) => {
-                if (!value || value === 'any' || value === 'unsure') return '';
-                return `
+            const labels = { 1: 'Use', 2: 'Noise', 3: 'Size', 4: 'Budget' };
+            const chips = Object.entries(wizardSelections)
+                .filter(([_, v]) => v && v !== 'any')
+                .map(([step, value]) => `
                     <span class="filter-chip">
-                        ${stepNames[step]}: ${value}
-                        <button onclick="removeWizardFilter(${step})" aria-label="Remove ${stepNames[step]} filter">×</button>
+                        ${labels[step]}: ${value}
+                        <button onclick="removeFilter(${step})">×</button>
                     </span>
-                `;
-            }).filter(Boolean).join('');
-            
+                `).join('');
             container.innerHTML = chips;
         }
 
-        function removeWizardFilter(step) {
-            delete wizardData[step];
-            document.querySelectorAll(`[data-step="${step}"] .wizard-option-card`).forEach(card => {
-                card.classList.remove('selected');
-            });
+        function removeFilter(step) {
+            delete wizardSelections[step];
+            document.querySelectorAll(`[data-step="${step}"] .wizard-option-card`).forEach(c => c.classList.remove('selected'));
             applyWizardFilters();
-            updateActiveFilterChips();
+            updateActiveFilters();
         }
 
         function clearWizardFilters() {
-            Object.keys(wizardData).forEach(step => {
-                delete wizardData[step];
-                document.querySelectorAll(`[data-step="${step}"] .wizard-option-card`).forEach(card => {
-                    card.classList.remove('selected');
-                });
+            Object.keys(wizardSelections).forEach(step => {
+                delete wizardSelections[step];
+                document.querySelectorAll(`[data-step="${step}"] .wizard-option-card`).forEach(c => c.classList.remove('selected'));
             });
             filteredData = [...allData];
             displayLimit = 12;
             displayData();
-            updateMatchDisplay();
-            updateActiveFilterChips();
-            
-            // Reset to step 1
-            currentWizardStep = 1;
-            document.getElementById('wizard-results').style.display = 'none';
+            document.getElementById('activeFilters').innerHTML = '';
             showWizardStep(1);
         }
 
-        // Initialize
+        function updateMatchCount() {
+            const count = filteredData.length;
+            document.getElementById('matchCount').textContent = count;
+            const badge = document.getElementById('wizardMatchCount');
+            badge.textContent = count;
+            badge.style.display = count !== allData.length ? 'flex' : 'none';
+        }
+
+        // Init
         loadData();
     </script>
 </body>
