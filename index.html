@@ -201,6 +201,68 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
+            transition: transform 0.2s;
+        }
+        
+        .mobile-menu-toggle.active {
+            transform: rotate(90deg);
+        }
+        
+        /* Mobile Navigation Menu */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: var(--ink);
+            z-index: 99;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .mobile-nav.active {
+            display: block;
+        }
+        
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .mobile-nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: background 0.2s;
+        }
+        
+        .mobile-nav-link:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .mobile-nav-link.active {
+            background: rgba(196,163,90,0.2);
+            color: var(--accent);
+        }
+        
+        .mobile-nav-link .nav-icon {
+            font-size: 1.2em;
+        }
+        
+        .mobile-nav-link.browse-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, #b8944f 100%);
+            color: #1a1a1a !important;
+            font-weight: 600;
+            justify-content: center;
+            margin-top: 0.5rem;
         }
         
         /* Responsive */
@@ -749,6 +811,17 @@
             <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
         </div>
         
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav" id="mobileNav">
+            <nav class="mobile-nav-links">
+                <a href="/" class="mobile-nav-link active"><span class="nav-icon">🏠</span> Home</a>
+                <a href="/artisan/" class="mobile-nav-link"><span class="nav-icon">🎨</span> Artisan Keys</a>
+                <a href="/blog/" class="mobile-nav-link"><span class="nav-icon">📝</span> Blog</a>
+                <a href="/beginner/" class="mobile-nav-link"><span class="nav-icon">📚</span> Guides</a>
+                <a href="/" class="mobile-nav-link browse-btn">Browse All Products</a>
+            </nav>
+        </div>
+        
         <div class="subheader">
             <div class="subheader-inner">
                 <div class="filter-chips" id="filterChips">
@@ -1172,6 +1245,36 @@
             displayLimit = 12;
             displayData();
         });
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        if (mobileMenuToggle && mobileNav) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+                document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+            });
+            
+            // Close mobile nav when clicking a link
+            mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            // Close mobile nav when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileNav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
 
         // Render category cards
         function renderCategoryCards() {
