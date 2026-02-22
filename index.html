@@ -869,7 +869,8 @@
         }
 
         function createCard(item) {
-            const imageUrl = getImageUrl(item.url);
+            // Use item.image first (actual product image URL), fallback to generated
+            const imageUrl = item.image || getImageUrl(item.url);
             const statusClass = getStatusClass(item.availability);
             
             return `
