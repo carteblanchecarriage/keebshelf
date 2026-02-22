@@ -413,6 +413,14 @@
         }
 
         /* Floating Widget Styles */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 4px 12px rgba(196, 163, 90, 0.4); }
+            50% { box-shadow: 0 6px 20px rgba(196, 163, 90, 0.6), 0 0 0 4px rgba(196, 163, 90, 0.2); }
+        }
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
         .wizard-widget {
             position: fixed;
             bottom: 20px;
@@ -1792,7 +1800,10 @@
     <div id="keyboard-wizard" class="wizard-widget collapsed" style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
         <!-- Toggle Button -->
         <div class="wizard-toggle" id="wizardToggle" role="button" tabindex="0" aria-label="Find my keyboard">
-            <span class="wizard-icon" style="font-size: 1.5rem;"></span>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"></path>
+            </svg>
             <span class="match-count" id="wizardMatchCount" style="display: none;">280</span>
         </div>
         
