@@ -1409,6 +1409,7 @@
         
         async function loadData() {
             try {
+                console.log('🔄 Starting data load...');
                 const response = await fetch('data.json');
                 
                 if (!response.ok) {
@@ -1416,67 +1417,60 @@
                 }
                 
                 const jsonData = await response.json();
+                console.log('✅ Data fetched, keys:', Object.keys(jsonData));
                 
                 // Extract products from nested structure - prioritize allProducts over groupBuys
-                const rawData = Array.isArray(jsonData) ? jsonData : (jsonData.allProducts || jsonData.groupBuys || jsonData.products || []);
+                let rawData = [];
+                if (Array.isArray(jsonData)) {
+                    rawData = jsonData;
+                } else if (jsonData.allProducts && Array.isArray(jsonData.allProducts)) {
+                    rawData = jsonData.allProducts;
+                } else if (jsonData.groupBuys && Array.isArray(jsonData.groupBuys)) {
+                    rawData = jsonData.groupBuys;
+                } else if (jsonData.products && Array.isArray(jsonData.products)) {
+                    rawData = jsonData.products;
+                }
+                
+                console.log('📊 Raw data count:', rawData.length);
                 
                 // Validation: Check if data is valid array
                 if (!Array.isArray(rawData) || rawData.length === 0) {
-                    throw new Error('Data is not a valid array or no products found');
+                    console.error('❌ No valid data array found. jsonData keys:', Object.keys(jsonData));
+                    throw new Error('No products found in data.json');
                 }
                 
-                // Validation: Check minimum product count
-                if (rawData.length < MIN_PRODUCTS_REQUIRED) {
-                    throw new Error(`Only ${rawData.length} products found. Minimum ${MIN_PRODUCTS_REQUIRED} required.`);
-                }
-                
-                // Validation: Check each product has required fields
-                const validProducts = rawData.filter((item, index) => {
-                    const hasName = item.name && typeof item.name === 'string' && item.name.trim().length > 0;
-                    const hasUrl = item.url && typeof item.url === 'string' && item.url.trim().length > 0;
-                    
-                    if (!hasName) {
-                        console.warn(`Product at index ${index} missing valid name:`, item);
-                    }
-                    if (!hasUrl) {
-                        console.warn(`Product at index ${index} missing valid URL:`, item);
-                    }
-                    
-                    return hasName && hasUrl;
+                // Less strict validation - just need name
+                const validProducts = rawData.filter(item => {
+                    return item && item.name && typeof item.name === 'string';
                 });
                 
-                if (validProducts.length < MIN_PRODUCTS_REQUIRED) {
-                    throw new Error(`Only ${validProducts.length} valid products. Minimum ${MIN_PRODUCTS_REQUIRED} required.`);
-                }
+                console.log('✅ Valid products:', validProducts.length);
                 
-                if (validProducts.length < rawData.length) {
-                    console.warn(`Filtered out ${rawData.length - validProducts.length} invalid products`);
+                if (validProducts.length === 0) {
+                    throw new Error('No valid products found');
                 }
                 
                 // Process and categorize valid products
-                allData = validProducts.map(item => {
-                    if (!item.category) {
-                        const name = item.name.toLowerCase();
-                        const url = item.url.toLowerCase();
-                        if (url.includes('switch') || name.includes('switch')) item.category = 'switches';
-                        else if (url.includes('artisan') || name.includes('artisan') || name.includes('resin') || name.includes('sculpt')) item.category = 'artisan';
-                        else if (url.includes('keycap') || name.includes('keycap')) item.category = 'keycaps';
-                        else if (url.includes('case') || name.includes('case')) item.category = 'case';
-                        else item.category = 'keyboard';
-                    }
-                    return item;
-                });
+                allData = validProducts.map(item => ({
+                    ...item,
+                    category: item.category || 'keyboard',
+                    price: item.price || 'Contact for price',
+                    vendor: item.vendor || 'Unknown',
+                    url: item.url || '#'
+                }));
                 
                 filteredData = [...allData];
+                console.log('📦 Displaying', allData.length, 'products');
                 displayData();
                 
-                // Log success and update stats
-                console.log(`✅ Loaded ${allData.length} products successfully`);
+                // Update stats
                 updateStats();
                 renderCategoryCards();
                 
+                console.log(`✅ Loaded ${allData.length} products successfully`);
+                
             } catch (error) {
-                console.error('❌ Data load failed:', error.message);
+                console.error('❌ Data load error:', error.message, error);
                 showDataError(error.message);
             }
         }
