@@ -1700,6 +1700,9 @@
             });
             stepContainer.querySelector(`[data-value="${value}"]`).classList.add('selected');
             
+            // INSTANT GRID UPDATE - Task 10: Grid updates instantly as selections made
+            filterGridByWizardSelections();
+            
             // Update match count badge instantly
             updateWizardMatchCount();
             
