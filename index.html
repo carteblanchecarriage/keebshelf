@@ -1407,71 +1407,85 @@
             displayData();
         }
         
+        // BULLETPROOF DATA LOADER - Production Ready
+        async function loadDataWithFallbacks() {
+            const DATA_URLS = [
+                'data.json',
+                './data.json', 
+                'https://raw.githubusercontent.com/carteblanchecarriage/keebshelf/master/data.json'
+            ];
+            
+            for (const url of DATA_URLS) {
+                try {
+                    console.log('[SWITCHYARD] Trying:', url);
+                    const response = await fetch(url, { 
+                        cache: 'no-cache',
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    
+                    if (!response.ok) {
+                        console.warn('[SWITCHYARD] Failed:', url, response.status);
+                        continue;
+                    }
+                    
+                    const jsonData = await response.json();
+                    let rawData = jsonData.allProducts || jsonData.groupBuys || jsonData.products || (Array.isArray(jsonData) ? jsonData : []);
+                    
+                    if (!Array.isArray(rawData)) rawData = [];
+                    
+                    if (rawData.length > 0) {
+                        console.log('[SWITCHYARD] SUCCESS from', url, ':', rawData.length, 'products');
+                        // Cache for offline
+                        try {
+                            localStorage.setItem('switchyard_data', JSON.stringify(rawData));
+                            localStorage.setItem('switchyard_data_time', Date.now().toString());
+                        } catch(e) {}
+                        return rawData;
+                    }
+                } catch (err) {
+                    console.warn('[SWITCHYARD] Error loading', url, ':', err.message);
+                }
+            }
+            
+            // Try cached data
+            try {
+                const cached = localStorage.getItem('switchyard_data');
+                if (cached) {
+                    console.log('[SWITCHYARD] Using cached data');
+                    return JSON.parse(cached);
+                }
+            } catch(e) {}
+            
+            throw new Error('Unable to load products from any source');
+        }
+
         async function loadData() {
             try {
-                console.log('🔄 Starting data load...');
-                const response = await fetch('data.json');
+                console.log('[SWITCHYARD] Starting load...');
+                const rawData = await loadDataWithFallbacks();
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const jsonData = await response.json();
-                console.log('✅ Data fetched, keys:', Object.keys(jsonData));
-                
-                // Extract products from nested structure - prioritize allProducts over groupBuys
-                let rawData = [];
-                if (Array.isArray(jsonData)) {
-                    rawData = jsonData;
-                } else if (jsonData.allProducts && Array.isArray(jsonData.allProducts)) {
-                    rawData = jsonData.allProducts;
-                } else if (jsonData.groupBuys && Array.isArray(jsonData.groupBuys)) {
-                    rawData = jsonData.groupBuys;
-                } else if (jsonData.products && Array.isArray(jsonData.products)) {
-                    rawData = jsonData.products;
-                }
-                
-                console.log('📊 Raw data count:', rawData.length);
-                
-                // Validation: Check if data is valid array
-                if (!Array.isArray(rawData) || rawData.length === 0) {
-                    console.error('❌ No valid data array found. jsonData keys:', Object.keys(jsonData));
-                    throw new Error('No products found in data.json');
-                }
-                
-                // Less strict validation - just need name
-                const validProducts = rawData.filter(item => {
-                    return item && item.name && typeof item.name === 'string';
-                });
-                
-                console.log('✅ Valid products:', validProducts.length);
-                
-                if (validProducts.length === 0) {
-                    throw new Error('No valid products found');
-                }
-                
-                // Process and categorize valid products
-                allData = validProducts.map(item => ({
-                    ...item,
-                    category: item.category || 'keyboard',
-                    price: item.price || 'Contact for price',
-                    vendor: item.vendor || 'Unknown',
-                    url: item.url || '#'
-                }));
+                allData = rawData
+                    .filter(item => item && item.name)
+                    .map(item => ({
+                        ...item,
+                        id: item.id || item.url || Math.random().toString(36).substr(2, 9),
+                        category: item.category || 'keyboard',
+                        price: item.price || 'Contact for price',
+                        vendor: item.vendor || 'Unknown',
+                        url: item.url || '#',
+                        scrapedAt: item.scrapedAt || new Date().toISOString()
+                    }));
                 
                 filteredData = [...allData];
-                console.log('📦 Displaying', allData.length, 'products');
-                displayData();
+                console.log('[SWITCHYARD] Loaded', allData.length, 'products');
                 
-                // Update stats
+                displayData();
                 updateStats();
                 renderCategoryCards();
                 
-                console.log(`✅ Loaded ${allData.length} products successfully`);
-                
             } catch (error) {
-                console.error('❌ Data load error:', error.message, error);
-                showDataError(error.message);
+                console.error('[SWITCHYARD] FATAL:', error);
+                showDataError('Failed to load products. Please refresh the page.');
             }
         }
         
