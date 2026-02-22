@@ -809,7 +809,7 @@
                 const response = await fetch('data.json');
                 const data = await response.json();
                 
-                allData = data.map(item => {
+                allData = data.allProducts.map(item => {
                     if (!item.category) {
                         if (item.url.includes('switch') || item.name.toLowerCase().includes('switch')) {
                             item.category = 'switches';
