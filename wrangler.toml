@@ -1,6 +1,7 @@
 name = "switchyard"
+main = "workers-site/index.js"
 compatibility_date = "2026-02-22"
+build_command = ""
 
 [site]
-bucket = "./"
-entry-point = "workers-site"
+bucket = "."
