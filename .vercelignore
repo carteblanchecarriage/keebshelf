@@ -1,0 +1,63 @@
+# Documentation (not needed for production build)
+docs/
+
+# Archive and backup
+archive/
+backups/
+
+# Logs
+logs/
+ab-test-logs/
+
+# Scraper (development tool)
+scraper/
+
+# Development scripts
+scripts/
+tools/
+
+# Marketing materials
+marketing/
+
+# Price alerts (old feature)
+price-alerts/
+
+# Affiliate data (sensitive)
+affiliates/
+
+# Static HTML folders (now in React)
+guides/
+guide/
+blog/
+faq/
+glossary/
+switches/
+artisan/
+beginner/
+best/
+best-60-percent/
+best-budget/
+best-programming/
+gaming/
+dashboard/
+data/
+
+# Old files
+agents/
+templates/
+_not-found/
+404/
+workers-site/
+switchyard-react/
+
+# Data files (already in public/)
+data.json.backup
+data-public.json
+*.backup
+
+# Misc
+*.log
+.DS_Store
+.vscode/
+.idea/
+EOF
