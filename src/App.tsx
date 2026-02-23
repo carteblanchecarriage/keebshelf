@@ -29,6 +29,7 @@ interface Product {
   vendor?: string;
   category?: string;
   description?: string;
+  scrapedAt?: string;
 }
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
   const [displayLimit, setDisplayLimit] = useState(12);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [wizardFilters, setWizardFilters] = useState<Product[] | null>(null);
+  const [sortBy, setSortBy] = useState<string>('newest');
 
   useEffect(() => {
     const handlePopState = () => setCurrentPath(window.location.pathname);
@@ -96,7 +98,37 @@ export default function App() {
     setDisplayLimit(prev => prev + 12);
   };
 
-  const displayedProducts = filteredProducts.slice(0, displayLimit);
+  // Sort products
+  const sortProducts = (productsToSort: Product[]) => {
+    const sorted = [...productsToSort];
+    switch (sortBy) {
+      case 'price-low':
+        return sorted.sort((a, b) => {
+          const priceA = parseFloat(a.price?.replace(/[^0-9.]/g, '') || '0');
+          const priceB = parseFloat(b.price?.replace(/[^0-9.]/g, '') || '0');
+          return priceA - priceB;
+        });
+      case 'price-high':
+        return sorted.sort((a, b) => {
+          const priceA = parseFloat(a.price?.replace(/[^0-9.]/g, '') || '0');
+          const priceB = parseFloat(b.price?.replace(/[^0-9.]/g, '') || '0');
+          return priceB - priceA;
+        });
+      case 'name-az':
+        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      case 'name-za':
+        return sorted.sort((a, b) => b.name.localeCompare(a.name));
+      case 'newest':
+      default:
+        return sorted.sort((a, b) => {
+          const dateA = a.scrapedAt ? new Date(a.scrapedAt).getTime() : 0;
+          const dateB = b.scrapedAt ? new Date(b.scrapedAt).getTime() : 0;
+          return dateB - dateA;
+        });
+    }
+  };
+
+  const displayedProducts = sortProducts(filteredProducts).slice(0, displayLimit);
   const hasMore = filteredProducts.length > displayLimit;
 
   // Route to page components
@@ -185,16 +217,34 @@ export default function App() {
         {filteredProducts.length} products
       </div>
 
-      <div className="filter-chips">
-        {['all', 'keyboard', 'switches', 'keycaps', 'artisan', 'case'].map(cat => (
-          <button
-            key={cat}
-            className={`filter-chip ${activeCategory === cat ? 'active' : ''}`}
-            onClick={() => handleCategoryChange(cat)}
+      <div className="controls-row">
+        <div className="filter-chips">
+          {['all', 'keyboard', 'switches', 'keycaps', 'artisan', 'case'].map(cat => (
+            <button
+              key={cat}
+              className={`filter-chip ${activeCategory === cat ? 'active' : ''}`}
+              onClick={() => handleCategoryChange(cat)}
+            >
+              {cat === 'all' ? 'All Products' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        <div className="sort-control">
+          <label htmlFor="sort">Sort:</label>
+          <select 
+            id="sort" 
+            value={sortBy} 
+            onChange={(e) => setSortBy(e.target.value)}
+            className="sort-select"
           >
-            {cat === 'all' ? 'All Products' : cat.charAt(0).toUpperCase() + cat.slice(1)}
-          </button>
-        ))}
+            <option value="newest">Newest First</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name-az">Name: A-Z</option>
+            <option value="name-za">Name: Z-A</option>
+          </select>
+        </div>
       </div>
 
       <div className="product-grid">
