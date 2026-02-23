@@ -18,6 +18,30 @@ const tiers = [
   { level: 'Grail Tier', price: '$500+', items: ['OG Clack Factory - Skulls', 'Vintage Brocaps - 1-off customs', 'GAF TypeBeasts - Rare drops', 'Maker 1-offs - Auction customs'] }
 ];
 
+const platforms = [
+  { name: 'r/mechmarket', type: 'Reddit', desc: 'The largest artisan marketplace. Auctions, raffles, and sales posted daily. High scam risk - use PayPal G&S.', tip: 'Check seller karma and trade history' },
+  { name: 'Drop', type: 'Vendor', desc: 'Official collaborations with makers. Lower prices, longer wait times. Reliable shipping.', tip: 'Sign up for email alerts' },
+  { name: 'Makers Instagram', type: 'Social', desc: 'Most artisans announce sales on Instagram first. Raffles, FCFS, or commissions.', tip: 'Turn on post notifications' },
+  { name: 'Discord', type: 'Community', desc: 'Maker-specific Discords for exclusive sales and GB updates. Very active.', tip: 'Join official maker Discords' },
+  { name: 'eBay', type: 'Secondary', desc: 'For hard-to-find caps. Prices often inflated. High scam risk.', tip: 'Only buy from established sellers' }
+];
+
+const collectingTips = [
+  { title: 'Start Small', desc: 'Do not chase grails first. Buy a $50 artisan to understand the hype before spending hundreds.' },
+  { title: 'Follow Makers', desc: 'Instagram is where sales happen. Turn on notifications for your favorite makers.' },
+  { title: 'Set a Budget', desc: 'Artisan collecting is addictive. Set monthly limits or you will empty your wallet.' },
+  { title: 'Storage Matters', desc: 'Store in protective cases or foam. Sunlight degrades resin over time.' },
+  { title: 'Profile Matching', desc: 'Artisans are usually R1 (ESC) profile. Check compatibility with your keycap set.' }
+];
+
+const scamSigns = [
+  { sign: 'Too Good to Be True', desc: 'A $500 cap for $50 is almost certainly fake or a scam.' },
+  { sign: 'No Trade History', desc: 'New accounts selling rare artisans = red flag. Check r/mechmarket flair.' },
+  { sign: 'Stock Photos Only', desc: 'Scammers use official product images. Ask for timestamped photos.' },
+  { sign: 'Friends & Family', desc: 'Never pay F&F on PayPal. Always use Goods & Services for buyer protection.' },
+  { sign: 'Rushed Sales', desc: '"Act now or I will sell to someone else" is pressure tactics. Walk away.' }
+];
+
 export default function ArtisanGuide() {
   const [activeTab, setActiveTab] = useState(0);
 
@@ -85,7 +109,7 @@ export default function ArtisanGuide() {
           </section>
 
           <section>
-            <h2>Artisan Keycap Guide</h2>
+            <h2>Price Tiers Guide</h2>
             
             <div className="tier-tabs">
               {tiers.map((tier, i) => (
@@ -109,11 +133,83 @@ export default function ArtisanGuide() {
             </div>
           </section>
 
+          <section>
+            <h2>Where to Buy Artisan Keycaps</h2>
+            
+            <div className="platform-grid">
+              {platforms.map((platform) => (
+                <div key={platform.name} className="platform-card">
+                  <h3>{platform.name}</h3>
+                  <span className="platform-type">{platform.type}</span>
+                  <p>{platform.desc}</p>
+                  <div className="platform-tip">
+                    <strong>Tip:</strong> {platform.tip}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2>Collecting Tips for Beginners</h2>
+            
+            <div className="tips-list enhanced">
+              {collectingTips.map((tip, i) => (
+                <div key={tip.title} className="tip-item">
+                  <span className="tip-number">{i + 1}</span>
+                  <div>
+                    <h4>{tip.title}</h4>
+                    <p>{tip.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2>⚠️ Scam Warning Signs</h2>
+            
+            <div className="warning-box">
+              <p className="warning-intro">The artisan market has scammers. Protect yourself by knowing these red flags:</p>
+              
+              <div className="scam-list">
+                {scamSigns.map((scam) => (
+                  <div key={scam.sign} className="scam-item">
+                    <h4>{scam.sign}</h4>
+                    <p>{scam.desc}</p>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="safety-tip">
+                <strong>Always require:</strong> Timestamped photos with username, PayPal Goods & Services payment, and trade history verification on r/mechmarket.
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2>Making Your Own Artisans</h2>
+            
+            <div className="maker-info-panel">
+              <p>Interested in becoming an artisan maker? Here is the typical journey:</p>
+              
+              <ol className="maker-steps">
+                <li><strong>Learn sculpting:</strong> Start with polymer clay or wax. Practice small designs.</li>
+                <li><strong>Master casting:</strong> Learn mold making and resin casting techniques.</li>
+                <li><strong>Build reputation:</strong> Post work on Reddit, Instagram. Offer free commissions at first.</li>
+                <li><strong>First sale:</strong> Small run of 10-20 caps. Price low to build trust.</li>
+                <li><strong>Grow:</strong> Consistent quality leads to demand. Eventually can make it a side income.</li>
+              </ol>
+              
+              <p className="maker-note">Most successful makers spent 1-2 years perfecting their craft before charging premium prices.</p>
+            </div>
+          </section>
+
           <section className="cta-section">
             <h2>Find Artisan Keycaps</h2>            
-            <p>Browse our collection of artisan keycaps from top makers.</p>
+            <p>Browse our collection of artisan keycaps from top makers and sellers.</p>
             
-            <a href="/?filter=artisan" className="cta-button">             View Artisan Products →
+            <a href="/?category=artisan" className="cta-button">             View Artisan Products →
             </a>
           </section>
         </div>
