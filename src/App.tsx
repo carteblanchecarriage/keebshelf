@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import Footer from './components/Footer';
+import ProductModal from './components/ProductModal';
 
 interface Product {
   id: string;
@@ -28,6 +30,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [displayLimit, setDisplayLimit] = useState(12);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     fetch('/data.json')
@@ -97,7 +100,11 @@ function App() {
 
         <div className="product-grid">
           {displayedProducts.map(product => (
-            <div key={product.id} className="product-card">
+            <div 
+              key={product.id} 
+              className="product-card"
+              onClick={() => setSelectedProduct(product)}
+            >
               <a href={product.url} target="_blank" rel="noopener noreferrer">
                 <div className="product-image">
                   {product.image ? (
@@ -125,6 +132,11 @@ function App() {
           </div>
         )}
       </main>
+      <Footer />
+      <ProductModal 
+        product={selectedProduct} 
+        onClose={() => setSelectedProduct(null)} 
+      />
     </div>
   );
 }
