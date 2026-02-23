@@ -99,6 +99,16 @@ const VENDORS = {
     categories: ['keyboards', 'cases', 'PCBs', 'keycaps'],
     scrapeStrategy: 'shopify',
     collections: ['60-layout', '65-layout', '75-layout', 'keycaps', 'switches']
+  },
+  'Vortex': {
+    name: 'Vortex',
+    baseUrl: 'https://vortexgear.store',
+    shopifyDomain: 'vortexgear.store',
+    affiliateBase: 'https://vortexgear.store',
+    commission: '8%',
+    categories: ['keyboards'],
+    scrapeStrategy: 'shopify',
+    collections: ['all']
   }
 };
 
