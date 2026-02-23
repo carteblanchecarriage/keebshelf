@@ -39,7 +39,7 @@ const VENDORS = {
   'Keychron': {
     name: 'Keychron',
     url: 'https://keychron.com',
-    affiliateUrl: 'https://keychron.com?ref=keyboardtracker',
+    affiliateUrl: 'https://keychron.com?ref=switchyard',
     commission: '8%',
     categories: ['keyboards'],
     activeGroupBuys: 4
@@ -158,7 +158,7 @@ function generateCurrentGroupBuys() {
       name: 'Keychron Q1 Pro',
       vendor: 'Keychron',
       vendorUrl: 'https://keychron.com',
-      affiliateUrl: 'https://keychron.com/products/keychron-q1-pro?ref=keyboardtracker',
+      affiliateUrl: 'https://keychron.com/products/keychron-q1-pro?ref=switchyard',
       status: 'active',
       price: '$199',
       endDate: '2026-03-01',

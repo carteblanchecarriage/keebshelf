@@ -56,6 +56,7 @@ const VENDORS = {
     baseUrl: 'https://epomaker.com',
     shopifyDomain: 'epomaker.com',
     affiliateBase: 'https://epomaker.com',
+    referralParam: '?sca_ref=10691179.cOO0hJ6jvi',
     commission: '6%',
     categories: ['keyboards'],
     scrapeStrategy: 'shopify',
@@ -86,6 +87,7 @@ const VENDORS = {
     baseUrl: 'https://keychron.com',
     shopifyDomain: 'keychron.com',
     affiliateBase: 'https://keychron.com',
+    referralParam: '?ref=switchyard',
     commission: '8%',
     categories: ['keyboards'],
     scrapeStrategy: 'shopify',
@@ -180,7 +182,8 @@ async function scrapeShopify(vendorKey, vendorConfig) {
           
           // Build affiliate URL with tracking
           const productUrl = `${vendorConfig.baseUrl}/products/${product.handle}`;
-          const affiliateUrl = `${productUrl}?ref=keyboardtracker`;
+          const referralParam = vendorConfig.referralParam || '?ref=keyboardtracker';
+          const affiliateUrl = `${productUrl}${referralParam}`;
           
           // Clean description - remove JSON metadata, script tags, HTML
           let cleanDescription = '';
@@ -308,7 +311,7 @@ async function scrapeShopifyCollections(vendorConfig) {
             vendor: vendorConfig.name,
             vendorUrl: vendorConfig.baseUrl,
             url: productUrl,
-            affiliateUrl: `${productUrl}?ref=keyboardtracker`,
+            affiliateUrl: `${productUrl}${vendorConfig.referralParam || '?ref=keyboardtracker'}`,
             price: `$${product.variants?.[0]?.price || '0'}`,
             category: category,
             status: 'active',
