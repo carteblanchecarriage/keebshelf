@@ -4,9 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 // Data storage
-const DATA_FILE = path.join(__dirname, '..', 'data', 'scraped-data.json');
+const DATA_FILE = path.join(__dirname, '..', 'public', 'data.json');
 
-// Ensure data directory exists
+// Ensure public directory exists
 const dataDir = path.dirname(DATA_FILE);
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
