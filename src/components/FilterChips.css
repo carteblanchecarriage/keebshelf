@@ -1,0 +1,40 @@
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.filter-chip {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid #e0ddd5;
+  background: white;
+  color: #6b6b6b;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.filter-chip:hover {
+  border-color: #c4a35a;
+  color: #c4a35a;
+}
+
+.filter-chip.active {
+  background: #c4a35a;
+  border-color: #c4a35a;
+  color: white;
+}
+
+@media (max-width: 640px) {
+  .filter-chips {
+    gap: 0.5rem;
+  }
+
+  .filter-chip {
+    padding: 0.4rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+}

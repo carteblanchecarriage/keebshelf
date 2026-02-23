@@ -1,0 +1,189 @@
+.guide-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  flex: 1;
+}
+
+.guide-content h1 {
+  font-size: 2.5rem;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  font-family: serif;
+}
+
+.guide-content h2 {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #c4a35a;
+  padding-bottom: 0.5rem;
+}
+
+.guide-content h3 {
+  font-size: 1.25rem;
+  color: #2d2d2d;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.guide-content h4 {
+  font-size: 1rem;
+  color: #c4a35a;
+  margin-bottom: 0.5rem;
+}
+
+.guide-content p {
+  color: #6b6b6b;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.guide-content ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.guide-content li {
+  color: #6b6b6b;
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.guide-content strong {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.intro {
+  font-size: 1.125rem;
+  color: #4a4a4a;
+  margin-bottom: 2rem;
+}
+
+/* Size grid for Beginners Guide */
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.size-card {
+  background: #f5f4f0;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e0ddd5;
+}
+
+.size-card h3 {
+  color: #c4a35a;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.size-card p {
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.size-card ul {
+  font-size: 0.875rem;
+  padding-left: 1rem;
+}
+
+.size-card li {
+  margin-bottom: 0.25rem;
+}
+
+/* Checklist */
+.checklist {
+  list-style: none;
+  padding-left: 0;
+}
+
+.checklist li {
+  font-size: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e0ddd5;
+}
+
+.checklist li:first-child {
+  border-top: 1px solid #e0ddd5;
+}
+
+/* Mistakes section */
+.mistakes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.mistake {
+  background: #fff5f5;
+  border-left: 4px solid #ef4444;
+  padding: 1rem 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.mistake h4 {
+  color: #dc2626;
+  margin: 0 0 0.5rem;
+}
+
+.mistake p {
+  color: #166534;
+  margin: 0;
+  font-weight: 500;
+}
+
+.mistake p::before {
+  content: "✓ ";
+}
+
+/* Glossary list */
+.glossary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.glossary-item {
+  padding: 1.5rem;
+  background: #f5f4f0;
+  border-radius: 0.75rem;
+  border: 1px solid #e0ddd5;
+}
+
+.glossary-item h3 {
+  color: #c4a35a;
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+}
+
+.glossary-item p {
+  margin: 0;
+  color: #6b6b6b;
+}
+
+@media (max-width: 768px) {
+  .guide-content {
+    padding: 1rem;
+  }
+  
+  .guide-content h1 {
+    font-size: 2rem;
+  }
+  
+  .size-grid {
+    grid-template-columns: 1fr;
+  }
+}

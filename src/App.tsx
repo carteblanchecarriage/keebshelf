@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import Header from './components/Header';
 import Footer from './components/Footer';
 import ProductModal from './components/ProductModal';
+import SwitchGuide from './pages/SwitchGuide';
+import BeginnersGuide from './pages/BeginnersGuide';
+import Glossary from './pages/Glossary';
 
 interface Product {
   id: string;
@@ -14,16 +18,28 @@ interface Product {
   description?: string;
 }
 
-const categories = [
-  { id: 'all', label: 'All Products' },
-  { id: 'keyboard', label: 'Keyboards' },
-  { id: 'switches', label: 'Switches' },
-  { id: 'keycaps', label: 'Keycaps' },
-  { id: 'artisan', label: 'Artisan' },
-  { id: 'case', label: 'Cases' },
-];
+export default function App() {
+  // Simple routing based on path
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
-function App() {
+  useEffect(() => {
+    const handlePopState = () => setCurrentPath(window.location.pathname);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Route to content pages
+  if (currentPath === '/switch-guide') {
+    return <SwitchGuide />;
+  }
+  if (currentPath === '/beginners-guide') {
+    return <BeginnersGuide />;
+  }
+  if (currentPath === '/glossary') {
+    return <Glossary />;
+  }
+
+  // Main page with product grid
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState('all');
@@ -53,7 +69,12 @@ function App() {
     if (category === 'all') {
       setFilteredProducts(products);
     } else {
-      setFilteredProducts(products.filter(p => p.category === category));
+      // Handle both singular and plural categories
+      const normalizedCategory = category === 'keyboard' ? 'keyboard' : category;
+      setFilteredProducts(products.filter(p => 
+        p.category === normalizedCategory ||
+        (normalizedCategory === 'keyboard' && (!p.category || p.category === 'keyboard'))
+      ));
     }
     setDisplayLimit(12);
   };
@@ -75,51 +96,44 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header">
-        <div className="logo">
-          <h1>Switchyard</h1>
-          <span>Mechanical Keyboard Tracker - Auto-Deploy Test</span>
-        </div>
-        <nav className="nav">
-          {categories.map(cat => (
-            <button
-              key={cat.id}
-              className={activeCategory === cat.id ? 'active' : ''}
-              onClick={() => handleCategoryChange(cat.id)}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </nav>
-      </header>
-
+      <Header />
       <main className="main">
         <div className="stats">
           {filteredProducts.length} products
         </div>
 
+        <div className="filter-chips">
+          {['all', 'keyboard', 'switches', 'keycaps', 'artisan', 'case'].map(cat => (
+            <button
+              key={cat}
+              className={`filter-chip ${activeCategory === cat ? 'active' : ''}`}
+              onClick={() => handleCategoryChange(cat)}
+            >
+              {cat === 'all' ? 'All Products' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </button>
+          ))}
+        </div>
+
         <div className="product-grid">
           {displayedProducts.map(product => (
-            <div 
-              key={product.id} 
+            <div
+              key={product.id}
               className="product-card"
               onClick={() => setSelectedProduct(product)}
             >
-              <a href={product.url} target="_blank" rel="noopener noreferrer">
-                <div className="product-image">
-                  {product.image ? (
-                    <img src={product.image} alt={product.name} />
-                  ) : (
-                    <div className="no-image">No Image</div>
-                  )}
-                </div>
-                <div className="product-info">
-                  <span className="vendor">{product.vendor}</span>
-                  <h3 className="name">{product.name}</h3>
-                  <span className="price">{product.price || 'Check Price'}</span>
-                  <span className="category">{product.category}</span>
-                </div>
-              </a>
+              <div className="product-image">
+                {product.image ? (
+                  <img src={product.image} alt={product.name} />
+                ) : (
+                  <div className="no-image">No Image</div>
+                )}
+              </div>
+              <div className="product-info">
+                <span className="vendor">{product.vendor}</span>
+                <h3 className="name">{product.name}</h3>
+                <span className="price">{product.price || 'Check Price'}</span>
+                <span className="category">{product.category}</span>
+              </div>
             </div>
           ))}
         </div>
@@ -133,12 +147,10 @@ function App() {
         )}
       </main>
       <Footer />
-      <ProductModal 
-        product={selectedProduct} 
-        onClose={() => setSelectedProduct(null)} 
+      <ProductModal
+        product={selectedProduct}
+        onClose={() => setSelectedProduct(null)}
       />
     </div>
   );
 }
-
-export default App;
