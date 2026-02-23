@@ -404,6 +404,56 @@
 }
 
 /* ---------------------------------------
+   Finish Button (Step 5)
+   --------------------------------------- */
+.wizard-btn-finish {
+    background: var(--accent, #c4a35a);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.wizard-btn-finish:hover:not(:disabled) {
+    background: var(--ink, #1a1a1a);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wizard-btn-finish:disabled {
+    background: var(--border, #e8e8e8);
+    color: var(--faded, #6b6b6b);
+    cursor: not-allowed;
+}
+
+.wizard-btn-finish:focus-visible {
+    outline: 2px solid var(--accent, #c4a35a);
+    outline-offset: 2px;
+}
+
+/* Dark mode for finish button */
+@media (prefers-color-scheme: dark) {
+    .wizard-btn-finish:disabled {
+        background: var(--border, #444444);
+        color: var(--faded, #888888);
+    }
+}
+
+[data-theme="dark"] .wizard-btn-finish:disabled,
+.dark-mode .wizard-btn-finish:disabled {
+    background: var(--border, #444444);
+    color: var(--faded, #888888);
+}
+
+/* ---------------------------------------
    Utility Classes
    --------------------------------------- */
 .wizard-widget.hidden {

@@ -2046,6 +2046,31 @@
                 }
             }
         }
+        
+        function finishWidget() {
+            // Close the widget
+            const widget = document.getElementById('keyboard-wizard');
+            if (widget) {
+                widget.classList.add('collapsed');
+            }
+            
+            // Apply final filters
+            filterGridByWizardSelections();
+            
+            // Scroll to results
+            const resultsSection = document.getElementById('collection');
+            if (resultsSection) {
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+            // Reset to step 1 for next time
+            setTimeout(() => {
+                document.querySelectorAll('[id^="widget-step-"]').forEach((el, idx) => {
+                    el.style.display = idx === 0 ? 'block' : 'none';
+                });
+                currentWidgetStep = 1;
+            }, 500);
+        }
 
         // Floating Widget Expand/Collapse Logic
             const widget = document.getElementById('keyboard-wizard');
@@ -2990,25 +3015,25 @@
 
                     <div class="wizard-options-grid">
                         <div class="wizard-option-card" data-value="budget" onclick="selectWidgetOption(5, 'budget')">
-                            <div class="wizard-icon">💰</div>
+                            <div class="wizard-icon">[$]</div>
                             <h4 class="wizard-option-title">Under $100</h4>
                             <p class="wizard-option-desc">Entry level, great for first time</p>
                         </div>
 
                         <div class="wizard-option-card" data-value="mid" onclick="selectWidgetOption(5, 'mid')">
-                            <div class="wizard-icon">💵</div>
+                            <div class="wizard-icon">[$$]</div>
                             <h4 class="wizard-option-title">$100–$200</h4>
                             <p class="wizard-option-desc">Sweet spot. Quality & features</p>
                         </div>
 
                         <div class="wizard-option-card" data-value="premium" onclick="selectWidgetOption(5, 'premium')">
-                            <div class="wizard-icon">💎</div>
+                            <div class="wizard-icon">[P]</div>
                             <h4 class="wizard-option-title">$200+</h4>
                             <p class="wizard-option-desc">Premium. Endgame territory</p>
                         </div>
 
                         <div class="wizard-option-card" data-value="flexible" onclick="selectWidgetOption(5, 'flexible')">
-                            <div class="wizard-icon">🌟</div>
+                            <div class="wizard-icon">[*]</div>
                             <h4 class="wizard-option-title">Flexible</h4>
                             <p class="wizard-option-desc">Show me the best regardless of price</p>
                         </div>
@@ -3016,7 +3041,7 @@
 
                     <div class="wizard-nav">
                         <button class="wizard-btn-back" onclick="widgetPrevStep()">← Back</button>
-                        <button class="wizard-btn-finish" id="widget-btn-finish" onclick="finishWidget()" disabled>✓ See Results</button>
+                        <button class="wizard-btn-finish" id="widget-btn-finish" onclick="finishWidget()" disabled>[OK] See Results</button>
                     </div>
                 </div>
             </div>
