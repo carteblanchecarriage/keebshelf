@@ -16,6 +16,9 @@ import BestGamingGuide from './pages/learn/BestGamingGuide';
 import Best60PercentGuide from './pages/learn/Best60PercentGuide';
 import BestProgrammingGuide from './pages/learn/BestProgrammingGuide';
 import GroupBuysGuide from './pages/learn/GroupBuysGuide';
+import LayoutSizesGuide from './pages/learn/LayoutSizesGuide';
+import Best75PercentGuide from './pages/learn/Best75PercentGuide';
+import KeycapProfilesGuide from './pages/learn/KeycapProfilesGuide';
 
 interface Product {
   id: string;
@@ -148,6 +151,15 @@ export default function App() {
   }
   if (currentPath === '/learn/best-programming' || currentPath === '/best-programming') {
     return <BestProgrammingGuide />;
+  }
+  if (currentPath === '/learn/layout-sizes') {
+    return <LayoutSizesGuide />;
+  }
+  if (currentPath === '/learn/best-75-percent') {
+    return <Best75PercentGuide />;
+  }
+  if (currentPath === '/learn/keycap-profiles') {
+    return <KeycapProfilesGuide />;
   }
 
   // Main app render

@@ -8,6 +8,7 @@ const guideCategories = [
     icon: '🎓',
     guides: [
       { path: '/learn/beginners-guide', title: 'Beginner\'s Guide', desc: 'New to mechanical keyboards? Start here with the basics.', difficulty: 'Easy' },
+      { path: '/learn/layout-sizes', title: 'Layout Sizes Explained', desc: '40%, 60%, 65%, 75%, TKL, Full-size - visual comparison.', difficulty: 'Easy' },
       { path: '/learn/glossary', title: 'Keyboard Glossary', desc: 'Master the terminology. Every term you need to know.', difficulty: 'Easy' },
       { path: '/learn/faq', title: 'FAQ', desc: 'Quick answers to common questions.', difficulty: 'Easy' },
     ]
@@ -17,6 +18,7 @@ const guideCategories = [
     icon: '🔍',
     guides: [
       { path: '/learn/switch-guide', title: 'Switch Guide', desc: 'Linear, tactile, clicky — find your perfect switch.', difficulty: 'Medium' },
+      { path: '/learn/keycap-profiles', title: 'Keycap Profiles', desc: 'Cherry, SA, OEM, DSA — how shape changes everything.', difficulty: 'Medium' },
       { path: '/learn/artisan-guide', title: 'Artisan Keycaps', desc: 'The world of custom, collectible keycaps.', difficulty: 'Medium' },
       { path: '/learn/group-buys', title: 'What Are Group Buys?', desc: 'Understanding the GB ecosystem and how to participate.', difficulty: 'Medium' },
     ]
@@ -25,9 +27,10 @@ const guideCategories = [
     title: 'Recommendations',
     icon: '⭐',
     guides: [
-      { path: '/learn/best-gaming', title: 'Best Gaming Keyboards', desc: 'Low latency, fast switches, competitive edge.', difficulty: 'Easy' },
       { path: '/learn/best-budget', title: 'Best Budget Keyboards', desc: 'Quality mechanical keyboards under $100.', difficulty: 'Easy' },
+      { path: '/learn/best-gaming', title: 'Best Gaming Keyboards', desc: 'Low latency, fast switches, competitive edge.', difficulty: 'Easy' },
       { path: '/learn/best-60-percent', title: 'Best 60% Keyboards', desc: 'Compact layouts that don\'t compromise.', difficulty: 'Medium' },
+      { path: '/learn/best-75-percent', title: 'Best 75% Keyboards', desc: 'The enthusiast sweet spot: arrows + F-row.', difficulty: 'Medium' },
       { path: '/learn/best-programming', title: 'Best for Programming', desc: 'Comfort and efficiency for long coding sessions.', difficulty: 'Easy' },
     ]
   },

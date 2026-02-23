@@ -1082,3 +1082,356 @@ gaming-cta {
 .styled-list li {
   margin-bottom: 0.75rem;
 }
+
+/* Layout Sizes Guide Styles */
+.size-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.size-card {
+  background: white;
+  border: 1px solid var(--border, #e8e8e8);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: box-shadow 0.2s;
+}
+
+.size-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.size-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.size-card-header h3 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.size-keys {
+  background: var(--accent, #c4a35a);
+  color: white;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.size-visual {
+  background: var(--ink, #1a1a1a);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem;
+  text-align: center;
+}
+
+.size-bar {
+  background: linear-gradient(90deg, #c4a35a 0%, #e8d5a3 100%);
+  height: 24px;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.size-label {
+  color: var(--accent, #c4a35a);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.size-details {
+  margin-top: 1.5rem;
+}
+
+.size-details .examples {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border, #e8e8e8);
+  font-size: 0.9rem;
+}
+
+.keycap-sizes {
+  margin: 2rem 0;
+}
+
+.keycap-size-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border, #e8e8e8);
+}
+
+.keycap-visual-wrapper {
+  flex: 1;
+  min-width: 150px;
+}
+
+.keycap-visual {
+  background: var(--ink, #1a1a1a);
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keycap-text {
+  color: white;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.keycap-width {
+  width: 80px;
+  font-weight: 600;
+  color: var(--ink, #1a1a1a);
+}
+
+.keycap-percent {
+  width: 60px;
+  color: var(--faded, #6b6b6b);
+  font-size: 0.9rem;
+}
+
+/* 75% Guide Styles */
+.comparison-simple {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.compare-item {
+  background: white;
+  border: 1px solid var(--border, #e8e8e8);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.compare-item h4 {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.compare-item .verdict {
+  display: block;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border, #e8e8e8);
+  color: var(--accent, #c4a35a);
+  font-weight: 500;
+}
+
+.faq-list {
+  margin: 1.5rem 0;
+}
+
+.faq-item {
+  background: white;
+  border: 1px solid var(--border, #e8e8e8);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.faq-item summary {
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item p {
+  padding: 0 1.25rem 1.25rem;
+  margin: 0;
+  color: var(--faded, #6b6b6b);
+  font-size: 0.95rem;
+}
+
+/* Keycap Profiles Guide Styles */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.profile-card {
+  background: white;
+  border: 1px solid var(--border, #e8e8e8);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.profile-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--ink, #1a1a1a);
+  color: var(--accent, #c4a35a);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.profile-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.profile-badge {
+  margin-left: auto;
+  background: var(--paper-dark, #f7f6f2);
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--faded, #6b6b6b);
+}
+
+.profile-desc {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--ink, #1a1a1a);
+}
+
+.profile-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--paper-dark, #f7f6f2);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.profile-specs div {
+  color: var(--faded, #6b6b6b);
+}
+
+.profile-details p {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.profile-cons {
+  color: #ef4444;
+}
+
+.comparison-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.compare-card {
+  background: white;
+  border: 1px solid var(--border, #e8e8e8);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.compare-card h3 {
+  margin-bottom: 1rem;
+  color: var(--ink, #1a1a1a);
+}
+
+.compare-card p {
+  margin-bottom: 1rem;
+  color: var(--faded, #6b6b6b);
+}
+
+.compare-card ul {
+  padding-left: 1.25rem;
+}
+
+.compare-card li {
+  margin-bottom: 0.5rem;
+}
+
+.materials-table {
+  margin: 1.5rem 0;
+}
+
+.makers-table-wrapper {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.recommendation-list {
+  margin: 1.5rem 0;
+}
+
+.rec-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border, #e8e8e8);
+}
+
+.rec-label {
+  min-width: 100px;
+  font-weight: 600;
+  color: var(--ink, #1a1a1a);
+}
+
+.rec-value {
+  color: var(--faded, #6b6b6b);
+}
+
+.note-box {
+  background: #eff6ff;
+  border-left: 4px solid #3b82f6;
+  padding: 1rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .size-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .keycap-size-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .keycap-visual-wrapper {
+    width: 100%;
+  }
+}
