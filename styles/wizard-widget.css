@@ -245,6 +245,132 @@
 }
 
 /* ---------------------------------------
+   Step Header Styles
+   --------------------------------------- */
+.wizard-step-header {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.wizard-step-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--faded, #6b6b6b);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+}
+
+.wizard-question {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--ink, #1a1a1a);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+}
+
+.wizard-subtitle {
+    font-size: 0.85rem;
+    color: var(--faded, #6b6b6b);
+    margin: 0;
+}
+
+/* ---------------------------------------
+   Wizard Navigation
+   --------------------------------------- */
+.wizard-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border, #e8e8e8);
+}
+
+.wizard-nav-right {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Navigation Buttons */
+.wizard-btn-next,
+.wizard-btn-back,
+.wizard-btn-skip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+}
+
+/* Next Button */
+.wizard-btn-next {
+    background: var(--accent, #c4a35a);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.25rem;
+}
+
+.wizard-btn-next:hover:not(:disabled) {
+    background: var(--ink, #1a1a1a);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.wizard-btn-next:disabled {
+    background: var(--border, #e8e8e8);
+    color: var(--faded, #6b6b6b);
+    cursor: not-allowed;
+}
+
+.wizard-btn-next:focus-visible {
+    outline: 2px solid var(--accent, #c4a35a);
+    outline-offset: 2px;
+}
+
+/* Back Button */
+.wizard-btn-back {
+    background: transparent;
+    color: var(--ink, #1a1a1a);
+    border: 1.5px solid var(--border, #e8e8e8);
+    padding: 0.6rem 1rem;
+}
+
+.wizard-btn-back:hover {
+    border-color: var(--accent, #c4a35a);
+    color: var(--accent, #c4a35a);
+    background: rgba(196, 163, 90, 0.05);
+}
+
+.wizard-btn-back:focus-visible {
+    outline: 2px solid var(--accent, #c4a35a);
+    outline-offset: 2px;
+}
+
+/* Skip Button */
+.wizard-btn-skip {
+    background: transparent;
+    color: var(--faded, #6b6b6b);
+    border: none;
+    padding: 0.6rem 0.75rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.wizard-btn-skip:hover {
+    color: var(--ink, #1a1a1a);
+}
+
+.wizard-btn-skip:focus-visible {
+    outline: 2px solid var(--accent, #c4a35a);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* ---------------------------------------
    DARK MODE STYLES
    --------------------------------------- */
 @media (prefers-color-scheme: dark) {
@@ -306,6 +432,48 @@
                     0 4px 12px rgba(0, 0, 0, 0.5),
                     0 0 0 4px rgba(196, 163, 90, 0.15);
     }
+
+    /* Step headers dark mode */
+    .wizard-step-number {
+        color: var(--faded, #888888);
+    }
+    
+    .wizard-question {
+        color: var(--ink, #fdfcf8);
+    }
+    
+    .wizard-subtitle {
+        color: var(--faded, #888888);
+    }
+    
+    /* Navigation buttons dark mode */
+    .wizard-nav {
+        border-color: var(--border, #444444);
+    }
+    
+    .wizard-btn-next:disabled {
+        background: var(--border, #444444);
+        color: var(--faded, #888888);
+    }
+    
+    .wizard-btn-back {
+        color: var(--ink, #fdfcf8);
+        border-color: var(--border, #444444);
+    }
+    
+    .wizard-btn-back:hover {
+        border-color: var(--accent, #c4a35a);
+        color: var(--accent, #c4a35a);
+        background: rgba(196, 163, 90, 0.1);
+    }
+    
+    .wizard-btn-skip {
+        color: var(--faded, #888888);
+    }
+    
+    .wizard-btn-skip:hover {
+        color: var(--ink, #fdfcf8);
+    }
 }
 
 /* Manual dark mode class support */
@@ -349,6 +517,56 @@
     background: var(--accent, #c4a35a);
     color: var(--ink, #1a1a1a);
     border-color: var(--paper, #1a1a1a);
+}
+
+/* Step headers - manual dark mode */
+[data-theme="dark"] .wizard-step-number,
+.dark-mode .wizard-step-number {
+    color: var(--faded, #888888);
+}
+
+[data-theme="dark"] .wizard-question,
+.dark-mode .wizard-question {
+    color: var(--ink, #fdfcf8);
+}
+
+[data-theme="dark"] .wizard-subtitle,
+.dark-mode .wizard-subtitle {
+    color: var(--faded, #888888);
+}
+
+/* Navigation - manual dark mode */
+[data-theme="dark"] .wizard-nav,
+.dark-mode .wizard-nav {
+    border-color: var(--border, #444444);
+}
+
+[data-theme="dark"] .wizard-btn-next:disabled,
+.dark-mode .wizard-btn-next:disabled {
+    background: var(--border, #444444);
+    color: var(--faded, #888888);
+}
+
+[data-theme="dark"] .wizard-btn-back,
+.dark-mode .wizard-btn-back {
+    color: var(--ink, #fdfcf8);
+    border-color: var(--border, #444444);
+}
+
+[data-theme="dark"] .wizard-btn-back:hover,
+.dark-mode .wizard-btn-back:hover {
+    border-color: var(--accent, #c4a35a);
+    color: var(--accent, #c4a35a);
+}
+
+[data-theme="dark"] .wizard-btn-skip,
+.dark-mode .wizard-btn-skip {
+    color: var(--faded, #888888);
+}
+
+[data-theme="dark"] .wizard-btn-skip:hover,
+.dark-mode .wizard-btn-skip:hover {
+    color: var(--ink, #fdfcf8);
 }
 
 /* ---------------------------------------
@@ -400,6 +618,31 @@
             transform: translateY(0);
             opacity: 1;
         }
+    }
+    
+    /* Mobile step header adjustments */
+    .wizard-step-header {
+        margin-bottom: 1rem;
+    }
+    
+    .wizard-question {
+        font-size: 1rem;
+    }
+    
+    .wizard-subtitle {
+        font-size: 0.8rem;
+    }
+    
+    /* Mobile navigation adjustments */
+    .wizard-nav {
+        margin-top: 1rem;
+        padding-top: 0.75rem;
+    }
+    
+    .wizard-btn-next,
+    .wizard-btn-back {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
     }
 }
 
