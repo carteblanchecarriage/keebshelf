@@ -11,11 +11,18 @@ on:
       - 'data.json'
       - 'public/data.json'
 
+permissions:
+  contents: write  # For committing data updates
+  pages: write     # For deploying to GitHub Pages
+  id-token: write  # For requesting JWT
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  scrape:
+  scrape-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # Allow pushing to repo
     
     steps:
       - name: Checkout repo
@@ -28,7 +35,7 @@ jobs:
         with:
           node-version: '20'
           
-      - name: Install root dependencies
+      - name: Install dependencies
         run: npm ci
         
       - name: Install scraper dependencies
@@ -38,47 +45,29 @@ jobs:
         run: node scraper/index.js
         continue-on-error: true
         
-      - name: Commit and push if changed
+      - name: Commit scraped data if changed
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add data.json public/data.json data/keyboard-data.json dashboard/data.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update: $(date '+%Y-%m-%d %H:%M')" && git push)
-
-  build-and-deploy:
-    needs: scrape
-    if: always()  # Run even if scrape fails (to redeploy on data changes)
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+        continue-on-error: true
         
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Build site
+      - name: Build site with fresh data
         run: npm run build
         
-      - name: Ensure data.json is in build
-        run: cp data.json build/data.json
-        
+      - name: Verify data.json in build
+        run: |
+          ls -la build/data.json
+          cat build/data.json | head -c 500
+          
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
-      - name: Upload artifact
+      - name: Upload to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: './build'
           
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages  
         uses: actions/deploy-pages@v4
