@@ -7,16 +7,18 @@
     <meta name="theme-color" content="#000000" />
     
     <!-- Primary Meta Tags -->
-    <title>Switchyard | Mechanical Keyboard Tracker</title>
-    <meta name="description" content="Track mechanical keyboard group buys, in-stock drops, and vendors. Find your perfect keyboard with Switchyard - the ultimate mechanical keyboard tracker and discovery tool." />
-    <meta name="keywords" content="mechanical keyboards, keyboard tracker, group buys, keycaps, switches, keyboard vendors, custom keyboards" />
+    <title>Switchyard | Mechanical Keyboard Tracker & Group Buy Database</title>
+    <meta name="description" content="Track mechanical keyboard group buys, in-stock drops, and vendors. Find your perfect keyboard with Switchyard - the ultimate mechanical keyboard tracker and discovery tool with curated guides and reviews." />
+    <meta name="keywords" content="mechanical keyboards, keyboard tracker, group buys, keycaps, switches, keyboard vendors, custom keyboards, keyboard reviews, artisan keycaps, hot-swap keyboards, 60% keyboards, 75% keyboards" />
     <meta name="author" content="Switchyard" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
     <link rel="canonical" href="https://switchyard.app" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://switchyard.app" />
-    <meta property="og:title" content="Switchyard | Mechanical Keyboard Tracker" />
+    <meta property="og:title" content="Switchyard | Mechanical Keyboard Tracker & Group Buy Database" />
     <meta property="og:description" content="Track mechanical keyboard group buys, in-stock drops, and vendors. Find your perfect keyboard with Switchyard." />
     <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
     <meta property="og:image:width" content="1200" />
@@ -27,9 +29,10 @@
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://switchyard.app" />
-    <meta property="twitter:title" content="Switchyard | Mechanical Keyboard Tracker" />
+    <meta property="twitter:title" content="Switchyard | Mechanical Keyboard Tracker & Group Buy Database" />
     <meta property="twitter:description" content="Track mechanical keyboard group buys, in-stock drops, and vendors. Find your perfect keyboard with Switchyard." />
     <meta property="twitter:image" content="%PUBLIC_URL%/og-image.png" />
+    <meta property="twitter:image:alt" content="Switchyard - Mechanical Keyboard Tracker" />
     
     <!-- Mobile/App -->
     <meta name="mobile-web-app-capable" content="yes" />
@@ -44,6 +47,22 @@
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Switchyard",
+      "url": "https://switchyard.app",
+      "description": "The ultimate mechanical keyboard tracker and discovery tool",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://switchyard.app/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run Switchyard - the mechanical keyboard tracker app.</noscript>

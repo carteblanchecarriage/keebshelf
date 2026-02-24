@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import { usePageSEO } from '../hooks/usePageSEO';
 import './Guide.css';
 
 const terms = [
@@ -114,6 +115,12 @@ const terms = [
 ];
 
 export default function Glossary() {
+  usePageSEO({
+    title: "Keyboard Glossary - Mechanical Keyboard Terms Defined | Switchyard",
+    description: "Master mechanical keyboard terminology with our comprehensive glossary. Learn what actuation, lubing, hot-swappable, PCB, stabilizers, and more mean in the keyboard world.",
+    keywords: "mechanical keyboard glossary, keyboard terminology, keycap definition, switch terms, group buy definition, hot-swap meaning, keyboard glossary, QMK, stabilizers, keycap profile"
+  });
+
   return (
     <Layout>
       <div className="guide-content">

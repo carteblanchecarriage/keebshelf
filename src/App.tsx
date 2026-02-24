@@ -3,6 +3,7 @@ import './App.css';
 import Layout from './components/Layout';
 import ProductModal from './components/ProductModal';
 import Wizard from './components/Wizard';
+import { usePageSEO } from './hooks/usePageSEO';
 
 // Learn Pages
 import Learn from './pages/learn';
@@ -75,6 +76,15 @@ export default function App() {
       });
   }, [currentPath]);
 
+  // SEO for main product grid
+  usePageSEO({
+    title: activeCategory === 'all' 
+      ? 'Switchyard | Mechanical Keyboard Tracker'
+      : `${activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} | Switchyard`,
+    description: `Browse ${filteredProducts.length}+ ${activeCategory === 'all' ? 'mechanical keyboards, keycaps, switches, and accessories' : activeCategory} from top vendors. Track group buys and find in-stock drops.`,
+    keywords: `mechanical keyboards, ${activeCategory}, keyboard tracker, group buys, keycaps, switches`
+  });
+
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
     const baseProducts = wizardFilters || products;
@@ -101,6 +111,7 @@ export default function App() {
       // Accessories: carrying cases, deskmats, cables, etc.
       setFilteredProducts(baseProducts.filter(p => {
         const name = p.name?.toLowerCase() || '';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
         const cat = p.category || '';
         // Carrying cases
         const isCarryingCase = name.includes('carrying case') || 

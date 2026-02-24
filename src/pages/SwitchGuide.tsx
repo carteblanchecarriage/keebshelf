@@ -1,8 +1,15 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import { usePageSEO } from '../hooks/usePageSEO';
 import './Guide.css';
 
 export default function SwitchGuide() {
+  usePageSEO({
+    title: "Switch Guide - Linear vs Tactile vs Clicky | Switchyard",
+    description: "Complete guide to mechanical keyboard switches: linear, tactile, and clicky. Compare Cherry MX Red, Brown, Blue, and more. Find the perfect switch for gaming, typing, or office work.",
+    keywords: "mechanical keyboard switches, linear vs tactile, Cherry MX switches, Cherry MX Red, Cherry MX Brown, switch guide, gaming switches, typing switches, keyboard switch types"
+  });
+
   return (
     <Layout>
       <div className="guide-content">
