@@ -98,7 +98,7 @@ function App() {
         <div className="product-grid">
           {displayedProducts.map(product => (
             <div key={product.id} className="product-card">
-              <a href={product.url} target="_blank" rel="noopener noreferrer">
+              <a href={product.affiliateUrl || product.url} target="_blank" rel="noopener noreferrer">
                 <div className="product-image">
                   {product.image ? (
                     <img src={product.image} alt={product.name} />

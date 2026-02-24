@@ -2,6 +2,7 @@ export interface Product {
   id: string;
   name: string;
   url: string;
+  affiliateUrl?: string;
   image?: string;
   images?: string[];
   price?: string;
