@@ -29,7 +29,7 @@ I think your audience would find value in having a single source for "what's act
 **What I'm NOT asking for:**
 No sponsored post, no obligation. If it doesn't fit your content, no worries at all.
 
-**Quick link:** [keebshelf.com]
+**Quick link:** [switchyard.com]
 
 Would love 2 minutes of your feedback if you have time to check it out. If not, totally fine—keep making great content either way.
 
@@ -93,7 +93,7 @@ Subject: Partnership opportunity – driving qualified traffic to [Vendor]
 
 Hi [Marketing Team/Partnership Manager],
 
-I'm Alex, creator of Keebshelf (keebshelf.com), a mechanical keyboard discovery platform focusing on group buys and live inventory.
+I'm Alex, creator of Keebshelf (switchyard.com), a mechanical keyboard discovery platform focusing on group buys and live inventory.
 
 **Current stats:**
 • 276 keyboards tracked
@@ -121,7 +121,7 @@ Alex
 
 ---
 Email: [email]
-Website: keebshelf.com
+Website: switchyard.com
 ```
 
 ### Kono.store (Specific)
@@ -239,7 +239,7 @@ Tired of checking 5 sites and still missing group buy windows announced here on 
 • Mobile-friendly, no signup
 • Updates every few hours
 
-🔗 https://carteblanchecarriage.github.io/keebshelf/dashboard/
+🔗 https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 **Notes:**
 • Affiliate links (full disclosure)
@@ -268,7 +268,7 @@ Features:
 ✅ Mobile-friendly
 ✅ Updates every 2 hours
 
-👉 https://carteblanchecarriage.github.io/keebshelf/dashboard/
+👉 https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 Has affiliate links (coffee money if you buy). Free to use either way.
 
@@ -307,7 +307,7 @@ Features I built because I needed them:
 • Mobile-friendly
 • No signup required
 
-Link: https://carteblanchecarriage.github.io/keebshelf/dashboard/
+Link: https://carteblanchecarriage.github.io/switchyard/dashboard/
 ```
 
 **Tweet 4/5:**
@@ -346,7 +346,7 @@ Stack: Node.js scraper on a homelab, vanilla JS frontend, GitHub Pages hosting. 
 
 Links are affiliate (full disclosure). No ads or tracking.
 
-URL: https://carteblanchecarriage.github.io/keebshelf/dashboard/
+URL: https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 Would love feedback on what other features would be useful. Plan to add email alerts for specific boards if there's interest.
 ```
@@ -444,7 +444,7 @@ I've built Keebshelf, an automated group buy and inventory tracker for mechanica
 
 Would appreciate a listing in the [Resources/Vendors] section.
 
-URL: https://carteblanchecarriage.github.io/keebshelf/dashboard/
+URL: https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 Thanks,
 Alex
@@ -481,7 +481,7 @@ Happy to provide quotes, data, or user testimonials.
 
 Best,
 Alex
-keebshelf.com
+switchyard.com
 ```
 
 ---
@@ -565,7 +565,7 @@ Questions? Just reply to this email.
 Happy typing,
 Alex
 
-P.S. Follow us on Twitter [@keebshelf] for real-time restock alerts.
+P.S. Follow us on Twitter [@switchyard] for real-time restock alerts.
 ```
 
 ### Follow-up (Week 2)

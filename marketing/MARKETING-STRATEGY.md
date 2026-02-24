@@ -33,7 +33,7 @@ No more checking 5 sites to see what's available:
 • Mobile-friendly, no signup
 • Auto-updates every few hours
 
-🔗 https://carteblanchecarriage.github.io/keebshelf/dashboard/
+🔗 https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 Has affiliate links (full disclosure). If you click and buy, I might make enough for ☕.
 
@@ -75,7 +75,7 @@ I built this because I kept missing group buy windows and got tired of opening 8
 • Hides sold-out items automatically
 • Updates every few hours via scraper
 
-🔗 [keebshelf.com](https://carteblanchecarriage.github.io/keebshelf/dashboard/)
+🔗 [switchyard.com](https://carteblanchecarriage.github.io/switchyard/dashboard/)
 
 **Technical details:**
 • Static site (GitHub Pages)
@@ -137,7 +137,7 @@ Features I built because I needed them:
 • Mobile-friendly
 • No signup required
 
-👉 https://carteblanchecarriage.github.io/keebshelf/dashboard/
+👉 https://carteblanchecarriage.github.io/switchyard/dashboard/
 ```
 
 **Tweet 4/5:** Trust

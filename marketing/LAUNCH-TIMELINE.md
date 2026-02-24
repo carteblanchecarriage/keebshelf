@@ -27,8 +27,8 @@
 
 **Day -10:**
 - [ ] Create social media accounts:
-  - [ ] Twitter/X: @keebshelf
-  - [ ] Reddit: u/keebshelf (for commenting)
+  - [ ] Twitter/X: @switchyard
+  - [ ] Reddit: u/switchyard (for commenting)
   - [ ] Discord: Join target servers, establish presence
 - [ ] Set up social scheduling (Buffer)
 - [ ] Create profile bios
@@ -47,7 +47,7 @@
 **Day -6:**
 - [ ] Reach out to 3-5 keyboard YouTubers (personalized emails)
 - [ ] Prepare press kit (screenshots, description, logo)
-- [ ] Set up Google Alerts for "keebshelf"
+- [ ] Set up Google Alerts for "switchyard"
 
 **Day -4:**
 - [ ] Final code review and deployment
@@ -299,7 +299,7 @@
 ## Contingency Plans
 
 **If site crashes:**
-1. Immediate: `pm2 restart keebshelf-api`
+1. Immediate: `pm2 restart switchyard-api`
 2. Apologize publicly: "Looking into technical issues..."
 3. Post update when resolved
 

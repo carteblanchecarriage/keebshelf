@@ -31,7 +31,7 @@ Keychron, Drop, KBDfans, NovelKeys, Epomaker, plus Geekhack interest checks
 
 **Affiliate disclosure:** Links are affiliate where available. No ads, no tracking cookies.
 
-[**Keebshelf Dashboard**](https://carteblanchecarriage.github.io/keebshelf/dashboard/)
+[**Keebshelf Dashboard**](https://carteblanchecarriage.github.io/switchyard/dashboard/)
 
 **Looking for feedback on:**
 - Vendors I'm missing (who should I add?)
@@ -108,7 +108,7 @@ Features I built because I needed them:
 • Mobile-friendly
 • No signup required
 
-[https://carteblanchecarriage.github.io/keebshelf/dashboard/](https://carteblanchecarriage.github.io/keebshelf/dashboard/)
+[https://carteblanchecarriage.github.io/switchyard/dashboard/](https://carteblanchecarriage.github.io/switchyard/dashboard/)
 
 ---
 
@@ -173,7 +173,7 @@ Features:
 - Sold-out items hidden by default
 - Mobile-friendly, no signup
 
-https://carteblanchecarriage.github.io/keebshelf/dashboard/
+https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 Has affiliate links (full disclosure). Built it because I needed it.
 
@@ -194,7 +194,7 @@ Hi everyone – I've been working on a group buy tracker and wanted to share:
 
 **Note:** Contains affiliate links
 
-Feedback welcome: https://carteblanchecarriage.github.io/keebshelf/dashboard/
+Feedback welcome: https://carteblanchecarriage.github.io/switchyard/dashboard/
 ```
 
 ---
@@ -228,7 +228,7 @@ Built Keebshelf: a dashboard aggregating live inventory from Keychron, Drop, KBD
 
 Would love feedback on what other features would be useful. Plan to add email alerts for specific boards if there's interest.
 
-URL: https://carteblanchecarriage.github.io/keebshelf/dashboard/
+URL: https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 ---
 

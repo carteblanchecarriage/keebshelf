@@ -30,7 +30,7 @@
 ### Step 2: Add Data Stream
 1. Property → Data Streams → Add Stream
 2. Choose "Web"
-3. Website URL: `https://carteblanchecarriage.github.io/keebshelf/dashboard/`
+3. Website URL: `https://carteblanchecarriage.github.io/switchyard/dashboard/`
 4. Stream name: "Keebshelf Dashboard"
 5. Click "Create Stream"
 
@@ -141,7 +141,7 @@ Add to `<head>` of index.html:
 
 ### Step 2: Submit Sitemap
 1. In GSC → Sitemaps
-2. Add sitemap URL: `https://carteblanchecarriage.github.io/keebshelf/sitemap.xml`
+2. Add sitemap URL: `https://carteblanchecarriage.github.io/switchyard/sitemap.xml`
 3. Click Submit
 
 ### Step 3: Key Metrics to Track
@@ -340,12 +340,12 @@ document.getElementById('subscribe-form').addEventListener('submit', (e) => {
 
 Base link:
 ```
-https://carteblanchecarriage.github.io/keebshelf/dashboard/
+https://carteblanchecarriage.github.io/switchyard/dashboard/
 ```
 
 With UTM:
 ```
-https://carteblanchecarriage.github.io/keebshelf/dashboard/?utm_source=twitter&utm_medium=social&utm_campaign=launch&utm_content=thread-1
+https://carteblanchecarriage.github.io/switchyard/dashboard/?utm_source=twitter&utm_medium=social&utm_campaign=launch&utm_content=thread-1
 ```
 
 **UTM Structure:**
