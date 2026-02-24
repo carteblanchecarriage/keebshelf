@@ -12,7 +12,7 @@ So I built something stupid simple: **One page that aggregates every group buy a
 
 ## What It Does
 
-[Keebshelf](https://carteblanchecarriage.github.io/keebshelf/dashboard/) pulls live data from:
+[Switchyard](https://carteblanchecarriage.github.io/switchyard/dashboard/) pulls live data from:
 
 - **Keychron** (Q-series, K-series, the whole lineup)
 - **Drop** (CTRL, ALT, SHIFT, Holy Pandas)
@@ -49,7 +49,7 @@ And yeah, the affiliate links are there. If you buy through a link, I might get 
 
 ## Try It
 
-**[keebshelf.github.io](https://carteblanchecarriage.github.io/keebshelf/dashboard/)**
+**[switchyard.github.io](https://carteblanchecarriage.github.io/switchyard/dashboard/)**
 
 It's free, no signup, works on mobile, and loads fast because it's just a static site pulling JSON.
 

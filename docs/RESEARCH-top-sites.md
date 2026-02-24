@@ -1,4 +1,4 @@
-# Keebshelf Competitive Research & Feature Roadmap
+# Switchyard Competitive Research & Feature Roadmap
 
 ## What Makes Mechanical Keyboard Sites Successful
 
@@ -9,7 +9,7 @@
 - **Deep technical discussions** - PCB files, QMK firmware, plate files
 - **Mature user base** - Been around since 2011
 
-**What Keebshelf can learn:**
+**What Switchyard can learn:**
 - Track IC → GB progression (currently just scrapes them)
 - Show sentiment/engagement on IC threads (upvotes, comments)
 - Archive historical ICs (some lead to GB 12 months later)
@@ -21,7 +21,7 @@
 - **Sound tests** - Audio is crucial
 - **Daily routine** - People check every morning
 
-**What Keebshelf can learn:**
+**What Switchyard can learn:**
 - Daily "new drops" digest
 - Sound test integration
 - Photo-first layout (currently text-heavy)
@@ -32,7 +32,7 @@
 - **Purchase directly** - No friction
 - **Newsletter/notification** - "Notify me"
 
-**What Keebshelf can learn:**
+**What Switchyard can learn:**
 - Can't compete as vendor but CAN aggregate
 - Price comparison across vendors for same item (e.g., Gateron Yellows everywhere)
 - Unified "notify me" wishlist
@@ -43,13 +43,13 @@
 - **Voting** - "Request this product"
 - **Discussion per product** - Builds community around drops
 
-**What Keebshelf can learn:**
+**What Switchyard can learn:**
 - Community wishlist/voting (even if we don't fulfill)
 - Discussion threads per product (via webhook to Discord?)
 
 ---
 
-## Gaps Keebshelf Can Fill
+## Gaps Switchyard Can Fill
 
 ### The Problem Today
 - Community lives in 3 places: Geekhack (ICs), Reddit (photos), Vendors (purchases)
@@ -96,7 +96,7 @@
 
 ---
 
-## What Makes Keebshelf Different
+## What Makes Switchyard Different
 
 ### NOT Trying To Be:
 - Drop (we don't need transaction revenue)
@@ -179,7 +179,7 @@
 
 ## Differentiation Statement
 
-**Keebshelf is the Bloomberg terminal for mechanical keyboards.**
+**Switchyard is the Bloomberg terminal for mechanical keyboards.**
 
 We don't sell. We don't judge. We don't favor vendors.
 

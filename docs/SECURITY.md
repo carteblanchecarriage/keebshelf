@@ -1,4 +1,4 @@
-# Keebshelf Security Review
+# Switchyard Security Review
 
 **Date:** 2026-02-21  
 **Scope:** API, Frontend, Data  
@@ -324,13 +324,13 @@ If conducting formal penetration testing:
 ## Security Incident Response
 
 ### If API is Abused
-1. Check logs: `pm2 logs keebshelf-api | grep <IP>`
+1. Check logs: `pm2 logs switchyard-api | grep <IP>`
 2. Temporarily block IP: `iptables -A INPUT -s <IP> -j DROP`
 3. Review rate limits: May need to lower
 4. Consider enabling Cloudflare DDoS protection
 
 ### If Data Compromised
-1. Stop API: `pm2 stop keebshelf-api`
+1. Stop API: `pm2 stop switchyard-api`
 2. Assess logs for intrusion
 3. Restore from backup if needed
 4. Rotate any exposed credentials
@@ -349,7 +349,7 @@ If conducting formal penetration testing:
 
 ## Conclusion
 
-**Keebshelf API is secure for public deployment.**
+**Switchyard API is secure for public deployment.**
 
 The API implements industry-standard security practices. The remaining improvements are "nice to have" rather than blocking. The only significant limitation is single-instance rate limiting, which is documented and acceptable for initial deployment.
 

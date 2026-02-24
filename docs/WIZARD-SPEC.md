@@ -1,4 +1,4 @@
-# Keebshelf Keyboard Finder Wizard - Specification v2.0
+# Switchyard Keyboard Finder Wizard - Specification v2.0
 
 ## User Story
 Help visitors find their perfect mechanical keyboard through an unobtrusive floating widget that filters the product grid in real-time.

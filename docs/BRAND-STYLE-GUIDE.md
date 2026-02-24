@@ -1,7 +1,7 @@
-## Keebshelf Brand Style Guide
+## Switchyard Brand Style Guide
 
 ### Brand Essence
-**Name:** Keebshelf  
+**Name:** Switchyard  
 **Tagline:** Find Your Perfect Mechanical Keyboard  
 **Mission:** Make mechanical keyboards accessible to everyone  
 **Voice:** Knowledgeable, helpful, not gatekeeping
@@ -10,7 +10,7 @@
 
 **Primary Logo:**  
 ```
-⌨️ Keebshelf
+⌨️ Switchyard
 ```
 
 **Favicon/Mark:**
@@ -80,7 +80,7 @@
 
 **Title Formula:**
 ```
-[Primary Keyword] | [Benefit/Value Prop] | Keebshelf
+[Primary Keyword] | [Benefit/Value Prop] | Switchyard
 ```
 
 **Meta Description:**
@@ -153,5 +153,5 @@ Compare 275+ mechanical keyboards from Keychron, Drop, KBDfans & more. Find live
 
 ---
 
-*Keebshelf Brand Style Guide v1.0*  
+*Switchyard Brand Style Guide v1.0*  
 *Created: February 21, 2026*

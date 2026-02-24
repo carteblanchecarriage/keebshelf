@@ -1,4 +1,4 @@
-# Keebshelf Launch Posts
+# Switchyard Launch Posts
 
 ## Twitter/X Thread (5 tweets)
 
@@ -18,7 +18,7 @@ The problem: Group buys get announced on Discord, Interest checks live in Google
 
 You miss stuff. Or you have 20 tabs open comparing a Tofu60 to a Keychron Q1.
 
-Keebshelf just shows what's actually available right now.
+Switchyard just shows what's actually available right now.
 
 ---
 
@@ -31,7 +31,7 @@ Features I built because I needed them:
 • Mobile-friendly
 • No signup required
 
-Link: https://carteblanchecarriage.github.io/keebshelf/dashboard/
+Link: https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 ---
 
@@ -62,7 +62,7 @@ RTs appreciated 🤙
 **Body:**
 I got tired of missing keyboard group buys because I forgot which Discord server announced them. Or finding out a board I wanted dropped yesterday and sold out.
 
-Built Keebshelf: a single dashboard aggregating live inventory from Keychron, Drop, KBDfans, NovelKeys, and Geekhack interest checks.
+Built Switchyard: a single dashboard aggregating live inventory from Keychron, Drop, KBDfans, NovelKeys, and Geekhack interest checks.
 
 Currently tracking 276 items. Scrapes every few hours, filters out sold-out products, sorts by price/vendor/name.
 
@@ -70,7 +70,7 @@ Stack: Node.js scraper on a homelab, vanilla JS frontend, GitHub Pages hosting. 
 
 Links are affiliate (full disclosure). No ads or tracking.
 
-URL: https://carteblanchecarriage.github.io/keebshelf/dashboard/
+URL: https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 Would love feedback on what other features would be useful. Plan to add email alerts for specific boards if there's interest.
 
@@ -78,7 +78,7 @@ Would love feedback on what other features would be useful. Plan to add email al
 
 ## Reddit r/MechanicalKeyboards Post
 
-**Title:** [GB] Keebshelf – A dashboard for tracking group buys across vendors
+**Title:** [GB] Switchyard – A dashboard for tracking group buys across vendors
 
 **Body:**
 I built this because I kept missing group buy windows and got tired of opening 8 tabs to compare entry-level customs.
@@ -92,7 +92,7 @@ Aggregates live data from:
 
 276 items currently. Filters by category, sorts by price, hides sold-out stuff.
 
-https://carteblanchecarriage.github.io/keebshelf/dashboard/
+https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 It's just a static site pulling JSON. No signup, works on mobile. If you click an affiliate link and buy something, I might make enough for coffee.
 
@@ -102,12 +102,12 @@ Feedback welcome – especially if you know of vendors I should add or features 
 
 ## Product Hunt Listing
 
-**Name:** Keebshelf
+**Name:** Switchyard
 
 **Tagline:** One dashboard to track every mechanical keyboard group buy
 
 **Description:**
-Stop checking five sites to find your next build. Keebshelf aggregates live group buys and in-stock keyboards from Keychron, Drop, KBDfans, NovelKeys, and Geekhack.
+Stop checking five sites to find your next build. Switchyard aggregates live group buys and in-stock keyboards from Keychron, Drop, KBDfans, NovelKeys, and Geekhack.
 
 Features:
 • 276+ keyboards, cases, switches, and keycaps tracked
@@ -121,7 +121,7 @@ I built this because I kept missing group buys announced on Discord and buried i
 
 Notes: Affiliate links included. Static site, open scraper.
 
-**Link:** https://carteblanchecarriage.github.io/keebshelf/dashboard/
+**Link:** https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 **Maker:** Alex (solo dev, mechanical keyboard enthusiast)
 
@@ -131,11 +131,11 @@ Notes: Affiliate links included. Static site, open scraper.
 
 Hey all – made something that might be useful.
 
-Keebshelf aggregates group buys and in-stock keyboards from Keychron, Drop, KBDfans, NovelKeys, and Geekhack interest checks.
+Switchyard aggregates group buys and in-stock keyboards from Keychron, Drop, KBDfans, NovelKeys, and Geekhack interest checks.
 
 No more checking 5 sites to see what's available. Filters by vendor, sorts by price, works on mobile.
 
-https://carteblanchecarriage.github.io/keebshelf/dashboard/
+https://carteblanchecarriage.github.io/switchyard/dashboard/
 
 Has affiliate links (full disclosure). Built it because I needed it, figured others might too.
 
