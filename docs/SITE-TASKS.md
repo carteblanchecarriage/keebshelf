@@ -97,7 +97,7 @@
 **Goal:** Know immediately if site goes down
 
 - [ ] Create UptimeRobot account (free)
-- [ ] Add monitor for carteb…github.io/keebshelf
+- [ ] Add monitor for carteb…github.io/switchyard
 - [ ] Add monitor for API (when migrated)
 - [ ] Configure alerts to Telegram/Email
 - [ ] Test alert by temporarily taking site down

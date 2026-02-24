@@ -170,7 +170,7 @@ Format: `Primary Keyword - Secondary Keyword | Keebshelf`
 User-agent: *
 Allow: /
 Disallow: /api/
-Sitemap: https://carteblanchecarriage.github.io/keebshelf/sitemap.xml
+Sitemap: https://carteblanchecarriage.github.io/switchyard/sitemap.xml
 ```
 
 ### Sitemap.xml

@@ -128,7 +128,7 @@ declare global {
   }
 }
 
-const CACHE_KEY = 'keebshelf_data';
+const CACHE_KEY = 'switchyard_data';
 const CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
 async function loadProducts() {
@@ -224,7 +224,7 @@ Track these metrics:
 ```bash
 # Automated
 npm install -g lighthouse
-lighthouse https://carteblanchecarriage.github.io/keebshelf --output=json
+lighthouse https://carteblanchecarriage.github.io/switchyard --output=json
 ```
 
 ### 2. WebPageTest

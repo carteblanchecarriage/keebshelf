@@ -110,7 +110,7 @@ These will be comprehensive, authoritative, and heavily interlinked.
 - [x] Launch timeline (14-day pre-launch + 30-day active promotion)
 - [x] KPI tracking: Traffic, conversions, SEO, revenue
 - [x] UTM parameter strategy for campaign tracking
-- [ ] Set social media handles (@keebshelf)
+- [ ] Set social media handles (@switchyard)
 - [ ] Sign up for GA4 property
 - [ ] Create launch content
 - [ ] Schedule first posts

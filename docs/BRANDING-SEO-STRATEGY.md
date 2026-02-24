@@ -196,8 +196,8 @@ Choose the right mechanical switch: linear vs tactile vs clicky explained. Compa
 <!-- Facebook/Open Graph -->
 <meta property="og:title" content="Find Your Perfect Mechanical Keyboard | Keebshelf">
 <meta property="og:description" content="Compare 275+ keyboards from Keychron, Drop & More. Live prices & deals.">
-<meta property="og:image" content="https://carteblanchecarriage.github.io/keebshelf/images/og-home.jpg">
-<meta property="og:url" content="https://carteblanchecarriage.github.io/keebshelf/">
+<meta property="og:image" content="https://carteblanchecarriage.github.io/switchyard/images/og-home.jpg">
+<meta property="og:url" content="https://carteblanchecarriage.github.io/switchyard/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Keebshelf">
 
@@ -205,7 +205,7 @@ Choose the right mechanical switch: linear vs tactile vs clicky explained. Compa
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Find Your Perfect Mechanical Keyboard | Keebshelf">
 <meta name="twitter:description" content="Compare 275+ keyboards. Live prices & deals from top brands.">
-<meta name="twitter:image" content="https://carteblanchecarriage.github.io/keebshelf/images/og-home.jpg">
+<meta name="twitter:image" content="https://carteblanchecarriage.github.io/switchyard/images/og-home.jpg">
 ```
 
 **OG Image Specs:**
@@ -297,7 +297,7 @@ Home (Hub)
 
 **URL Structure** (good ✅):
 ```
-/keebshelf/
+/switchyard/
 /guides/switches/
 /guides/programming/
 /blog.html

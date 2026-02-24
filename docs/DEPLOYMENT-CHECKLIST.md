@@ -116,7 +116,7 @@ railway login
 
 # 2. Initialize project
 cd ~/Desktop/keyboard-tracker/api
-railway init --name keebshelf-api
+railway init --name switchyard-api
 
 # 3. Configure environment
 railway variables set NODE_ENV=production
@@ -167,7 +167,7 @@ vercel env add NODE_ENV production
 ```json
 {
   "version": 2,
-  "name": "keebshelf-api",
+  "name": "switchyard-api",
   "builds": [
     { "src": "index-v2.js", "use": "@vercel/node" }
   ],
@@ -238,7 +238,7 @@ sudo dpkg -i cloudflared-linux-amd64.deb
 cloudflared tunnel login
 
 # 3. Create tunnel
-cloudflared tunnel create keebshelf
+cloudflared tunnel create switchyard
 
 # 4. Configure
 ~/.cloudflared/config.yml:
@@ -246,15 +246,15 @@ tunnel: YOUR_TUNNEL_ID
 credentials-file: /home/klondike/.cloudflared/YOUR_TUNNEL_ID.json
 
 ingress:
-  - hostname: api.keebshelf.com
+  - hostname: api.switchyard.com
     service: http://localhost:3003
   - service: http_status:404
 
 # 5. Route DNS
-cloudflared tunnel route dns keebshelf api.keebshelf.com
+cloudflared tunnel route dns switchyard api.switchyard.com
 
 # 6. Run
-cloudflared tunnel run keebshelf
+cloudflared tunnel run switchyard
 ```
 
 ### Option 2: Custom Domain via Railway/Vercel
@@ -269,19 +269,19 @@ cloudflared tunnel run keebshelf
 ### API Endpoints Test
 ```bash
 # Health check
-curl -s https://api.keebshelf.com/health | jq .
+curl -s https://api.switchyard.com/health | jq .
 
 # List products
-curl -s https://api.keebshelf.com/api/groupbuys | jq '.data | length'
+curl -s https://api.switchyard.com/api/groupbuys | jq '.data | length'
 
 # Search
-curl -s 'https://api.keebshelf.com/api/search?q=keychron' | jq '.data | length'
+curl -s 'https://api.switchyard.com/api/search?q=keychron' | jq '.data | length'
 
 # Rate limiting (should return 429 after limit)
-for i in {1..110}; do curl -s -o /dev/null -w "%{http_code}\n" https://api.keebshelf.com/health; done
+for i in {1..110}; do curl -s -o /dev/null -w "%{http_code}\n" https://api.switchyard.com/health; done
 
 # Check headers
-curl -I https://api.keebshelf.com/health | grep -E "X-Rate|X-Frame|X-Content"
+curl -I https://api.switchyard.com/health | grep -E "X-Rate|X-Frame|X-Content"
 ```
 
 ### Performance Test
@@ -290,7 +290,7 @@ curl -I https://api.keebshelf.com/health | grep -E "X-Rate|X-Frame|X-Content"
 sudo apt install hey
 
 # Load test
-hey -z 30s -c 50 https://api.keebshelf.com/health
+hey -z 30s -c 50 https://api.switchyard.com/health
 ```
 
 Expected results:
@@ -313,7 +313,7 @@ pm2 set pm2-logrotate:compress true
 
 ### Uptime Monitoring (UptimeRobot)
 1. Sign up at https://uptimerobot.com
-2. Add monitor: https://api.keebshelf.com/health
+2. Add monitor: https://api.switchyard.com/health
 3. Set alert to Telegram/Discord/Email
 4. Check interval: 5 minutes
 
@@ -337,7 +337,7 @@ crontab -e
 **Backup script** (`tools/backup.sh`):
 ```bash
 #!/bin/bash
-BACKUP_DIR="/home/klondike/backups/keebshelf"
+BACKUP_DIR="/home/klondike/backups/switchyard"
 DATE=$(date +%Y%m%d-%H%M)
 
 mkdir -p $BACKUP_DIR
@@ -354,7 +354,7 @@ echo "[$(date)] Backup completed: data-$DATE.tar.gz" >> /home/klondike/Desktop/k
 ```
 
 ### Disaster Recovery
-1. **API down:** `pm2 restart keebshelf-api`
+1. **API down:** `pm2 restart switchyard-api`
 2. **Data corruption:** Restore from backup
 3. **Server failure:** Deploy to Railway/Vercel as backup
 
@@ -370,12 +370,12 @@ git revert HEAD
 git push
 
 # Option 2: PM2 rollback
-pm2 restart keebshelf-api --update-env
+pm2 restart switchyard-api --update-env
 
 # Option 3: Restore data
-pm2 stop keebshelf-api
+pm2 stop switchyard-api
 # Restore data.json from backup
-pm2 start keebshelf-api
+pm2 start switchyard-api
 ```
 
 ### Database Rollback (if using Supabase)
@@ -422,7 +422,7 @@ When ready to launch:
 4. **Announce** on relevant channels:
    - r/MechanicalKeyboards (Reddit)
    - Discord servers (Keychron, Keebtalk)
-   - Twitter/X (@keebshelf)
+   - Twitter/X (@switchyard)
    - Personal network
 
 ---
@@ -445,7 +445,7 @@ When ready to launch:
 
 ### API won't start
 ```bash
-pm2 logs keebshelf-api --lines 50
+pm2 logs switchyard-api --lines 50
 # Check for port conflicts, missing env vars
 ```
 

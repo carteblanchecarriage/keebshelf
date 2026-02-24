@@ -68,7 +68,7 @@ Email notification service with multiple provider support.
 **Environment Variables:**
 ```bash
 EMAIL_SERVICE=console  # or 'sendgrid', 'mailgun'
-FROM_EMAIL=alerts@keebshelf.com
+FROM_EMAIL=alerts@switchyard.com
 FROM_NAME=Keebshelf
 SENDGRID_API_KEY=xxxxx  # if using SendGrid
 MAILGUN_API_KEY=xxxxx   # if using Mailgun

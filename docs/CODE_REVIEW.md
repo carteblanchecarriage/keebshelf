@@ -99,7 +99,7 @@ async function scrapeDropWithPuppeteer() {
 
 **Fix:** Add localStorage caching with TTL:
 ```javascript
-const CACHE_KEY = 'keebshelf_data';
+const CACHE_KEY = 'switchyard_data';
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
 
 function getCachedData() {
@@ -122,7 +122,7 @@ function getCachedData() {
 <meta name="description" content="Curated mechanical keyboard group buys and interest checks. Track drops from Keychron, Drop, KBDfans, NovelKeys, and more.">
 <meta property="og:title" content="Keebshelf | Mechanical Keyboard Collection">
 <meta property="og:description" content="Curated mechanical keyboard group buys...">
-<meta property="og:image" content="https://carteblanchecarriage.github.io/keebshelf/preview.png">
+<meta property="og:image" content="https://carteblanchecarriage.github.io/switchyard/preview.png">
 ```
 
 ### 7. No Analytics
