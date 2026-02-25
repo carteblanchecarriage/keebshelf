@@ -255,9 +255,6 @@ export default function Wizard({ products, onFilterChange }: WizardProps) {
   const currentStepData = steps[currentStep];
   const hasSelections = Object.values(selections).some(s => s !== null);
 
-  // Calculate total possible matches from current position
-  const totalPossibleMatches = products.length;
-
   return (
     <>
       {/* Floating Action Button */}
