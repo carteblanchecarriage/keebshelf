@@ -1,9 +1,9 @@
-name: Scrape Data
+name: Scrape Products
 
 on:
   schedule:
-    - cron: '0 */2 * * *'  # Every 2 hours
-  workflow_dispatch:  # Manual trigger
+    - cron: '0 */6 * * *'  # Every 6 hours (4x per day)
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -21,30 +21,30 @@ jobs:
         with:
           node-version: '20'
           
-      - name: Install scraper deps
-        run: cd scraper && npm ci 2>&1 || npm install axios cheerio
-        
-      - name: Run scraper
-        id: scraper
+      - name: Install scraper dependencies
         run: |
-          cd scraper && node scraper.js
-          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          cd scraper
+          npm install axios cheerio --no-package-lock 2>&1 || true
+          
+      - name: Run vendor scraper
+        id: scraper
+        run: cd scraper && node scraper.js
+        timeout-minutes: 10
         continue-on-error: true
         
-      - name: Commit and push if data changed
+      - name: Commit if new products found
         id: commit
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add data.json
           
-          # Check if data actually changed
           if git diff --cached --quiet; then
-            echo "No new data found"
             echo "changed=false" >> $GITHUB_OUTPUT
+            echo "📊 No new products found"
           else
-            git commit -m "Data: $(date '+%Y-%m-%d %H:%M UTC') - new items from scraper"
+            git commit -m "Products: $(date '+%Y-%m-%d %H:%M UTC') - vendor scrape"
             git push
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "✅ New data committed"
+            echo "✅ New products committed"
           fi
