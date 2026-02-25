@@ -32,6 +32,7 @@ interface Product {
   category?: string;
   description?: string;
   scrapedAt?: string;
+  type?: string;
 }
 
 export default function App() {
@@ -45,6 +46,7 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [wizardFilters, setWizardFilters] = useState<Product[] | null>(null);
   const [sortBy, setSortBy] = useState<string>('newest');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const handlePopState = () => setCurrentPath(window.location.pathname);
@@ -65,7 +67,7 @@ export default function App() {
     fetch('https://raw.githubusercontent.com/carteblanchecarriage/switchyard/master/public/data.json')
       .then(res => res.json())
       .then(data => {
-        const allProducts: Product[] = data.allProducts || data.groupBuys || [];
+        const allProducts: Product[] = data.allProducts || data.items || [];
         setProducts(allProducts);
         setFilteredProducts(allProducts);
         setLoading(false);
@@ -86,39 +88,28 @@ export default function App() {
     keywords: `mechanical keyboards, ${activeCategory}, keyboard tracker, group buys, keycaps, switches`
   });
 
-  const handleCategoryChange = (category: string) => {
-    setActiveCategory(category);
-    const baseProducts = wizardFilters || products;
-    
+  // Filter products by category
+  const filterByCategory = (category: string, baseProducts: Product[]): Product[] => {
     if (category === 'all') {
-      // Show all products
-      setFilteredProducts(baseProducts);
+      return baseProducts;
     } else if (category === 'keyboard') {
-      // Keyboards: category === 'keyboard' OR category === 'accessories' (those are keyboards mislabeled)
-      // Exclude carrying cases which are actual accessories
-      setFilteredProducts(baseProducts.filter(p => {
+      return baseProducts.filter(p => {
         const cat = p.category || 'keyboard';
         const isCarryingCase = p.name?.toLowerCase().includes('carrying case') || 
                                p.name?.toLowerCase().includes('travel case');
         return (cat === 'keyboard' || cat === 'accessories') && !isCarryingCase;
-      }));
+      });
     } else if (category === 'artisan') {
-      // Artisan: keycaps with "artisan" in the name
-      setFilteredProducts(baseProducts.filter(p => 
+      return baseProducts.filter(p => 
         p.category === 'keycaps' && 
         p.name?.toLowerCase().includes('artisan')
-      ));
+      );
     } else if (category === 'accessories') {
-      // Accessories: carrying cases, deskmats, cables, etc.
-      setFilteredProducts(baseProducts.filter(p => {
+      return baseProducts.filter(p => {
         const name = p.name?.toLowerCase() || '';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const cat = p.category || '';
-        // Carrying cases
         const isCarryingCase = name.includes('carrying case') || 
                                name.includes('travel case') ||
                                name.includes('keyboard bag');
-        // Other accessories (if they exist)
         const isAccessory = name.includes('cable') || 
                            name.includes('deskmat') || 
                            name.includes('wrist rest') ||
@@ -127,17 +118,63 @@ export default function App() {
                            name.includes('lube') ||
                            name.includes('foam');
         return isCarryingCase || isAccessory;
-      }));
+      });
     } else {
-      // Other categories (switches, keycaps, case) - use exact match
-      setFilteredProducts(baseProducts.filter(p => p.category === category));
+      return baseProducts.filter(p => p.category === category);
     }
+  };
+
+  // Filter products by search query
+  const filterBySearch = (query: string, productsToFilter: Product[]): Product[] => {
+    if (!query || query.trim() === '') {
+      return productsToFilter;
+    }
+    
+    const lowerQuery = query.toLowerCase().trim();
+    return productsToFilter.filter(p => {
+      const nameMatch = p.name?.toLowerCase().includes(lowerQuery);
+      const vendorMatch = p.vendor?.toLowerCase().includes(lowerQuery);
+      const categoryMatch = p.category?.toLowerCase().includes(lowerQuery);
+      const descMatch = p.description?.toLowerCase().includes(lowerQuery);
+      const typeMatch = p.type?.toLowerCase().includes(lowerQuery);
+      
+      return nameMatch || vendorMatch || categoryMatch || descMatch || typeMatch;
+    });
+  };
+
+  // Combined filter handler
+  const applyFilters = (category: string, query: string) => {
+    const baseProducts = wizardFilters || products;
+    
+    // First apply category filter
+    let filtered = filterByCategory(category, baseProducts);
+    
+    // Then apply search filter
+    filtered = filterBySearch(query, filtered);
+    
+    setFilteredProducts(filtered);
     setDisplayLimit(12);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    applyFilters(category, searchQuery);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    applyFilters(activeCategory, query);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    applyFilters(activeCategory, '');
   };
 
   const handleWizardFilter = (filtered: Product[]) => {
     setWizardFilters(filtered);
-    setFilteredProducts(filtered);
+    applyFilters(activeCategory, searchQuery);
     setDisplayLimit(12);
   };
 
@@ -262,6 +299,28 @@ export default function App() {
     <Layout>
       <div className="stats">
         {filteredProducts.length} products
+        {searchQuery && ` (searching "${searchQuery}")`}
+      </div>
+
+      {/* Search Bar */}
+      <div className="search-container">
+        <div className="search-wrapper">
+          <svg className="search-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+          </svg>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search products, vendors, categories..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          {searchQuery && (
+            <button className="search-clear" onClick={clearSearch}>
+              ✕
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="controls-row">
@@ -323,6 +382,13 @@ export default function App() {
           <button onClick={loadMore}>
             Load More ({filteredProducts.length - displayLimit} remaining)
           </button>
+        </div>
+      )}
+
+      {filteredProducts.length === 0 && !loading && (
+        <div className="no-results">
+          <p>No products found matching "{searchQuery}"</p>
+          <button onClick={clearSearch}>Clear Search</button>
         </div>
       )}
 
