@@ -20,10 +20,6 @@ function loadData() {
     if (!data.items && data.allProducts) {
       data.items = data.allProducts;
     }
-    // Ensure we have the arrays
-    if (!data.items) data.items = [];
-    if (!data.allProducts) data.allProducts = [];
-    if (!data.groupBuys) data.groupBuys = [];
     return data;
   } catch {
     return { items: [], allProducts: [], groupBuys: [], metadata: {} };
@@ -44,25 +40,18 @@ function addAffiliateLink(url, vendor) {
 }
 
 // Shopify JSON API scraper with PAGINATION support
-// This is the KEY FIX - we now paginate through all products
-async function scrapeShopifyStore(baseUrl, collectionPath, vendorName, maxProducts = 1000) {
+async function scrapeShopifyStore(baseUrl, collectionPath, vendorName, maxProducts = 250) {
   const items = [];
   let page = 1;
   let hasMore = true;
-  const seenIds = new Set();
   
   try {
-    // Shopify's JSON API returns up to 250 products per page
-    // We paginate until we get all products or hit maxProducts
-    while (hasMore && items.length < maxProducts && page <= 10) {
+    // Shopify's JSON API typically returns 20-50 products per page
+    // We need to paginate through all pages
+    while (hasMore && items.length < maxProducts) {
       const url = `${baseUrl}${collectionPath}/products.json?page=${page}&limit=250`;
-      console.log(`      📄 Page ${page}...`);
-      
       const res = await axios.get(url, {
-        headers: { 
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'application/json'
-        },
+        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
         timeout: 15000
       });
       
@@ -73,12 +62,7 @@ async function scrapeShopifyStore(baseUrl, collectionPath, vendorName, maxProduc
         break;
       }
       
-      let newProductsCount = 0;
       products.forEach(p => {
-        // Deduplicate by product ID
-        if (seenIds.has(p.id)) return;
-        seenIds.add(p.id);
-        
         const url = `${baseUrl}/products/${p.handle}`;
         const price = p.variants?.[0]?.price || 'See site';
         const img = p.images?.[0]?.src || '';
@@ -103,15 +87,7 @@ async function scrapeShopifyStore(baseUrl, collectionPath, vendorName, maxProduc
           scrapedAt: new Date().toISOString(),
           source: 'vendor'
         });
-        newProductsCount++;
       });
-      
-      console.log(`         ✓ ${newProductsCount} new products`);
-      
-      // If we got fewer than 250 products, we've reached the end
-      if (products.length < 250) {
-        hasMore = false;
-      }
       
       page++;
       
@@ -122,36 +98,31 @@ async function scrapeShopifyStore(baseUrl, collectionPath, vendorName, maxProduc
     }
     
   } catch (e) {
-    console.log(`   ⚠️ ${vendorName}: ${e.message.slice(0, 80)}`);
+    console.log(`   ⚠️ ${vendorName}: ${e.message.slice(0, 50)}`);
   }
   
-  console.log(`   ✅ ${vendorName}: ${items.length} total products (${page-1} pages)`);
+  console.log(`   ✅ ${vendorName}: ${items.length} products (from ${page-1} pages)`);
   return items;
 }
 
-// Individual scrapers with MULTIPLE collection endpoints
-// This is another KEY FIX - we scrape multiple collections per vendor
+// Individual scrapers with multiple collection endpoints
 async function scrapeKeychron() {
   console.log('🔍 Keychron...');
   const allItems = [];
-  const seenIds = new Set();
   
-  // Multiple collections to get ALL products
+  // Multiple collections to get more products
   const collections = [
     '/collections/all-keyboards',
     '/collections/all-products',
     '/collections/keychron-keyboards',
-    '/collections/lemokey',
-    '/collections/switches',
-    '/collections/keycaps'
+    '/collections/lemokey'
   ];
   
   for (const collection of collections) {
-    const items = await scrapeShopifyStore('https://keychron.com', collection, 'Keychron', 1000);
+    const items = await scrapeShopifyStore('https://keychron.com', collection, 'Keychron', 250);
     // Deduplicate by ID
     items.forEach(item => {
-      if (!seenIds.has(item.id)) {
-        seenIds.add(item.id);
+      if (!allItems.find(i => i.id === item.id)) {
         allItems.push(item);
       }
     });
@@ -164,21 +135,18 @@ async function scrapeKeychron() {
 async function scrapeEpomaker() {
   console.log('🔍 Epomaker...');
   const allItems = [];
-  const seenIds = new Set();
   
   const collections = [
     '/collections/all',
     '/collections/keyboards',
     '/collections/switches',
-    '/collections/keycaps',
-    '/collections/accessories'
+    '/collections/keycaps'
   ];
   
   for (const collection of collections) {
-    const items = await scrapeShopifyStore('https://epomaker.com', collection, 'Epomaker', 1000);
+    const items = await scrapeShopifyStore('https://epomaker.com', collection, 'Epomaker', 250);
     items.forEach(item => {
-      if (!seenIds.has(item.id)) {
-        seenIds.add(item.id);
+      if (!allItems.find(i => i.id === item.id)) {
         allItems.push(item);
       }
     });
@@ -191,23 +159,19 @@ async function scrapeEpomaker() {
 async function scrapeKBDfans() {
   console.log('🔍 KBDfans...');
   const allItems = [];
-  const seenIds = new Set();
   
   const collections = [
     '/collections/keyboard',
     '/collections/keycaps',
     '/collections/switches',
     '/collections/diy-kit',
-    '/collections/accessories',
-    '/collections/cases',
-    '/collections/pcb'
+    '/collections/accessories'
   ];
   
   for (const collection of collections) {
-    const items = await scrapeShopifyStore('https://kbdfans.com', collection, 'KBDfans', 1000);
+    const items = await scrapeShopifyStore('https://kbdfans.com', collection, 'KBDfans', 250);
     items.forEach(item => {
-      if (!seenIds.has(item.id)) {
-        seenIds.add(item.id);
+      if (!allItems.find(i => i.id === item.id)) {
         allItems.push(item);
       }
     });
@@ -220,7 +184,6 @@ async function scrapeKBDfans() {
 async function scrapeNovelKeys() {
   console.log('🔍 NovelKeys...');
   const allItems = [];
-  const seenIds = new Set();
   
   const collections = [
     '/collections/keyboards',
@@ -230,10 +193,9 @@ async function scrapeNovelKeys() {
   ];
   
   for (const collection of collections) {
-    const items = await scrapeShopifyStore('https://novelkeys.com', collection, 'NovelKeys', 1000);
+    const items = await scrapeShopifyStore('https://novelkeys.com', collection, 'NovelKeys', 250);
     items.forEach(item => {
-      if (!seenIds.has(item.id)) {
-        seenIds.add(item.id);
+      if (!allItems.find(i => i.id === item.id)) {
         allItems.push(item);
       }
     });
@@ -247,7 +209,6 @@ async function scrapeNovelKeys() {
 async function scrapeDrop() {
   console.log('🔍 Drop...');
   const items = [];
-  const seenIds = new Set();
   
   try {
     // Try multiple Drop collections
@@ -276,8 +237,7 @@ async function scrapeDrop() {
             const fullUrl = href.startsWith('http') ? href : `https://drop.com${href}`;
             const id = `drop-${href.split('/').pop()?.slice(0, 30) || i}`;
             
-            if (!seenIds.has(id)) {
-              seenIds.add(id);
+            if (!items.find(i => i.id === id)) {
               items.push({
                 id,
                 name: name.slice(0, 100),
@@ -431,7 +391,7 @@ async function runScraper() {
     }
   }
   
-  // Merge - preserve existing items and add new ones
+  // Merge
   const allItems = [...(data.items || []), ...newItems];
   data.items = allItems;
   data.allProducts = allItems.filter(i => i.type === 'product');
