@@ -5,8 +5,7 @@ const path = require('path');
 
 const DATA_FILE = path.join(__dirname, '..', 'data.json');
 
-// ============ CONFIGURATION ============
-
+// Affiliate tracking codes
 const AFFILIATE_CODES = {
   'Epomaker': { param: 'ref', value: 'keyboardtracker' },
   'KBDfans': { param: 'ref', value: 'keyboardtracker' },
@@ -15,39 +14,15 @@ const AFFILIATE_CODES = {
   'Drop': { param: 'referer', value: 'keyboardtracker' }
 };
 
-// ============ DATA STRUCTURE ============
-// Standardized item structure:
-// {
-//   id: string (unique identifier),
-//   name: string (product/group buy name),
-//   type: 'product' | 'group_buy' | 'interest_check',
-//   platform: string (Geekhack, Reddit, Keychron, etc),
-//   vendor?: string (for products),
-//   category?: string (keyboard, keycaps, switches, accessories),
-//   url: string (original URL),
-//   affiliateUrl?: string (with tracking),
-//   price?: string,
-//   image?: string,
-//   status: 'active' | 'live' | 'interest_check' | 'ended',
-//   author?: string (for group buys),
-//   joins?: number (for group buys),
-//   replies?: number,
-//   views?: number,
-//   upvotes?: number (for Reddit),
-//   scrapedAt: ISO timestamp,
-//   source: 'vendor' | 'geekhack' | 'reddit'
-// }
-
 function loadData() {
   try {
-    return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    if (!data.items && data.allProducts) {
+      data.items = data.allProducts;
+    }
+    return data;
   } catch {
-    return { 
-      items: [],           // Unified list of all items
-      products: [],        // Vendor products
-      groupBuys: [],       // Group buys only
-      metadata: {} 
-    };
+    return { items: [], allProducts: [], groupBuys: [], metadata: {} };
   }
 }
 
@@ -64,167 +39,86 @@ function addAffiliateLink(url, vendor) {
   return url;
 }
 
-// ============ PRODUCT SCRAPERS ============
-
-async function scrapeKeychron() {
-  console.log('🔍 Keychron...');
+// Shopify JSON API scraper (works for Keychron, Epomaker, KBDfans, NovelKeys)
+async function scrapeShopifyStore(baseUrl, collectionPath, vendorName, limit = 50) {
   const items = [];
   try {
-    const res = await axios.get('https://keychron.com/collections/all-keyboards', {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
-      timeout: 10000
+    const res = await axios.get(`${baseUrl}${collectionPath}/products.json`, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+      timeout: 15000
     });
-    const $ = cheerio.load(res.data);
-    $('.product-item, .product-card').each((i, el) => {
-      const name = $(el).find('.product-title, h3').first().text().trim();
-      const href = $(el).find('a[href*="/products/"]').attr('href');
-      const price = $(el).find('.product-price').first().text().trim();
-      const img = $(el).find('img').attr('src') || $(el).find('img').attr('data-src');
+    
+    const products = res.data?.products || [];
+    
+    products.slice(0, limit).forEach(p => {
+      const url = `${baseUrl}/products/${p.handle}`;
+      const price = p.variants?.[0]?.price || 'See site';
+      const img = p.images?.[0]?.src || '';
+      const type = (p.product_type || '').toLowerCase();
       
-      if (name && href) {
-        const url = href.startsWith('http') ? href : `https://keychron.com${href}`;
-        items.push({
-          id: `keychron-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40)}`,
-          name,
-          type: 'product',
-          platform: 'Keychron',
-          vendor: 'Keychron',
-          category: 'keyboard',
-          url,
-          affiliateUrl: addAffiliateLink(url, 'Keychron'),
-          price: price || 'See site',
-          image: img || '',
-          status: 'active',
-          scrapedAt: new Date().toISOString(),
-          source: 'vendor'
-        });
-      }
+      items.push({
+        id: `${vendorName.toLowerCase()}-${p.handle}-${p.id}`.slice(0, 80),
+        name: p.title,
+        type: 'product',
+        platform: vendorName,
+        vendor: vendorName,
+        category: type.includes('keycap') ? 'keycaps' :
+                 type.includes('switch') ? 'switches' :
+                 type.includes('cable') ? 'accessories' :
+                 type.includes('deskmat') ? 'accessories' : 'keyboard',
+        url,
+        affiliateUrl: addAffiliateLink(url, vendorName),
+        price: price.startsWith('$') ? price : `$${price}`,
+        image: img,
+        description: p.body_html?.replace(/<[^>]*>/g, '').slice(0, 200).trim() || '',
+        status: 'active',
+        scrapedAt: new Date().toISOString(),
+        source: 'vendor'
+      });
     });
-  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+    
+  } catch (e) {
+    console.log(`   ⚠️ ${e.message.slice(0, 50)}`);
+  }
+  return items;
+}
+
+// Individual scrapers
+async function scrapeKeychron() {
+  console.log('🔍 Keychron...');
+  const items = await scrapeShopifyStore('https://keychron.com', '/collections/all-keyboards', 'Keychron', 50);
   console.log(`   ✅ ${items.length}`);
   return items;
 }
 
 async function scrapeEpomaker() {
   console.log('🔍 Epomaker...');
-  const items = [];
-  try {
-    const res = await axios.get('https://epomaker.com/collections/all', {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
-      timeout: 10000
-    });
-    const $ = cheerio.load(res.data);
-    $('.product-item').each((i, el) => {
-      const name = $(el).find('.product-title').text().trim();
-      const href = $(el).find('a').attr('href');
-      const price = $(el).find('.price').first().text().trim();
-      const img = $(el).find('img').attr('src') || '';
-      
-      if (name && href) {
-        const url = href.startsWith('http') ? href : `https://epomaker.com${href}`;
-        items.push({
-          id: `epo-${Date.now()}-${i}`,
-          name,
-          type: 'product',
-          platform: 'Epomaker',
-          vendor: 'Epomaker',
-          category: href.includes('keycap') ? 'keycaps' : 
-                   href.includes('switch') ? 'switches' : 'keyboard',
-          url,
-          affiliateUrl: addAffiliateLink(url, 'Epomaker'),
-          price,
-          image: img,
-          status: 'active',
-          scrapedAt: new Date().toISOString(),
-          source: 'vendor'
-        });
-      }
-    });
-  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  const items = await scrapeShopifyStore('https://epomaker.com', '/collections/all', 'Epomaker', 50);
   console.log(`   ✅ ${items.length}`);
   return items;
 }
 
 async function scrapeKBDfans() {
   console.log('🔍 KBDfans...');
-  const items = [];
-  try {
-    const res = await axios.get('https://kbdfans.com/collections/keyboard', {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
-      timeout: 10000
-    });
-    const $ = cheerio.load(res.data);
-    $('.product-card, .grid__item').each((i, el) => {
-      const name = $(el).find('.product-card__name, h3').first().text().trim();
-      const href = $(el).find('a').attr('href');
-      const price = $(el).find('.price').text().trim();
-      
-      if (name && href) {
-        const url = href.startsWith('http') ? href : `https://kbdfans.com${href}`;
-        items.push({
-          id: `kbdfans-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 30)}`,
-          name,
-          type: 'product',
-          platform: 'KBDfans',
-          vendor: 'KBDfans',
-          category: 'keyboard',
-          url,
-          affiliateUrl: addAffiliateLink(url, 'KBDfans'),
-          price,
-          status: 'active',
-          scrapedAt: new Date().toISOString(),
-          source: 'vendor'
-        });
-      }
-    });
-  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  const items = await scrapeShopifyStore('https://kbdfans.com', '/collections/keyboard', 'KBDfans', 50);
   console.log(`   ✅ ${items.length}`);
   return items;
 }
 
 async function scrapeNovelKeys() {
   console.log('🔍 NovelKeys...');
-  const items = [];
-  try {
-    const res = await axios.get('https://novelkeys.com/collections/keyboards', {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
-      timeout: 10000
-    });
-    const $ = cheerio.load(res.data);
-    $('.product-item').each((i, el) => {
-      const name = $(el).find('.product-title').text().trim();
-      const href = $(el).find('a[href*="/products/"]').attr('href');
-      const price = $(el).find('.product-price').text().trim();
-      
-      if (name && href) {
-        const url = href.startsWith('http') ? href : `https://novelkeys.com${href}`;
-        items.push({
-          id: `nk-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 30)}`,
-          name,
-          type: 'product',
-          platform: 'NovelKeys',
-          vendor: 'NovelKeys',
-          category: 'keyboard',
-          url,
-          affiliateUrl: addAffiliateLink(url, 'NovelKeys'),
-          price,
-          status: 'active',
-          scrapedAt: new Date().toISOString(),
-          source: 'vendor'
-        });
-      }
-    });
-  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  const items = await scrapeShopifyStore('https://novelkeys.com', '/collections/keyboards', 'NovelKeys', 50);
   console.log(`   ✅ ${items.length}`);
   return items;
 }
 
+// Drop scraper (not Shopify)
 async function scrapeDrop() {
   console.log('🔍 Drop...');
   const items = [];
   try {
     const res = await axios.get('https://drop.com/mechanical-keyboards', {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' },
       timeout: 10000
     });
     const $ = cheerio.load(res.data);
@@ -252,13 +146,12 @@ async function scrapeDrop() {
         });
       }
     });
-  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 50)}`); }
   console.log(`   ✅ ${items.length}`);
   return items;
 }
 
-// ============ GROUP BUY SCRAPERS ============
-
+// Group Buy scrapers
 async function scrapeGeekhack() {
   console.log('\n🔍 Geekhack Group Buys...');
   const items = [];
@@ -277,9 +170,8 @@ async function scrapeGeekhack() {
       
       if (title && href) {
         const url = href.startsWith('http') ? href : `https://geekhack.org${href}`;
-        const id = `geekhack-${title.slice(0, 30).replace(/[^a-z0-9]+/gi, '-')}`;
         items.push({
-          id,
+          id: `geekhack-${title.slice(0, 30).replace(/[^a-z0-9]+/gi, '-')}-${i}`.slice(0, 80),
           name: title,
           type: title.toLowerCase().includes('[ic]') ? 'interest_check' : 'group_buy',
           platform: 'Geekhack',
@@ -292,7 +184,7 @@ async function scrapeGeekhack() {
         });
       }
     });
-  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 50)}`); }
   console.log(`   ✅ ${items.length} threads`);
   return items;
 }
@@ -325,37 +217,29 @@ async function scrapeReddit() {
         });
       }
     });
-  } catch (e) { 
+  } catch (e) {
     if (e.response?.status === 403) {
-      console.log('   ⚠️ Reddit rate limited (expected)');
+      console.log('   ⚠️ Reddit rate limited');
     } else {
-      console.log(`   ⚠️ ${e.message.slice(0, 40)}`);
+      console.log(`   ⚠️ ${e.message.slice(0, 50)}`);
     }
   }
   console.log(`   ✅ ${items.length} posts`);
   return items;
 }
 
-// ============ MAIN ============
-
+// Main
 async function runScraper() {
   console.log('🚀 Starting Switchyard Scraper\n');
   const startTime = Date.now();
   const data = loadData();
   
-  // Track existing items by URL
   const existingUrls = new Set(data.items?.map(i => i.url) || []);
   const newItems = [];
   
-  // ===== PRODUCTS =====
+  // Products
   console.log('📦 VENDOR PRODUCTS');
-  const productScrapers = [
-    scrapeKeychron,
-    scrapeEpomaker, 
-    scrapeKBDfans,
-    scrapeNovelKeys,
-    scrapeDrop
-  ];
+  const productScrapers = [scrapeKeychron, scrapeEpomaker, scrapeKBDfans, scrapeNovelKeys, scrapeDrop];
   
   for (const scraper of productScrapers) {
     try {
@@ -369,11 +253,11 @@ async function runScraper() {
     } catch (e) {
       console.log(`   Error: ${e.message.slice(0, 50)}`);
     }
-    await new Promise(r => setTimeout(r, 500));
+    await new Promise(r => setTimeout(r, 1000));
   }
   
-  // ===== GROUP BUYS =====
-  console.log('\n🎯 GROUP BUYS & INTEREST CHECKS');
+  // Group Buys
+  console.log('\n🎯 GROUP BUYS');
   const gbScrapers = [scrapeGeekhack, scrapeReddit];
   
   for (const scraper of gbScrapers) {
@@ -392,41 +276,33 @@ async function runScraper() {
   
   // Merge
   const allItems = [...(data.items || []), ...newItems];
-  
-  // Separate into categories
   data.items = allItems;
-  data.products = allItems.filter(i => i.type === 'product');
+  data.allProducts = allItems.filter(i => i.type === 'product');
   data.groupBuys = allItems.filter(i => i.type === 'group_buy' || i.type === 'interest_check');
   
-  // Stats
   data.metadata = {
     scrapedAt: new Date().toISOString(),
     duration: ((Date.now() - startTime) / 1000).toFixed(2),
     totalItems: allItems.length,
-    newItemsAdded: newItems.length,
-    products: data.products.length,
-    groupBuys: data.groupBuys.length,
-    byType: {
-      products: data.products.length,
-      groupBuys: data.groupBuys.filter(i => i.type === 'group_buy').length,
-      interestChecks: data.groupBuys.filter(i => i.type === 'interest_check').length
-    }
+    newItems: newItems.length,
+    products: data.allProducts.length,
+    groupBuys: data.groupBuys.length
   };
   
   saveData(data);
   
   console.log('\n📊 RESULTS');
-  console.log(`   Total: ${allItems.length} items (${newItems.length} new)`);
-  console.log(`   Products: ${data.products.length}`);
+  console.log(`   Total: ${allItems.length} (${newItems.length} new)`);
+  console.log(`   Products: ${data.allProducts.length}`);
   console.log(`   Group Buys: ${data.groupBuys.filter(i => i.type === 'group_buy').length}`);
   console.log(`   Interest Checks: ${data.groupBuys.filter(i => i.type === 'interest_check').length}`);
   console.log(`   ⏱️  ${data.metadata.duration}s`);
-  console.log(newItems.length > 0 ? '\n✅ New data found!' : '\n📊 No new items');
+  console.log(newItems.length > 0 ? '\n✅ New items found!' : '\n📊 No new items');
   
   return { changed: newItems.length > 0, count: newItems.length };
 }
 
-runScraper().then(r => process.exit(0)).catch(e => {
+runScraper().then(() => process.exit(0)).catch(e => {
   console.error('Error:', e.message);
   process.exit(1);
 });
