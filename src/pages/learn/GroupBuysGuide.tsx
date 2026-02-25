@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../../components/Layout';
+import { usePageSEO } from '../../hooks/usePageSEO';
 import './GuidePages.css';
 
 const timeline = [
@@ -51,6 +52,12 @@ const platforms = [
 ];
 
 export default function GroupBuysGuide() {
+  usePageSEO({
+    title: 'Mechanical Keyboard Group Buy Guide 2026 | How It Works | Switchyard',
+    description: 'Everything about keyboard group buys: how they work, timelines, risks, and tips. GMK keycaps, custom kits, artisan pre-orders explained.',
+    keywords: 'mechanical keyboard group buy, GB guide, GMK group buy, keyboard pre-order, group buy timeline, group buy risks'
+  });
+
   return (
     <Layout>
       <article className="guide-article">

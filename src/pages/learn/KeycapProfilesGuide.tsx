@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../../components/Layout';
+import { usePageSEO } from '../../hooks/usePageSEO';
 import './GuidePages.css';
 
 const profiles = [
@@ -117,6 +118,12 @@ const makers = [
 ];
 
 export default function KeycapProfilesGuide() {
+  usePageSEO({
+    title: 'Keycap Profiles Guide | Cherry SA OEM DSA Explained | Switchyard',
+    description: 'Complete keycap profile guide: Cherry, SA, OEM, DSA, XDA, MT3, KAT. Sculpted vs uniform, ABS vs PBT materials, and which profile to choose.',
+    keywords: 'keycap profiles, Cherry profile, SA keycaps, OEM vs Cherry, DSA keycaps, XDA profile, MT3 keycaps, keycap guide'
+  });
+
   return (
     <Layout>
       <article className="guide-article">

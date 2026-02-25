@@ -1,16 +1,16 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { usePageSEO } from '../../hooks/usePageSEO';
 import '../../App.css';
 
 export default function BestTKLGuide() {
+  usePageSEO({
+    title: 'Best TKL Keyboards 2026 | Tenkeyless Mechanical | Switchyard',
+    description: 'The best tenkeyless (TKL) mechanical keyboards for 2026. Top picks for gaming, productivity, and programming with detailed reviews and buying advice.',
+    keywords: 'TKL keyboard, tenkeyless, mechanical keyboard, gaming keyboard, best TKL 2026, Keychron Q3'
+  });
+
   return (
     <div className="guide-page">
-      <Helmet>
-        <title>Best TKL Keyboards 2026 | Switchyard</title>
-        <meta name="description" content="The best tenkeyless (TKL) mechanical keyboards for 2026. Top picks for gaming, productivity, and programming with detailed reviews and buying advice." />
-        <meta name="keywords" content="TKL keyboard, tenkeyless, mechanical keyboard, gaming keyboard, best TKL 2026" />
-      </Helmet>
-
       <div className="guide-header">
         <h1>Best TKL Keyboards of 2026</h1>
         <p className="guide-subtitle">The perfect balance of functionality and desk space</p>

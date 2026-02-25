@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../../components/Layout';
+import { usePageSEO } from '../../hooks/usePageSEO';
 import './GuidePages.css';
 
 const topPicks = [
@@ -54,6 +55,12 @@ const layoutComparison = [
 ];
 
 export default function BestProgrammingGuide() {
+  usePageSEO({
+    title: 'Best Keyboards for Programming 2026 | Developer Picks | Switchyard',
+    description: 'Top keyboards for coding: Keychron Q1 Pro, HHKB, Moonlander. QMK programmable, compact layouts, ergonomic splits for developers.',
+    keywords: 'best keyboard for programming, coding keyboard, developer keyboard, QMK keyboard, split keyboard programming, HHKB, Moonlander'
+  });
+
   return (
     <Layout>
       <article className="guide-article">

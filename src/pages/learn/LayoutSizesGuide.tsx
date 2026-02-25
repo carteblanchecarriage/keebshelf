@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../../components/Layout';
+import { usePageSEO } from '../../hooks/usePageSEO';
 import './GuidePages.css';
 
 const layoutData = [
@@ -73,6 +74,12 @@ const keycapSizes = [
 ];
 
 export default function LayoutSizesGuide() {
+  usePageSEO({
+    title: 'Keyboard Layout Sizes Explained | 40% to Full-Size | Switchyard',
+    description: 'Visual guide to keyboard sizes: 40%, 60%, 65%, 75%, TKL, full-size. Compare widths, pros/cons, and find your perfect layout.',
+    keywords: 'keyboard layout sizes, 60% vs 65% vs 75%, keyboard size comparison, TKL keyboard, full size keyboard layout'
+  });
+
   return (
     <Layout>
       <article className="guide-article">
