@@ -18,6 +18,7 @@ import Best60PercentGuide from './pages/learn/Best60PercentGuide';
 import BestProgrammingGuide from './pages/learn/BestProgrammingGuide';
 import GroupBuysGuide from './pages/learn/GroupBuysGuide';
 import LayoutSizesGuide from './pages/learn/LayoutSizesGuide';
+import BestTKLGuide from './pages/learn/BestTKLGuide';
 import Best75PercentGuide from './pages/learn/Best75PercentGuide';
 import KeycapProfilesGuide from './pages/learn/KeycapProfilesGuide';
 
@@ -270,6 +271,9 @@ export default function App() {
   }
   if (currentPath === '/learn/layout-sizes') {
     return <LayoutSizesGuide />;
+  }
+  if (currentPath === '/learn/best-tkl' || currentPath === '/best-tkl') {
+    return <BestTKLGuide />;
   }
   if (currentPath === '/learn/best-75-percent') {
     return <Best75PercentGuide />;
