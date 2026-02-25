@@ -65,7 +65,9 @@ export default function App() {
     }
     
     // Fetch from GitHub raw URL - decouples data updates from builds
-    fetch('https://raw.githubusercontent.com/carteblanchecarriage/switchyard/master/public/data.json')
+    // Add cache-busting timestamp to ensure fresh data
+    const cacheBuster = Date.now();
+    fetch(`https://raw.githubusercontent.com/carteblanchecarriage/switchyard/master/public/data.json?v=${cacheBuster}`)
       .then(res => res.json())
       .then(data => {
         const allProducts: Product[] = data.allProducts || data.items || [];
