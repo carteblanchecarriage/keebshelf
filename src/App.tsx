@@ -185,6 +185,28 @@ export default function App() {
     setDisplayLimit(prev => prev + 12);
   };
 
+  // Extract keyboard size value from product name/description
+  const getSizeValue = (product: Product): number => {
+    const text = (product.name + ' ' + (product.description || '')).toLowerCase();
+    
+    // Check for specific size patterns (smaller = lower number)
+    if (text.includes('40%')) return 40;
+    if (text.includes('60%')) return 60;
+    if (text.includes('65%')) return 65;
+    if (text.includes('75%')) return 75;
+    if (text.includes('80%') || text.includes('tkl') || text.includes('tenkeyless')) return 80;
+    if (text.includes('96%') || text.includes('1800')) return 96;
+    if (text.includes('100%') || text.includes('full size') || text.includes('full-size')) return 100;
+    
+    // Check for layout keywords
+    if (text.includes('numpad')) return 100;
+    if (text.includes('compact') && text.includes('mini')) return 60;
+    if (text.includes('compact')) return 65;
+    
+    // Default to middle value for unknown
+    return 50;
+  };
+
   // Sort products
   const sortProducts = (productsToSort: Product[]) => {
     const sorted = [...productsToSort];
@@ -201,6 +223,10 @@ export default function App() {
           const priceB = parseFloat(b.price?.replace(/[^0-9.]/g, '') || '0');
           return priceB - priceA;
         });
+      case 'size-small':
+        return sorted.sort((a, b) => getSizeValue(a) - getSizeValue(b));
+      case 'size-large':
+        return sorted.sort((a, b) => getSizeValue(b) - getSizeValue(a));
       case 'name-az':
         return sorted.sort((a, b) => a.name.localeCompare(b.name));
       case 'name-za':
@@ -353,6 +379,8 @@ export default function App() {
             <option value="newest">Newest First</option>
             <option value="price-low">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
+            <option value="size-small">Size: Small to Large</option>
+            <option value="size-large">Size: Large to Small</option>
             <option value="name-az">Name: A-Z</option>
             <option value="name-za">Name: Z-A</option>
           </select>
