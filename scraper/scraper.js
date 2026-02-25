@@ -5,7 +5,8 @@ const path = require('path');
 
 const DATA_FILE = path.join(__dirname, '..', 'data.json');
 
-// Affiliate tracking codes
+// ============ CONFIGURATION ============
+
 const AFFILIATE_CODES = {
   'Epomaker': { param: 'ref', value: 'keyboardtracker' },
   'KBDfans': { param: 'ref', value: 'keyboardtracker' },
@@ -14,268 +15,418 @@ const AFFILIATE_CODES = {
   'Drop': { param: 'referer', value: 'keyboardtracker' }
 };
 
-// Vendor configurations
-const VENDORS = {
-  Keychron: {
-    baseUrl: 'https://keychron.com',
-    collections: ['/collections/all-keyboards', '/collections/keychron-q-series', '/collections/keychron-v-series'],
-    selector: '.product-item',
-    nameSelector: '.product-title',
-    priceSelector: '.product-price',
-    linkSelector: 'a[href*="/products/"]'
-  },
-  Epomaker: {
-    baseUrl: 'https://epomaker.com',
-    collections: ['/collections/all-products', '/collections/keyboards', '/collections/keycaps', '/collections/switches'],
-    selector: '.product-item',
-    nameSelector: '.product-title, h3',
-    priceSelector: '.product-price, .price',
-    linkSelector: 'a[href*="/products/"]'
-  },
-  KBDfans: {
-    baseUrl: 'https://kbdfans.com',
-    collections: ['/collections/keyboard', '/collections/keycaps', '/collections/switches'],
-    selector: '.grid__item, .product-card',
-    nameSelector: '.product-card__name, h2',
-    priceSelector: '.product-card__price, .price',
-    linkSelector: 'a[href*="/products/"]'
-  },
-  NovelKeys: {
-    baseUrl: 'https://novelkeys.com',
-    collections: ['/collections/keyboards', '/collections/keycaps', '/collections/switches'],
-    selector: '.product-item',
-    nameSelector: '.product-title',
-    priceSelector: '.product-price',
-    linkSelector: 'a[href*="/products/"]'
-  },
-  Drop: {
-    baseUrl: 'https://drop.com',
-    collections: ['/mechanical-keyboards', '/keycaps', '/switches'],
-    selector: '[data-testid="product-card"], .item-card',
-    nameSelector: 'h3, .title',
-    priceSelector: '[data-testid="price"], .price',
-    linkSelector: 'a[href*="/buy/"]'
-  }
-};
+// ============ DATA STRUCTURE ============
+// Standardized item structure:
+// {
+//   id: string (unique identifier),
+//   name: string (product/group buy name),
+//   type: 'product' | 'group_buy' | 'interest_check',
+//   platform: string (Geekhack, Reddit, Keychron, etc),
+//   vendor?: string (for products),
+//   category?: string (keyboard, keycaps, switches, accessories),
+//   url: string (original URL),
+//   affiliateUrl?: string (with tracking),
+//   price?: string,
+//   image?: string,
+//   status: 'active' | 'live' | 'interest_check' | 'ended',
+//   author?: string (for group buys),
+//   joins?: number (for group buys),
+//   replies?: number,
+//   views?: number,
+//   upvotes?: number (for Reddit),
+//   scrapedAt: ISO timestamp,
+//   source: 'vendor' | 'geekhack' | 'reddit'
+// }
 
 function loadData() {
   try {
     return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
   } catch {
-    return { allProducts: [], groupBuys: [], metadata: {} };
+    return { 
+      items: [],           // Unified list of all items
+      products: [],        // Vendor products
+      groupBuys: [],       // Group buys only
+      metadata: {} 
+    };
   }
 }
 
 function saveData(data) {
-  data.metadata = {
-    ...(data.metadata || {}),
-    updatedAt: new Date().toISOString(),
-    scrapedAt: new Date().toISOString()
-  };
+  data.metadata.updatedAt = new Date().toISOString();
+  data.metadata.scrapedAt = new Date().toISOString();
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
 
 function addAffiliateLink(url, vendor) {
-  if (!url) return url;
-  if (url.includes('?')) return url;
-  
-  const affiliate = AFFILIATE_CODES[vendor];
-  if (affiliate) {
-    return `${url}?${affiliate.param}=${affiliate.value}`;
-  }
+  if (!url || url.includes('?')) return url;
+  const aff = AFFILIATE_CODES[vendor];
+  if (aff) return `${url}?${aff.param}=${aff.value}`;
   return url;
 }
 
-function normalizeVendorName(name) {
-  const map = {
-    'keychron': 'Keychron',
-    'epomaker': 'Epomaker',
-    'kbdfans': 'KBDfans',
-    'kbd-fans': 'KBDfans',
-    'novelkeys': 'NovelKeys',
-    'novel-keys': 'NovelKeys',
-    'drop': 'Drop',
-    'drop-com': 'Drop'
-  };
-  return map[name.toLowerCase()] || name.charAt(0).toUpperCase() + name.slice(1);
+// ============ PRODUCT SCRAPERS ============
+
+async function scrapeKeychron() {
+  console.log('🔍 Keychron...');
+  const items = [];
+  try {
+    const res = await axios.get('https://keychron.com/collections/all-keyboards', {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      timeout: 10000
+    });
+    const $ = cheerio.load(res.data);
+    $('.product-item, .product-card').each((i, el) => {
+      const name = $(el).find('.product-title, h3').first().text().trim();
+      const href = $(el).find('a[href*="/products/"]').attr('href');
+      const price = $(el).find('.product-price').first().text().trim();
+      const img = $(el).find('img').attr('src') || $(el).find('img').attr('data-src');
+      
+      if (name && href) {
+        const url = href.startsWith('http') ? href : `https://keychron.com${href}`;
+        items.push({
+          id: `keychron-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40)}`,
+          name,
+          type: 'product',
+          platform: 'Keychron',
+          vendor: 'Keychron',
+          category: 'keyboard',
+          url,
+          affiliateUrl: addAffiliateLink(url, 'Keychron'),
+          price: price || 'See site',
+          image: img || '',
+          status: 'active',
+          scrapedAt: new Date().toISOString(),
+          source: 'vendor'
+        });
+      }
+    });
+  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  console.log(`   ✅ ${items.length}`);
+  return items;
 }
 
-async function scrapeVendor(vendorName, config) {
-  console.log(`\n🔍 Scraping ${vendorName}...`);
-  const products = [];
-  
-  for (const collection of config.collections) {
-    try {
-      const url = `${config.baseUrl}${collection}`;
-      console.log(`   Checking ${collection}...`);
+async function scrapeEpomaker() {
+  console.log('🔍 Epomaker...');
+  const items = [];
+  try {
+    const res = await axios.get('https://epomaker.com/collections/all', {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      timeout: 10000
+    });
+    const $ = cheerio.load(res.data);
+    $('.product-item').each((i, el) => {
+      const name = $(el).find('.product-title').text().trim();
+      const href = $(el).find('a').attr('href');
+      const price = $(el).find('.price').first().text().trim();
+      const img = $(el).find('img').attr('src') || '';
       
-      const response = await axios.get(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-          'Accept-Language': 'en-US,en;q=0.9',
-          'Cache-Control': 'no-cache'
-        },
-        timeout: 15000,
-        maxRedirects: 5
-      });
-      
-      if (!response.data || response.data.length < 1000) {
-        console.log(`   ⚠️ Empty response`);
-        continue;
+      if (name && href) {
+        const url = href.startsWith('http') ? href : `https://epomaker.com${href}`;
+        items.push({
+          id: `epo-${Date.now()}-${i}`,
+          name,
+          type: 'product',
+          platform: 'Epomaker',
+          vendor: 'Epomaker',
+          category: href.includes('keycap') ? 'keycaps' : 
+                   href.includes('switch') ? 'switches' : 'keyboard',
+          url,
+          affiliateUrl: addAffiliateLink(url, 'Epomaker'),
+          price,
+          image: img,
+          status: 'active',
+          scrapedAt: new Date().toISOString(),
+          source: 'vendor'
+        });
       }
-      
-      const $ = cheerio.load(response.data);
-      
-      // Try different selectors based on site structure
-      $(config.selector).each((i, elem) => {
-        try {
-          const $el = $(elem);
-          
-          // Find name
-          let name = $el.find(config.nameSelector).first().text().trim();
-          if (!name) name = $el.attr('data-title') || $el.find('h2, h3, h4').first().text().trim();
-          if (!name) return;
-          
-          // Find link
-          let link = $el.find(config.linkSelector).first().attr('href');
-          if (!link) link = $el.attr('href');
-          if (!link) link = $el.closest('a').attr('href');
-          if (!link) return;
-          
-          // Normalize URL
-          const fullUrl = link.startsWith('http') ? link : `${config.baseUrl}${link.startsWith('/') ? '' : '/'}${link}`;
-          
-          // Find price
-          let price = $el.find(config.priceSelector).first().text().trim();
-          if (!price) price = $el.find('.money, .amount, [class*="price"]').first().text().trim();
-          
-          // Find image
-          let image = $el.find('img').first().attr('src') || $el.find('img').first().attr('data-src');
-          if (image && image.startsWith('//')) image = 'https:' + image;
-          
-          const id = `${vendorName.toLowerCase()}-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50)}`;
-          
-          products.push({
-            id,
-            name: name.slice(0, 120),
-            vendor: vendorName,
-            url: fullUrl,
-            affiliateUrl: addAffiliateLink(fullUrl, vendorName),
-            price: price.slice(0, 30) || 'See site',
-            image: image || '',
-            category: collection.includes('keyboard') ? 'keyboard' : 
-                     collection.includes('keycap') ? 'keycaps' : 
-                     collection.includes('switch') ? 'switches' : 'accessories',
-            status: 'active',
-            scrapedAt: new Date().toISOString(),
-            source: 'vendor'
-          });
-        } catch (e) {
-          // Skip malformed items
-        }
-      });
-      
-    } catch (error) {
-      console.log(`   ⚠️ ${collection}: ${error.message.slice(0, 50)}`);
-    }
-    
-    // Rate limiting between requests
-    await new Promise(r => setTimeout(r, 1000));
-  }
-  
-  // Remove duplicates
-  const seen = new Set();
-  const unique = products.filter(p => {
-    if (seen.has(p.url)) return false;
-    seen.add(p.url);
-    return true;
-  });
-  
-  console.log(`   ✅ Found ${unique.length} ${vendorName} products`);
-  return unique;
+    });
+  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  console.log(`   ✅ ${items.length}`);
+  return items;
 }
+
+async function scrapeKBDfans() {
+  console.log('🔍 KBDfans...');
+  const items = [];
+  try {
+    const res = await axios.get('https://kbdfans.com/collections/keyboard', {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      timeout: 10000
+    });
+    const $ = cheerio.load(res.data);
+    $('.product-card, .grid__item').each((i, el) => {
+      const name = $(el).find('.product-card__name, h3').first().text().trim();
+      const href = $(el).find('a').attr('href');
+      const price = $(el).find('.price').text().trim();
+      
+      if (name && href) {
+        const url = href.startsWith('http') ? href : `https://kbdfans.com${href}`;
+        items.push({
+          id: `kbdfans-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 30)}`,
+          name,
+          type: 'product',
+          platform: 'KBDfans',
+          vendor: 'KBDfans',
+          category: 'keyboard',
+          url,
+          affiliateUrl: addAffiliateLink(url, 'KBDfans'),
+          price,
+          status: 'active',
+          scrapedAt: new Date().toISOString(),
+          source: 'vendor'
+        });
+      }
+    });
+  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  console.log(`   ✅ ${items.length}`);
+  return items;
+}
+
+async function scrapeNovelKeys() {
+  console.log('🔍 NovelKeys...');
+  const items = [];
+  try {
+    const res = await axios.get('https://novelkeys.com/collections/keyboards', {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      timeout: 10000
+    });
+    const $ = cheerio.load(res.data);
+    $('.product-item').each((i, el) => {
+      const name = $(el).find('.product-title').text().trim();
+      const href = $(el).find('a[href*="/products/"]').attr('href');
+      const price = $(el).find('.product-price').text().trim();
+      
+      if (name && href) {
+        const url = href.startsWith('http') ? href : `https://novelkeys.com${href}`;
+        items.push({
+          id: `nk-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 30)}`,
+          name,
+          type: 'product',
+          platform: 'NovelKeys',
+          vendor: 'NovelKeys',
+          category: 'keyboard',
+          url,
+          affiliateUrl: addAffiliateLink(url, 'NovelKeys'),
+          price,
+          status: 'active',
+          scrapedAt: new Date().toISOString(),
+          source: 'vendor'
+        });
+      }
+    });
+  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  console.log(`   ✅ ${items.length}`);
+  return items;
+}
+
+async function scrapeDrop() {
+  console.log('🔍 Drop...');
+  const items = [];
+  try {
+    const res = await axios.get('https://drop.com/mechanical-keyboards', {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      timeout: 10000
+    });
+    const $ = cheerio.load(res.data);
+    $('a[href*="/buy/"]').each((i, el) => {
+      const $el = $(el);
+      const name = $el.find('h3, .title').first().text().trim();
+      const href = $el.attr('href');
+      const joins = $el.text().match(/(\d+) joined/)?.[1];
+      
+      if (name && href && name.length > 2) {
+        const url = href.startsWith('http') ? href : `https://drop.com${href}`;
+        items.push({
+          id: `drop-${href.split('/').pop()?.slice(0, 20) || i}`,
+          name: name.slice(0, 100),
+          type: 'product',
+          platform: 'Drop',
+          vendor: 'Drop',
+          category: 'keyboard',
+          url,
+          affiliateUrl: addAffiliateLink(url, 'Drop'),
+          joins: joins ? parseInt(joins) : 0,
+          status: 'active',
+          scrapedAt: new Date().toISOString(),
+          source: 'vendor'
+        });
+      }
+    });
+  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  console.log(`   ✅ ${items.length}`);
+  return items;
+}
+
+// ============ GROUP BUY SCRAPERS ============
+
+async function scrapeGeekhack() {
+  console.log('\n🔍 Geekhack Group Buys...');
+  const items = [];
+  try {
+    const res = await axios.get('https://geekhack.org/index.php?board=70.0', {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      timeout: 10000
+    });
+    const $ = cheerio.load(res.data);
+    $('.topic_row').each((i, el) => {
+      const title = $(el).find('.subject a').first().text().trim();
+      const href = $(el).find('.subject a').attr('href');
+      const author = $(el).find('.poster a').text().trim();
+      const replies = $(el).find('.stats .replies').text().trim() || 
+                     $(el).find('.stats').text().match(/(\d+) replies?/)?.[1];
+      
+      if (title && href) {
+        const url = href.startsWith('http') ? href : `https://geekhack.org${href}`;
+        const id = `geekhack-${title.slice(0, 30).replace(/[^a-z0-9]+/gi, '-')}`;
+        items.push({
+          id,
+          name: title,
+          type: title.toLowerCase().includes('[ic]') ? 'interest_check' : 'group_buy',
+          platform: 'Geekhack',
+          url,
+          author: author || 'Unknown',
+          replies: parseInt(replies) || 0,
+          status: 'live',
+          scrapedAt: new Date().toISOString(),
+          source: 'geekhack'
+        });
+      }
+    });
+  } catch (e) { console.log(`   ⚠️ ${e.message.slice(0, 40)}`); }
+  console.log(`   ✅ ${items.length} threads`);
+  return items;
+}
+
+async function scrapeReddit() {
+  console.log('🔍 Reddit r/mechmarket...');
+  const items = [];
+  try {
+    const res = await axios.get('https://www.reddit.com/r/mechmarket/new.json?limit=25', {
+      headers: { 'User-Agent': 'Switchyard/1.0' },
+      timeout: 10000
+    });
+    const posts = res.data?.data?.children || [];
+    posts.forEach(post => {
+      const p = post.data;
+      const match = p.title?.match(/\[(GB|IC)\]/i);
+      if (match) {
+        items.push({
+          id: `reddit-${p.id}`,
+          name: p.title,
+          type: match[1].toUpperCase() === 'IC' ? 'interest_check' : 'group_buy',
+          platform: 'Reddit r/mechmarket',
+          url: `https://reddit.com${p.permalink}`,
+          author: p.author,
+          upvotes: p.ups || 0,
+          comments: p.num_comments || 0,
+          status: 'live',
+          scrapedAt: new Date().toISOString(),
+          source: 'reddit'
+        });
+      }
+    });
+  } catch (e) { 
+    if (e.response?.status === 403) {
+      console.log('   ⚠️ Reddit rate limited (expected)');
+    } else {
+      console.log(`   ⚠️ ${e.message.slice(0, 40)}`);
+    }
+  }
+  console.log(`   ✅ ${items.length} posts`);
+  return items;
+}
+
+// ============ MAIN ============
 
 async function runScraper() {
-  console.log('🚀 Starting vendor product scraper...\n');
+  console.log('🚀 Starting Switchyard Scraper\n');
+  const startTime = Date.now();
+  const data = loadData();
   
-  const existingData = loadData();
-  const originalCount = existingData.allProducts?.length || 0;
+  // Track existing items by URL
+  const existingUrls = new Set(data.items?.map(i => i.url) || []);
+  const newItems = [];
   
-  // Build existing product map
-  const existingByUrl = new Map();
-  (existingData.allProducts || []).forEach(p => {
-    if (p.url) existingByUrl.set(p.url.split('?')[0], p);
-  });
+  // ===== PRODUCTS =====
+  console.log('📦 VENDOR PRODUCTS');
+  const productScrapers = [
+    scrapeKeychron,
+    scrapeEpomaker, 
+    scrapeKBDfans,
+    scrapeNovelKeys,
+    scrapeDrop
+  ];
   
-  const allNewProducts = [];
-  let totalNew = 0;
-  
-  // Scrape each vendor
-  for (const [vendorName, config] of Object.entries(VENDORS)) {
+  for (const scraper of productScrapers) {
     try {
-      const products = await scrapeVendor(vendorName, config);
-      
-      products.forEach(p => {
-        const baseUrl = p.url.split('?')[0];
-        if (!existingByUrl.has(baseUrl)) {
-          allNewProducts.push(p);
-          existingByUrl.set(baseUrl, p);
-          totalNew++;
+      const items = await scraper();
+      items.forEach(item => {
+        if (!existingUrls.has(item.url)) {
+          newItems.push(item);
+          existingUrls.add(item.url);
         }
       });
-      
-    } catch (error) {
-      console.log(`❌ ${vendorName} failed: ${error.message}`);
+    } catch (e) {
+      console.log(`   Error: ${e.message.slice(0, 50)}`);
+    }
+    await new Promise(r => setTimeout(r, 500));
+  }
+  
+  // ===== GROUP BUYS =====
+  console.log('\n🎯 GROUP BUYS & INTEREST CHECKS');
+  const gbScrapers = [scrapeGeekhack, scrapeReddit];
+  
+  for (const scraper of gbScrapers) {
+    try {
+      const items = await scraper();
+      items.forEach(item => {
+        if (!existingUrls.has(item.url)) {
+          newItems.push(item);
+          existingUrls.add(item.url);
+        }
+      });
+    } catch (e) {
+      console.log(`   Error: ${e.message.slice(0, 50)}`);
     }
   }
   
-  // Merge with existing
-  const updatedProducts = [...(existingData.allProducts || []), ...allNewProducts];
+  // Merge
+  const allItems = [...(data.items || []), ...newItems];
   
-  // Update data
-  const newData = {
-    ...existingData,
-    allProducts: updatedProducts,
-    metadata: {
-      ...existingData.metadata,
-      updatedAt: new Date().toISOString(),
-      lastScrape: new Date().toISOString(),
-      totalVendors: Object.keys(VENDORS).length,
-      newProductsAdded: totalNew,
-      totalProducts: updatedProducts.length
+  // Separate into categories
+  data.items = allItems;
+  data.products = allItems.filter(i => i.type === 'product');
+  data.groupBuys = allItems.filter(i => i.type === 'group_buy' || i.type === 'interest_check');
+  
+  // Stats
+  data.metadata = {
+    scrapedAt: new Date().toISOString(),
+    duration: ((Date.now() - startTime) / 1000).toFixed(2),
+    totalItems: allItems.length,
+    newItemsAdded: newItems.length,
+    products: data.products.length,
+    groupBuys: data.groupBuys.length,
+    byType: {
+      products: data.products.length,
+      groupBuys: data.groupBuys.filter(i => i.type === 'group_buy').length,
+      interestChecks: data.groupBuys.filter(i => i.type === 'interest_check').length
     }
   };
   
-  // Count by vendor
-  const byVendor = {};
-  updatedProducts.forEach(p => {
-    byVendor[p.vendor] = (byVendor[p.vendor] || 0) + 1;
-  });
+  saveData(data);
   
-  saveData(newData);
+  console.log('\n📊 RESULTS');
+  console.log(`   Total: ${allItems.length} items (${newItems.length} new)`);
+  console.log(`   Products: ${data.products.length}`);
+  console.log(`   Group Buys: ${data.groupBuys.filter(i => i.type === 'group_buy').length}`);
+  console.log(`   Interest Checks: ${data.groupBuys.filter(i => i.type === 'interest_check').length}`);
+  console.log(`   ⏱️  ${data.metadata.duration}s`);
+  console.log(newItems.length > 0 ? '\n✅ New data found!' : '\n📊 No new items');
   
-  console.log('\n📊 Summary:');
-  console.log(`   Previous: ${originalCount} products`);
-  console.log(`   New: ${totalNew} products`);
-  console.log(`   Total: ${updatedProducts.length} products`);
-  console.log('\n   By Vendor:');
-  Object.entries(byVendor)
-    .sort((a, b) => b[1] - a[1])
-    .forEach(([v, c]) => console.log(`      ${v}: ${c}`));
-  
-  return { changed: totalNew > 0, newItems: totalNew, data: newData };
+  return { changed: newItems.length > 0, count: newItems.length };
 }
 
-// Run
-runScraper().then(result => {
-  if (result.changed) {
-    console.log('\n✅ New products found and added!');
-  } else {
-    console.log('\n📊 No new products (scrape successful, existing data current)');
-  }
-  process.exit(0);
-}).catch(error => {
-  console.error('Scraper failed:', error.message);
+runScraper().then(r => process.exit(0)).catch(e => {
+  console.error('Error:', e.message);
   process.exit(1);
 });

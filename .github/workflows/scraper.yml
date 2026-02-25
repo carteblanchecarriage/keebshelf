@@ -1,8 +1,8 @@
-name: Scrape Products
+name: Scrape Data
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Every 6 hours (4x per day)
+    - cron: '0 */2 * * *'  # Every 2 hours
   workflow_dispatch:
 
 permissions:
@@ -21,18 +21,16 @@ jobs:
         with:
           node-version: '20'
           
-      - name: Install scraper dependencies
-        run: |
-          cd scraper
-          npm install axios cheerio --no-package-lock 2>&1 || true
+      - name: Install scraper deps
+        run: cd scraper && npm install axios cheerio --no-package-lock 2>/dev/null || true
           
-      - name: Run vendor scraper
+      - name: Run scraper
         id: scraper
         run: cd scraper && node scraper.js
-        timeout-minutes: 10
+        timeout-minutes: 5
         continue-on-error: true
         
-      - name: Commit if new products found
+      - name: Commit if new items found
         id: commit
         run: |
           git config user.name "GitHub Actions"
@@ -41,10 +39,10 @@ jobs:
           
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "📊 No new products found"
+            echo "📊 No new items"
           else
-            git commit -m "Products: $(date '+%Y-%m-%d %H:%M UTC') - vendor scrape"
+            git commit -m "Scrape: $(date '+%Y-%m-%d %H:%M UTC') - products + group buys"
             git push
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "✅ New products committed"
+            echo "✅ New items committed"
           fi
