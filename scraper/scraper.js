@@ -36,7 +36,7 @@ const IC_INDICATORS = [
 
 // Sold out indicators
 const SOLD_OUT_INDICATORS = [
-  'sold out', 'out of stock', 'unavailable', 'discontinued', 'ended'
+  'sold out', 'out of stock', 'unavailable', 'discontinued', 'ended', 'archived'
 ];
 
 function loadData() {
@@ -141,6 +141,13 @@ function isInterestCheck(name, description) {
 // Check inventory status from Shopify variant data
 function getAvailability(product) {
   const variants = product.variants || [];
+  const tags = product.tags || [];
+  const tagsLower = tags.map(t => t.toLowerCase());
+  
+  // Check for archived/discontinued tags first
+  if (tagsLower.includes('archived') || tagsLower.includes('discontinued') || tagsLower.includes('nonreturnable')) {
+    return { available: false, quantity: 0, archived: true };
+  }
   
   if (variants.length === 0) {
     return { available: true, quantity: 0 }; // Assume available if no variants
@@ -159,10 +166,11 @@ function getAvailability(product) {
     }
   }
   
-  // Check inventory policy
+  // Check inventory policy - but don't override if explicitly unavailable
   const firstVariant = variants[0];
-  if (firstVariant?.inventory_policy === 'continue') {
-    anyAvailable = true; // Can always order even if 0 inventory
+  if (firstVariant?.inventory_policy === 'continue' && anyAvailable) {
+    // Can continue ordering if actually available
+    anyAvailable = true;
   }
   
   return { 
