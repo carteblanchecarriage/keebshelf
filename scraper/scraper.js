@@ -281,6 +281,14 @@ async function scrapeShopifyStore(baseUrl, collectionPath, vendorName, maxProduc
           return; // Skip parts entirely - they're not full products
         }
         
+        // Skip redirect-only products
+        const isRedirectOnly = description.toLowerCase().includes('redirect to') ||
+                                description.toLowerCase().includes('order placed will be canceled') ||
+                                description.toLowerCase().includes('only exists to redirect');
+        if (isRedirectOnly) {
+          return; // Skip this product
+        }
+
         // Determine item type and availability status
         const itemType = isGroupBuy(p.title, description, vendorName, tags) ? 'group_buy' :
                         isInterestCheck(p.title, description) ? 'interest_check' :
