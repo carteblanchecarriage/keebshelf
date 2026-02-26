@@ -19,7 +19,7 @@ export function useDocumentMeta(options: MetaOptions = {}) {
     canonical,
     ogTitle,
     ogDescription,
-    ogImage = 'https://switchyard.app/og-image.png',
+    ogImage = 'https://switchyard.club/og-image.png',
     ogType = 'website',
     twitterCard = 'summary_large_image',
     noIndex = false

@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 
 // Canonical domain for Switchyard
-const DOMAIN = 'https://switchyard.app';
+const DOMAIN = 'https://switchyard.club';
 
 interface SEOConfig {
   title: string;

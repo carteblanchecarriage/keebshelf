@@ -29,7 +29,7 @@ export default function Footer() {
         <div className="footer-section">
           <h3>Contact</h3>
           <ul>
-            <li><a href="mailto:contact@switchyard.app">Email</a></li>
+            <li><a href="mailto:contact@switchyard.club">Email</a></li>
             <li><a href="https://twitter.com/switchyard" target="_blank" rel="noopener noreferrer">Twitter</a></li>
           </ul>
         </div>

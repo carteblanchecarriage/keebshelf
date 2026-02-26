@@ -13,10 +13,10 @@ export default function SEO({
   title, 
   description, 
   pathname = '', 
-  image = 'https://switchyard.app/logo512.png',
+  image = 'https://switchyard.club/logo512.png',
   type = 'article'
 }: SEOProps) {
-  const siteUrl = 'https://switchyard.app';
+  const siteUrl = 'https://switchyard.club';
   const canonical = `${siteUrl}${pathname}`;
   const fullTitle = title.includes('Switchyard') ? title : `${title} | Switchyard`;
 

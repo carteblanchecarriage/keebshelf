@@ -1,5 +1,5 @@
 # Switchyard Robots.txt
-# https://www.switchyard.app
+# https://switchyard.club
 
 User-agent: *
 Allow: /
@@ -11,4 +11,4 @@ Disallow: /_*
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://switchyard.app/sitemap.xml
+Sitemap: https://switchyard.club/sitemap.xml

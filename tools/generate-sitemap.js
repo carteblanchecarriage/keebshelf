@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const baseUrl = 'https://switchyard.app';
+const baseUrl = 'https://switchyard.club';
 const today = new Date().toISOString().split('T')[0];
 
 const pages = [
