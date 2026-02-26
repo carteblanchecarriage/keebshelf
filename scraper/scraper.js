@@ -244,7 +244,27 @@ async function scrapeShopifyStore(baseUrl, collectionPath, vendorName, maxProduc
         }
         
         // Determine category
-        let category = type.includes('keycap') ? 'keycaps' :
+        // Check product name for keycap indicators (NovelKeys uses patterns like GMK, CYL, SA, etc.)
+        const titleLower = p.title.toLowerCase();
+        const tagsLower = tags.map(t => t.toLowerCase()).join(' ');
+        const nameHasKeycaps = titleLower.includes('gmk') ||
+                              titleLower.includes('cyl') ||
+                              titleLower.includes('sa ') ||
+                              titleLower.includes('dsa ') ||
+                              titleLower.includes('kat ') ||
+                              titleLower.includes('mt3') ||
+                              titleLower.includes('keycap') ||
+                              titleLower.includes('keycaps') ||
+                              titleLower.includes('keyset') ||
+                              tagsLower.includes('keycap') ||
+                              tagsLower.includes('keycaps');
+        
+        // NovelKeys uses "Mechs & Co." type for some keycap collaborations (CYL, MW, etc.)
+        const isMechsAndCoKeycaps = vendorName === 'NovelKeys' && 
+                                     type === 'mechs & co.' &&
+                                     (titleLower.includes('cyl') || titleLower.includes('mw '));
+        
+        let category = type.includes('keycap') || nameHasKeycaps || isMechsAndCoKeycaps ? 'keycaps' :
                       type.includes('switch') ? 'switches' :
                       type.includes('cable') ? 'accessories' :
                       type.includes('deskmat') ? 'accessories' :
