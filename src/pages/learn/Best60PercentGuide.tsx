@@ -42,7 +42,7 @@ const topPicks = [
     price: '$129',
     specs: '60% / Aluminum / Wireless+QMK / Hot-Swap',
     why: 'QMK on wireless 60% is rare. Aluminum case. Buy-it-for-life option.',
-    link: 'https://keychron.com/products/keychron-q4-pro'
+    link: 'https://keychron.com/products/keychron-q4-pro?ref=switchyard'
   },
   {
     badge: 'Enthusiast',

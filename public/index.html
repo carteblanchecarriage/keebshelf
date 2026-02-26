@@ -27,12 +27,13 @@
     <meta property="og:locale" content="en_US" />
     
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://switchyard.app" />
-    <meta property="twitter:title" content="Switchyard | Mechanical Keyboard Tracker & Group Buy Database" />
-    <meta property="twitter:description" content="Track mechanical keyboard group buys, in-stock drops, and vendors. Find your perfect keyboard with Switchyard." />
-    <meta property="twitter:image" content="%PUBLIC_URL%/og-image.png" />
-    <meta property="twitter:image:alt" content="Switchyard - Mechanical Keyboard Tracker" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://switchyard.app" />
+    <meta name="twitter:title" content="Switchyard | Mechanical Keyboard Tracker & Group Buy Database" />
+    <meta name="twitter:description" content="Track mechanical keyboard group buys, in-stock drops, and vendors. Find your perfect keyboard with Switchyard." />
+    <meta name="twitter:image" content="%PUBLIC_URL%/og-image.png" />
+    <meta name="twitter:image:alt" content="Switchyard - Mechanical Keyboard Tracker and Discovery Platform" />
+    <meta name="twitter:site" content="@switchyard" />
     
     <!-- Mobile/App -->
     <meta name="mobile-web-app-capable" content="yes" />
@@ -43,6 +44,9 @@
     
     <!-- Icons -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Sitemap -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -61,6 +65,20 @@
         "target": "https://switchyard.app/?search={search_term_string}",
         "query-input": "required name=search_term_string"
       }
+    }
+    </script>
+    
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Switchyard",
+      "url": "https://switchyard.app",
+      "logo": "https://switchyard.app/logo512.png",
+      "sameAs": [
+        "https://twitter.com/switchyard"
+      ]
     }
     </script>
   </head>

@@ -10,7 +10,7 @@ const topPicks = [
     price: '$199',
     specs: '75% Layout / QMK/VIA / Gasket Mount / Aluminum / South-Facing',
     why: 'QMK means every key is programmable. The knob can be volume, scroll, or any key combo.',
-    link: 'https://keychron.com/products/keychron-q1-pro'
+    link: 'https://keychron.com/products/keychron-q1-pro?ref=switchyard'
   },
   {
     badge: '60% Legend',
@@ -26,7 +26,7 @@ const topPicks = [
     price: '$94',
     specs: '75% Low-Profile / QMK/VIA / Hot-Swap / Wireless',
     why: 'Low-profile keys mean less finger travel. QMK at this price is rare.',
-    link: 'https://keychron.com/products/keychron-k3-pro'
+    link: 'https://keychron.com/products/keychron-k3-pro?ref=switchyard'
   },
   {
     badge: 'Split/Ergo',
@@ -42,7 +42,7 @@ const topPicks = [
     price: '$109',
     specs: 'TKL Layout / QMK/VIA / Mac-First / Bluetooth / Hot-Swap',
     why: 'Designed for Macs. QMK on wireless. TKL keeps muscle memory intact.',
-    link: 'https://keychron.com/products/keychron-k8-pro'
+    link: 'https://keychron.com/products/keychron-k8-pro?ref=switchyard'
   }
 ];
 

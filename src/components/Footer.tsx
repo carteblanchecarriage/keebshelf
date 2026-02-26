@@ -1,3 +1,4 @@
+
 import React from 'react';
 import './Footer.css';
 
@@ -18,17 +19,18 @@ export default function Footer() {
         <div className="footer-section">
           <h3>Learn</h3>
           <ul>
-            <li><a href="/switch-guide">Switch Guide</a></li>
-            <li><a href="/beginners-guide">Beginner's Guide</a></li>
-            <li><a href="/glossary">Glossary</a></li>
+            <li><a href="/learn">All Guides</a></li>
+            <li><a href="/learn/switch-guide">Switch Guide</a></li>
+            <li><a href="/learn/beginners-guide">Beginner's Guide</a></li>
+            <li><a href="/learn/glossary">Glossary</a></li>
           </ul>
         </div>
         
         <div className="footer-section">
           <h3>Contact</h3>
           <ul>
-            <li><a href="mailto:contact@switchyard.io">Email</a></li>
-            <li><a href="https://twitter.com/switchyard">Twitter</a></li>
+            <li><a href="mailto:contact@switchyard.app">Email</a></li>
+            <li><a href="https://twitter.com/switchyard" target="_blank" rel="noopener noreferrer">Twitter</a></li>
           </ul>
         </div>
         
@@ -37,13 +39,12 @@ export default function Footer() {
           <ul>
             <li><a href="/privacy">Privacy Policy</a></li>
             <li><a href="/terms">Terms of Service</a></li>
-            <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
       </div>
       
       <div className="footer-bottom">
-        <p>© 2025 Switchyard. All rights reserved.</p>
+        <p>© 2026 Switchyard. All rights reserved.</p>
       </div>
     </footer>
   );

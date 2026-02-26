@@ -10,7 +10,7 @@ const topPicks = [
     price: '$199',
     specs: '75% / Aluminum / QMK/VIA / Gasket / Hot-swap',
     why: 'The default answer for Q1 is justified: solid aluminum, gasket mount, wireless, fully programmable.',
-    link: 'https://keychron.com/products/keychron-q1-pro'
+    link: 'https://keychron.com/products/keychron-q1-pro?ref=switchyard'
   },
   {
     badge: 'Budget Pick',

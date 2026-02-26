@@ -42,7 +42,7 @@ export default function BestTKLGuide() {
                 <li>Gasket mount design</li>
               </ul>
               <p className="pick-why">The gold standard for enthusiast TKLs</p>
-              <a href="https://keychron.com/products/keychron-q3" className="pick-link" target="_blank" rel="noreferrer">Check Price →</a>
+              <a href="https://keychron.com/products/keychron-q3?ref=switchyard" className="pick-link" target="_blank" rel="noreferrer">Check Price →</a>
             </div>
 
             <div className="pick-card">
@@ -56,7 +56,7 @@ export default function BestTKLGuide() {
                 <li>RGB backlighting</li>
               </ul>
               <p className="pick-why">Unbeatable value for the price</p>
-              <a href="https://keychron.com/products/keychron-c3-pro" className="pick-link" target="_blank" rel="noreferrer">Check Price →</a>
+              <a href="https://keychron.com/products/keychron-c3-pro?ref=switchyard" className="pick-link" target="_blank" rel="noreferrer">Check Price →</a>
             </div>
 
             <div className="pick-card">
@@ -70,7 +70,7 @@ export default function BestTKLGuide() {
                 <li>Full aluminum construction</li>
               </ul>
               <p className="pick-why">Gaming-focused with pro features</p>
-              <a href="https://keychron.com/products/keychron-q3-he" className="pick-link" target="_blank" rel="noreferrer">Check Price →</a>
+              <a href="https://keychron.com/products/keychron-q3-he?ref=switchyard" className="pick-link" target="_blank" rel="noreferrer">Check Price →</a>
             </div>
           </div>
         </section>

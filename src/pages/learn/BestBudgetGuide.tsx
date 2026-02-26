@@ -11,7 +11,7 @@ const topPicks = [
     price: '$84',
     specs: '75% Layout • Hot-Swap • Gateron G Pro Switches • South-Facing RGB',
     why: 'Best balance of features, build quality, and price. Hot-swap means you can change switches later. The knob is genuinely useful for volume control.',
-    link: 'https://keychron.com/products/keychron-v1'
+    link: 'https://keychron.com/products/keychron-v1?ref=switchyard'
   },
   {
     badge: 'Best for Gaming',
@@ -29,7 +29,7 @@ const topPicks = [
     price: '$75-89',
     specs: 'TKL Layout • Hot-Swap (some models) • Wireless + Wired • Mac/Windows',
     why: 'The TKL layout keeps function keys and arrows while saving space. Wireless works reliably. Great for office environments.',
-    link: 'https://keychron.com/products/keychron-k8'
+    link: 'https://keychron.com/products/keychron-k8?ref=switchyard'
   },
   {
     badge: 'Best Entry-Level',
