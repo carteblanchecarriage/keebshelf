@@ -9,10 +9,10 @@ const PUBLIC_DATA_FILE = path.join(__dirname, '..', 'public', 'data.json');
 // Affiliate tracking codes
 const AFFILIATE_CODES = {
   'Epomaker': { param: 'sca_ref', value: '10691179.cOO0hJ6jvi' },
-  'KBDfans': { param: 'ref', value: 'keyboardtracker' },
-  'NovelKeys': { param: 'ref', value: 'keyboardtracker' },
+  'KBDfans': { param: 'ref', value: 'switchyard' },
+  'NovelKeys': { param: 'ref', value: 'switchyard' },
   'Keychron': { param: 'ref', value: 'switchyard' },
-  'Drop': { param: 'referer', value: 'keyboardtracker' }
+  'Drop': { param: 'referer', value: 'switchyard' }
 };
 
 // Keywords that indicate a product is a PART, not a complete keyboard
