@@ -13,16 +13,33 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
     return price.startsWith('$') ? price : `$${price}`;
   };
 
+  // Generate descriptive alt text for accessibility and SEO
+  const getImageAltText = (): string => {
+    const parts = [product.name];
+    if (product.vendor) parts.push(product.vendor);
+    if (product.category && product.category !== 'keyboard') parts.push(product.category);
+    parts.push('mechanical keyboard product image');
+    return parts.join(' - ');
+  };
+
   return (
     <div
       className="product-card"
       onClick={() => onClick(product)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === 'Enter' && onClick(product)}
+      aria-label={`View details for ${product.name} by ${product.vendor || 'unknown vendor'}`}
     >
       <div className="product-image">
         {product.image ? (
-          <img src={product.image} alt={product.name} />
+          <img 
+            src={product.image} 
+            alt={getImageAltText()}
+            loading="lazy"
+          />
         ) : (
-          <div className="no-image">No Image</div>
+          <div className="no-image" role="img" aria-label="No product image available">No Image</div>
         )}
       </div>
 
