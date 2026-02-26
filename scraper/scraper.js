@@ -20,6 +20,21 @@ const AFFILIATE_CODES = {
   'Boardsource': { param: 'ref', value: 'switchyard' }
 };
 
+// Vendor priority order (affiliate vendors first)
+const VENDOR_PRIORITY = {
+  'Keychron': 1,
+  'Epomaker': 2,
+  'Qwerkywriter': 3,
+  'KBDfans': 10,
+  'NovelKeys': 11,
+  'Drop': 12,
+  'CannonKeys': 20,
+  'DiviniKey': 21,
+  'Glorious': 22,
+  'Boardsource': 23,
+  'Kono.store': 24
+};
+
 // Keywords that indicate a product is a PART, not a complete keyboard
 const PART_KEYWORDS = [
   'pcb', 'plate', 'weight', 'top', 'bottom', 'mid', 'hardware pack',
@@ -1160,15 +1175,32 @@ async function runScraper() {
   
   console.log(`   Filtered ${allItems.length - freshItems.length} stale items (>30 days old)`);
   
+  // Sort products to prioritize affiliate vendors first
+  const sortByAffiliatePriority = (items) => {
+    return [...items].sort((a, b) => {
+      const aPriority = VENDOR_PRIORITY[a.vendor] ?? 999;
+      const bPriority = VENDOR_PRIORITY[b.vendor] ?? 999;
+      
+      if (aPriority !== bPriority) {
+        return aPriority - bPriority;
+      }
+      
+      // Secondary sort by name
+      return (a.name || '').localeCompare(b.name || '');
+    });
+  };
+  
   // Organize by type
   data.items = freshItems;
-  data.allProducts = freshItems.filter(i => i.type === 'product' && i.category !== 'parts');
-  data.inStock = freshItems.filter(i => i.status === 'in_stock' || i.status === 'active');
+  data.allProducts = sortByAffiliatePriority(freshItems.filter(i => i.type === 'product' && i.category !== 'parts'));
+  data.inStock = sortByAffiliatePriority(freshItems.filter(i => i.status === 'in_stock' || i.status === 'active'));
   data.groupBuys = freshItems.filter(i => i.type === 'group_buy' && i.status !== 'ended');
   data.interestChecks = freshItems.filter(i => i.type === 'interest_check');
   
   // Remove parts from main view but keep them accessible
   data.parts = freshItems.filter(i => i.category === 'parts');
+  
+  console.log(`   ✅ Sorted by affiliate priority: Keychron, Epomaker, Qwerkywriter first`);
   
   data.metadata = {
     scrapedAt: new Date().toISOString(),
