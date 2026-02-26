@@ -260,13 +260,20 @@ async function scrapeShopifyStore(baseUrl, collectionPath, vendorName, maxProduc
                               tagsLower.includes('keycap') ||
                               tagsLower.includes('keycaps');
         
-        // NovelKeys uses "Mechs & Co." type for some keycap collaborations (CYL, MW, etc.)
+        // NovelKeys specific categorization
+        const isNovelKeysKeycapSet = vendorName === 'NovelKeys' && 
+                                      (type === 'keycap set' || 
+                                       type === 'artisan keycaps' ||
+                                       type === 'mechs & co.');
+        
+        const isNovelKeysSwitches = vendorName === 'NovelKeys' && type === 'switches';
+        
         const isMechsAndCoKeycaps = vendorName === 'NovelKeys' && 
                                      type === 'mechs & co.' &&
                                      (titleLower.includes('cyl') || titleLower.includes('mw '));
         
-        let category = type.includes('keycap') || nameHasKeycaps || isMechsAndCoKeycaps ? 'keycaps' :
-                      type.includes('switch') ? 'switches' :
+        let category = type.includes('keycap') || nameHasKeycaps || isMechsAndCoKeycaps || isNovelKeysKeycapSet ? 'keycaps' :
+                      type.includes('switch') || isNovelKeysSwitches ? 'switches' :
                       type.includes('cable') ? 'accessories' :
                       type.includes('deskmat') ? 'accessories' :
                       type.includes('case') && !type.includes('keyboard') ? 'accessories' :
