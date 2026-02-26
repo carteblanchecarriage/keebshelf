@@ -22,28 +22,60 @@ jobs:
           node-version: '20'
           
       - name: Install scraper deps
-        run: cd scraper && npm install axios cheerio --no-package-lock 2>/dev/null || true
+        run: |
+          cd scraper
+          npm install axios cheerio
           
       - name: Run scraper
         id: scraper
-        run: cd scraper && node scraper.js
-        timeout-minutes: 5
-        continue-on-error: true
+        run: |
+          echo "🚀 Starting scraper..."
+          cd scraper && node scraper.js
+          echo "✅ Scraper completed"
+        timeout-minutes: 10
+        # Removed continue-on-error - we want to know if it fails
         
-      - name: Commit if new items found
+      - name: Check file timestamps
+        run: |
+          echo "📄 Checking data files..."
+          ls -la data.json public/data.json 2>/dev/null || echo "Files not found"
+          stat data.json public/data.json 2>/dev/null | grep Modify
+        
+      - name: Commit updated data
         id: commit
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           
-          # Check for ANY changes (staged or unstaged)
-          if git diff --quiet HEAD -- data.json public/data.json; then
+          # Check if data files exist and have changed
+          if [ ! -f "data.json" ] && [ ! -f "public/data.json" ]; then
+            echo "❌ No data files found"
+            exit 1
+          fi
+          
+          # Show git status for debugging
+          echo "📊 Git status:"
+          git status --short
+          
+          # Check for changes in data files
+          if git diff --quiet HEAD -- data.json public/data.json 2>/dev/null; then
+            echo "📊 No changes detected in data files"
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "📊 No new items"
           else
+            echo "✅ Changes detected - committing..."
             git add data.json public/data.json
-            git commit -m "Scrape: $(date '+%Y-%m-%d %H:%M UTC') - products + group buys"
+            
+            # Show what changed
+            echo "📝 Changes summary:"
+            git diff --stat HEAD -- data.json public/data.json || echo "Unable to show diff stats"
+            
+            git commit -m "🔄 Auto-scrape: $(date '+%Y-%m-%d %H:%M UTC')" || echo "Already up to date"
             git push
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "✅ New items committed"
+            echo "✅ Changes committed and pushed"
           fi
+          
+      - name: Verify deployment
+        run: |
+          echo "📦 Final data count:"
+          cat public/data.json 2>/dev/null | grep -o '"allProducts"' | wc -l || echo "Could not read file"
