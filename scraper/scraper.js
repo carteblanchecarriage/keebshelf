@@ -13,7 +13,7 @@ const AFFILIATE_CODES = {
   'NovelKeys': { param: 'ref', value: 'switchyard' },
   'Keychron': { param: 'ref', value: 'switchyard' },
   'Drop': { param: 'referer', value: 'switchyard' },
-  'Qwerkywriter': { param: 'ref', value: 'switchyard' },
+  'Qwerkywriter': { param: 'sca_ref', value: '10713146.AiDf5cQpby' },
   'CannonKeys': { param: 'ref', value: 'switchyard' },
   'DiviniKey': { param: 'ref', value: 'switchyard' },
   'Glorious': { param: 'ref', value: 'switchyard' },
