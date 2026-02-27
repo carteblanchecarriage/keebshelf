@@ -293,6 +293,41 @@ export default function SwitchGuide() {
         </section>
 
         <section className="guide-section">
+          <h2>Switch Testers and Starter Kits</h2>
+          <p>
+            Can't decide? These switch testers let you try before you buy. 
+            Most include 9-12 popular switch types.
+          </p>
+          
+          <div className="product-card">
+            <h3>Glorious GMMK Switch Tester</h3>
+            <p>12-switch tester with popular Gateron, Kailh, and Cherry options. 
+            Includes carrying case. Perfect for first-time buyers.</p>
+            <a href="/?search=Glorious+switch+tester&category=keyboard" className="cta-button">Find Switch Tester →</a>
+          </div>
+          
+          <div className="product-card">
+            <h3>NovelKeys Switch Tester</h3>
+            <p>Enthusiast-focused tester with premium switches including Holy Pandas, 
+            Zealios, and Kailh BOX. Higher end options.</p>
+            <a href="/?search=NovelKeys+switch+tester&category=keyboard" className="cta-button">Find NovelKeys Tester →</a>
+          </div>
+          
+          <div className="product-card">
+            <h3>Amazon 9-Switch Tester</h3>
+            <p>Budget option with basic Cherry MX variants (Red, Brown, Blue, Black). 
+            Under $15 and ships fast.</p>
+            <a href="/?search=9+switch+tester&category=keyboard" className="cta-button">Find Budget Tester →</a>
+          </div>
+          
+          <div className="highlight-box info">
+            <strong>Pro Tip:</strong> If you're serious about finding your perfect switch, 
+            buy a hot-swap keyboard as your first board. You can try 10+ switches over time 
+            without buying a tester you'll never use again.
+          </div>
+        </section>
+
+        <section className="guide-section">
           <h2>Making Your Decision</h2>
           
           <div className="decision-framework">

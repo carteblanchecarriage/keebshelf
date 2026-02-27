@@ -499,7 +499,7 @@ export default function App() {
   if (currentPath === '/learn/best-budget' || currentPath === '/best-budget') {
     return <BestBudgetGuide />;
   }
-  if (currentPath === '/learn/best-gaming' || currentPath === '/gaming') {
+  if (currentPath === '/learn/best-gaming' || currentPath === '/best-gaming' || currentPath === '/gaming') {
     return <BestGamingGuide />;
   }
   if (currentPath === '/learn/best-60-percent' || currentPath === '/best-60-percent') {
