@@ -240,6 +240,26 @@ export default function App() {
       });
   }, [currentPath]);
 
+  // Apply URL search params after products load
+  useEffect(() => {
+    if (products.length > 0 && searchQuery) {
+      const queryLower = searchQuery.toLowerCase();
+      const filtered = products.filter((p: Product) =>
+        p.name?.toLowerCase().includes(queryLower) ||
+        p.vendor?.toLowerCase().includes(queryLower) ||
+        p.description?.toLowerCase().includes(queryLower)
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [products, searchQuery]);
+
+  // Apply URL category params after products load
+  useEffect(() => {
+    if (products.length > 0 && activeCategory !== 'all') {
+      applyFilters(activeCategory, searchQuery);
+    }
+  }, [products, activeCategory]);
+
   // SEO for main product grid - dynamic based on category and search
   const getPageTitle = () => {
     if (searchQuery) {
