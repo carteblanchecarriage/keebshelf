@@ -72,19 +72,15 @@ export default function Learn() {
               </h2>
               <div className="guide-grid">
                 {category.guides.map((guide) => {
-                  const isBlog = guide.path.startsWith('/blog/');
                   return (
                     <a
                       key={guide.path}
                       href={guide.path}
                       className="guide-card"
                       onClick={(e) => {
-                        if (!isBlog) {
-                          e.preventDefault();
-                          window.history.pushState({}, '', guide.path);
-                          window.dispatchEvent(new PopStateEvent('popstate'));
-                        }
-                        // For blog posts, let the browser handle navigation normally
+                        e.preventDefault();
+                        window.history.pushState({}, '', guide.path);
+                        window.dispatchEvent(new PopStateEvent('popstate'));
                       }}
                     >
                       <div className="guide-header">
