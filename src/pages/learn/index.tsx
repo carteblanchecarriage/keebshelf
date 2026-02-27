@@ -72,27 +72,33 @@ export default function Learn() {
                 {category.title}
               </h2>
               <div className="guide-grid">
-                {category.guides.map((guide) => (
-                  <a
-                    key={guide.path}
-                    href={guide.path}
-                    className="guide-card"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.history.pushState({}, '', guide.path);
-                      window.dispatchEvent(new PopStateEvent('popstate'));
-                    }}
-                  >
-                    <div className="guide-header">
-                      <span className={`difficulty-badge difficulty-${guide.difficulty.toLowerCase()}`}>
-                        {guide.difficulty}
-                      </span>
-                    </div>
-                    <h3>{guide.title}</h3>
-                    <p>{guide.desc}</p>
-                    <span className="guide-link">Read guide →</span>
-                  </a>
-                ))}
+                {category.guides.map((guide) => {
+                  const isBlog = guide.path.startsWith('/blog/');
+                  return (
+                    <a
+                      key={guide.path}
+                      href={guide.path}
+                      className="guide-card"
+                      onClick={(e) => {
+                        if (!isBlog) {
+                          e.preventDefault();
+                          window.history.pushState({}, '', guide.path);
+                          window.dispatchEvent(new PopStateEvent('popstate'));
+                        }
+                        // For blog posts, let the browser handle navigation normally
+                      }}
+                    >
+                      <div className="guide-header">
+                        <span className={`difficulty-badge difficulty-${guide.difficulty.toLowerCase()}`}>
+                          {guide.difficulty}
+                        </span>
+                      </div>
+                      <h3>{guide.title}</h3>
+                      <p>{guide.desc}</p>
+                      <span className="guide-link">Read guide →</span>
+                    </a>
+                  );
+                })}
               </div>
             </section>
           ))}
