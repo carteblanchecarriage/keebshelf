@@ -33,13 +33,21 @@ interface Step {
 const applyFilter = (products: KeyboardProduct[], selections: WizardState, stepId?: keyof WizardState): KeyboardProduct[] => {
   let filtered = [...products];
   
+  // 🔴 CRITICAL: Filter to keyboards only first - exclude accessories, keycaps, switches, etc.
+  const nonKeyboardCategories = ['keycaps', 'switches', 'accessories', 'mice', 'deskmats', 'lubricants', 'case', 'cable', 'artisan'];
+  filtered = filtered.filter(p => {
+    const cat = p.category?.toLowerCase();
+    // Include keyboards and items without a category (assume keyboard by default)
+    return !cat || cat === 'keyboard' || !nonKeyboardCategories.includes(cat);
+  });
+  
   // Use case filtering
   if (selections.useCase && stepId !== 'useCase') {
     const keywords: Record<string, string[]> = {
-      gaming: ['gaming', 'rgb', 'macro', 'fast', 'reaction', 'competitive'],
-      work: ['ergonomic', 'quiet', 'office', 'professional', 'productivity', 'typing'],
-      creative: ['media', 'macro', 'programmable', 'control', 'dial', 'knob', 'encoder'],
-      general: [],
+      gaming: ['gaming', 'rgb', 'macro', 'fast', 'reaction', 'competitive', 'esports', 'rapid trigger', 'hall effect'],
+      work: ['ergonomic', 'quiet', 'office', 'professional', 'productivity', 'typing', 'wireless', 'bluetooth', 'programmer', 'coding', 'developer', 'mechanical', 'mx switches'],
+      creative: ['media', 'macro', 'programmable', 'control', 'dial', 'knob', 'encoder', 'editing', 'design'],
+      general: ['mechanical', 'keyboard', 'mx', 'keychron', 'epomaker', 'drop'],
     };
     const words = keywords[selections.useCase] || [];
     if (words.length > 0) {
@@ -55,42 +63,55 @@ const applyFilter = (products: KeyboardProduct[], selections: WizardState, stepI
   // Workspace filtering (noise level)
   if (selections.workspace && stepId !== 'workspace') {
     if (selections.workspace === 'shared') {
-      // For shared spaces, exclude loud/clicky switches
+      // For shared spaces, exclude loud/clicky switches - expanded keywords
+      const loudKeywords = ['clicky', 'blue', 'jade', 'navy', 'green', 'white', 'box white', 'kailh box', 'buckling', 'model m', 'loud', 'noisy'];
+      filtered = filtered.filter(p => {
+        const text = (p.name + ' ' + (p.description || '')).toLowerCase();
+        return !loudKeywords.some(kw => text.includes(kw));
+      });
+    }
+  }
+
+  // Size filtering - fixed keywords to be more accurate
+  if (selections.size && stepId !== 'size') {
+    const sizeKeywords: Record<string, string[]> = {
+      fullsize: ['full', '100%', 'numpad', '104-key', '104key', '108-key', '108key', '96%', '96-key', '96key', '1800', '98%', '98-key', '98key'],
+      tkl: ['tkl', 'tenkeyless', '80%', '87-key', '87key', '88-key', '88key', '84-key', '84key'],
+      '75percent': ['75%', '75-key', '75key', '82-key', '82key', '84-key', '84key'], // NEW: Separate 75% option
+      compact: ['60%', '65%', 'mini', '40%', '68-key', '68key', '69-key', '69key', '67-key', '67key', '61-key', '61key', '64-key', '64key'], // Removed 'compact' and '75%'
+    };
+    const keywords = sizeKeywords[selections.size] || [];
+    if (keywords.length > 0) {
       filtered = filtered.filter(p => 
-        !p.name?.toLowerCase().includes('clicky') &&
-        !p.name?.toLowerCase().includes('blue') &&
-        !p.name?.toLowerCase().includes('jade') &&
-        !p.name?.toLowerCase().includes('navy')
+        keywords.some(k => 
+          p.name?.toLowerCase().includes(k) ||
+          p.description?.toLowerCase().includes(k)
+        )
       );
     }
   }
 
-  // Size filtering
-  if (selections.size && stepId !== 'size') {
-    const sizeKeywords: Record<string, string[]> = {
-      fullsize: ['full', '100%', 'numpad', '104', '108', '96%', '1800'],
-      tkl: ['tkl', 'tenkeyless', '80%', '87', '88'],
-      compact: ['60%', '65%', 'compact', 'mini', '75%', '40%', '68', '69'],
-    };
-    const keywords = sizeKeywords[selections.size] || [];
-    filtered = filtered.filter(p => 
-      keywords.some(k => 
-        p.name?.toLowerCase().includes(k) ||
-        p.description?.toLowerCase().includes(k)
-      )
-    );
-  }
-
-  // Hotswap filtering
+  // Hotswap filtering - improved logic to handle soldered filtering
   if (selections.hotswap && selections.hotswap !== 'any' && stepId !== 'hotswap') {
-    const hasHotswap = selections.hotswap === 'hotswap';
+    const searchHotswap = selections.hotswap === 'hotswap';
     filtered = filtered.filter(p => {
-      const productHasHotswap = /hotswap|hot-swap|swappable|hot swap/i.test(p.name + ' ' + p.description);
-      return hasHotswap ? productHasHotswap : !productHasHotswap;
+      const text = (p.name + ' ' + (p.description || '')).toLowerCase();
+      const hasHotswap = /\b(hotswap|hot-swap|hot swap|hot.?swappable|hotswappable)\b/i.test(text) ||
+                        /\b(swappable switches|swap switches)\b/i.test(text);
+      
+      if (searchHotswap) {
+        // Looking for hotswap - return true if product has hotswap mentioned
+        return hasHotswap;
+      } else {
+        // Looking for soldered - exclude if hotswap is mentioned, or if it's explicitly soldered
+        const isSoldered = /\b(soldered|solder|pcb only|barebones|non-hotswap|non hotswap)\b/i.test(text);
+        // Return true if explicitly soldered, or if hotswap is not mentioned (assume soldered for safety)
+        return isSoldered || !hasHotswap;
+      }
     });
   }
 
-  // Budget filtering
+  // Budget filtering - improved to handle price ranges like "$199.99 - $249.99"
   if (selections.budget && stepId !== 'budget') {
     const priceRanges: Record<string, [number, number]> = {
       budget: [0, 100],
@@ -99,8 +120,11 @@ const applyFilter = (products: KeyboardProduct[], selections: WizardState, stepI
     };
     const [min, max] = priceRanges[selections.budget] || [0, 10000];
     filtered = filtered.filter(p => {
-      const priceStr = p.price?.replace(/[^0-9.]/g, '');
-      const price = parseFloat(priceStr || '0');
+      const priceStr = p.price || '';
+      // Extract first number from price string (handles "$199.99", "From $99", "$199.99 - $249.99")
+      const match = priceStr.match(/[\d,]+\.?\d*/);
+      if (!match) return false;
+      const price = parseFloat(match[0].replace(/,/g, ''));
       return price >= min && price <= max;
     });
   }
@@ -148,7 +172,8 @@ const steps: Step[] = [
     options: [
       { id: 'fullsize', label: 'Full Size', desc: 'With numpad (100%)' },
       { id: 'tkl', label: 'TKL', desc: 'No numpad (80%)' },
-      { id: 'compact', label: 'Compact', desc: 'Small and portable (60-65%)' },
+      { id: '75percent', label: '75%', desc: 'Compact F-row, no numpad (75-84%)' },
+      { id: 'compact', label: 'Compact', desc: 'Small and portable (40-69%)' },
     ]
   },
   {
