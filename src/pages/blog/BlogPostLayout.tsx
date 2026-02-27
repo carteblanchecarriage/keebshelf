@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../../components/Layout';
 import { usePageSEO } from '../../hooks/usePageSEO';
+import { useScrollToTop } from '../../hooks/useScrollToTop';
 import './BlogPost.css';
 
 interface BlogPostLayoutProps {
@@ -32,6 +33,8 @@ export default function BlogPostLayout({
     keywords,
     ogImage
   });
+
+  useScrollToTop();
 
   return (
     <Layout>

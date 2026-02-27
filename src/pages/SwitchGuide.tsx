@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import { usePageSEO } from '../hooks/usePageSEO';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 import './Guide.css';
 
 const switchTypes = [
@@ -71,6 +72,8 @@ const noiseLevels = [
 ];
 
 export default function SwitchGuide() {
+  useScrollToTop();
+  
   usePageSEO({
     title: "Complete Mechanical Switch Guide 2026 | Linear vs Tactile vs Clicky | Switchyard",
     description: "The ultimate mechanical keyboard switch guide. Compare Cherry MX Red, Brown, Blue, Holy Panda, and more. Learn about actuation force, travel distance, sound profiles, and find the perfect switch for gaming, typing, or office work.",
