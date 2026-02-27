@@ -1,3 +1,54 @@
+/* Wizard Floating Action Button */
+.wizard-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  z-index: 998;
+  transition: all 0.2s ease;
+}
+
+.wizard-fab:hover {
+  transform: scale(1.05);
+  background: #1d4ed8;
+}
+
+.wizard-fab.active {
+  background: #10b981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.wizard-fab svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.match-count {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  background: #ef4444;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Wizard Active Indicator */
 .wizard-active-indicator {
   position: fixed;
