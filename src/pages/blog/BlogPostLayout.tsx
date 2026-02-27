@@ -74,7 +74,6 @@ export default function BlogPostLayout({
                   <li><a href="/blog/hall-effect-keyboards-2026">Hall Effect Keyboards Explained</a></li>
                   <li><a href="/blog/are-keychron-keyboards-worth-it">Are Keychron Worth It?</a></li>
                   <li><a href="/blog/cherry-mx2a-vs-original">Cherry MX2A vs Original</a></li>
-                  <li><a href="/blog/what-are-group-buys">What Are Group Buys?</a></li>
                 </ul>
               </div>
 
@@ -92,7 +91,6 @@ export default function BlogPostLayout({
                 <li><a href="/blog/hall-effect-keyboards-2026">Hall Effect Keyboards Explained</a></li>
                 <li><a href="/blog/are-keychron-keyboards-worth-it">Are Keychron Worth It?</a></li>
                 <li><a href="/blog/cherry-mx2a-vs-original">Cherry MX2A vs Original</a></li>
-                <li><a href="/blog/what-are-group-buys">What Are Group Buys?</a></li>
               </ul>
             </div>
           </div>
