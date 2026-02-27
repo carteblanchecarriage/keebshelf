@@ -192,7 +192,6 @@ export default function App() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
-    const vendorParam = urlParams.get('vendor');
     const categoryParam = urlParams.get('category');
     
     if (searchParam) {
@@ -261,6 +260,7 @@ export default function App() {
   }, [products, searchQuery]);
 
   // Apply URL category params after products load
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (products.length > 0 && activeCategory !== 'all') {
       applyFilters(activeCategory, searchQuery);
