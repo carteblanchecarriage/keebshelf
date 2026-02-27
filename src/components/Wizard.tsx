@@ -75,10 +75,10 @@ const applyFilter = (products: KeyboardProduct[], selections: WizardState, stepI
   // Size filtering - fixed keywords to be more accurate
   if (selections.size && stepId !== 'size') {
     const sizeKeywords: Record<string, string[]> = {
-      fullsize: ['full', '100%', 'numpad', '104-key', '104key', '108-key', '108key', '96%', '96-key', '96key', '1800', '98%', '98-key', '98key'],
+      fullsize: ['full', '100%', 'numpad', '104-key', '104key', '108-key', '108key', '96%', '96-key', '96key', '98%', '98-key', '98key', '1800-compact', '1800compact'],
       tkl: ['tkl', 'tenkeyless', '80%', '87-key', '87key', '88-key', '88key', '84-key', '84key'],
-      '75percent': ['75%', '75-key', '75key', '82-key', '82key', '84-key', '84key'], // NEW: Separate 75% option
-      compact: ['60%', '65%', 'mini', '40%', '68-key', '68key', '69-key', '69key', '67-key', '67key', '61-key', '61key', '64-key', '64key'], // Removed 'compact' and '75%'
+      '75percent': ['75%', '75-key', '75key', '82-key', '82key', '84-key', '84key', '80-key', '80key'],
+      compact: ['60%', '65%', 'mini', '40%', '68-key', '68key', '69-key', '69key', '67-key', '67key', '61-key', '61key', '64-key', '64key', '75-key'], // 75-key only, not 75%
     };
     const keywords = sizeKeywords[selections.size] || [];
     if (keywords.length > 0) {
@@ -96,7 +96,7 @@ const applyFilter = (products: KeyboardProduct[], selections: WizardState, stepI
     const searchHotswap = selections.hotswap === 'hotswap';
     filtered = filtered.filter(p => {
       const text = (p.name + ' ' + (p.description || '')).toLowerCase();
-      const hasHotswap = /\b(hotswap|hot-swap|hot swap|hot.?swappable|hotswappable)\b/i.test(text) ||
+      const hasHotswap = /\b(hotswap|hot-swap|hot\s?swap|hot-swappable|hotswappable)\b/i.test(text) ||
                         /\b(swappable switches|swap switches)\b/i.test(text);
       
       if (searchHotswap) {
@@ -112,10 +112,11 @@ const applyFilter = (products: KeyboardProduct[], selections: WizardState, stepI
   }
 
   // Budget filtering - improved to handle price ranges like "$199.99 - $249.99"
+  // Using non-overlapping ranges to avoid products matching multiple categories
   if (selections.budget && stepId !== 'budget') {
     const priceRanges: Record<string, [number, number]> = {
-      budget: [0, 100],
-      mid: [100, 200],
+      budget: [0, 99.99],
+      mid: [100, 199.99],
       premium: [200, 10000],
     };
     const [min, max] = priceRanges[selections.budget] || [0, 10000];
@@ -125,7 +126,8 @@ const applyFilter = (products: KeyboardProduct[], selections: WizardState, stepI
       const match = priceStr.match(/[\d,]+\.?\d*/);
       if (!match) return false;
       const price = parseFloat(match[0].replace(/,/g, ''));
-      return price >= min && price <= max;
+      // Use strict checks to avoid boundary issues
+      return price >= min && price <= max + 0.01; // Small buffer for floating point
     });
   }
 
