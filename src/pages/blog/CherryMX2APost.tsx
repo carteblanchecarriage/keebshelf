@@ -175,31 +175,33 @@ export default function CherryMX2APost() {
             <h4>Cherry MX2A Switches (70-Pack)</h4>
             <div className="price">$49.99</div>
             <div className="features">
-              ✅ Genuine Cherry MX2A (2024+ manufacture)<br />
-              ✅ Multiple variants: Red/Brown/Blue/Silent<br />
+              ✅ Genuine Cherry MX2A (2024+ molds)<br />
+              ✅ Available: Red/Brown/Blue/Silent<br />
               ✅ 1-year manufacturer warranty<br />
-              ⚠️ Verify manufacture date — some vendors still sell old stock
+              ⚠️ Verify manufacture date — some vendors sell old stock
             </div>
-            <a href="/?switch=cherry-mx2a" className="cta-button">Compare Prices</a>
+            <a href="https://keychron.com/products/cherry-mx2a-switch-set?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on Keychron →</a>
           </div>
         </div>
 
-        <p><strong>Better value alternatives to consider:</strong></p>
+        <p><strong>Better value alternatives:</strong> Looking at the data, Gateron is the enthusiast's choice for smoothness per dollar:</p>
 
         <div className="product-card">
           <div className="product-card-image" style={{background: '#ddd'}}></div>
           <div className="product-card-info">
-            <h4>Gateron Milky Yellow (70-Pack)</h4>
-            <div className="price">$18.99</div>
+            <h4>Gateron G Pro 3.0 Yellow</h4>
+            <div className="price">$15.50</div>
             <div className="features">
               ✅ Smoother than stock Cherry MX2A<br />
-              ✅ Full nylon housing (deeper sound)<br />
-              ✅ Excellent lubing candidate<br />
-              ❌ Not as refined stock feel
+              ✅ Pre-lubed from factory<br />
+              ✅ 50g actuation (light)<br />
+              ✅ Best value linear switch
             </div>
-            <a href="/?switch=gateron-milky-yellow" className="cta-button">Compare Prices</a>
+            <a href="https://kbdfans.com/products/gateron-g-pro-3-0-yellow-linear-switches?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on KBDfans →</a>
           </div>
         </div>
+
+        <p><a href="/?category=switches" className="cta-button">Browse All Switches →</a></p>
 
         <h2>Final Verdict: Cherry's Comeback, But Not Victory</h2>
 

@@ -108,16 +108,16 @@ export default function KeychronReviewPost() {
         <div className="product-card">
           <div className="product-card-image" style={{background: '#ddd'}}></div>
           <div className="product-card-info">
-            <h4>Keychron K8</h4>
+            <h4>Keychron K8 Max</h4>
             <div className="price">$89</div>
             <div className="features">
               ✅ Best wireless implementation<br />
               ✅ Mac/Windows native support<br />
               ✅ Bluetooth 5.1, USB-C wired<br />
-              ❌ Mediocre stabilizers<br />
-              ❌ ABS keycaps wear fast
+              ⚠️ Mediocre stabilizers<br />
+              ⚠️ ABS keycaps wear fast
             </div>
-            <a href="/?keyboard=keychron-k8" className="cta-button">Compare Prices</a>
+            <a href="https://keychron.com/products/keychron-k8-max-qmk-wireless-mechanical-keyboard?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Check Price on Keychron →</a>
           </div>
         </div>
 
@@ -127,31 +127,16 @@ export default function KeychronReviewPost() {
             <h4>Epomaker TH80 Pro</h4>
             <div className="price">$119</div>
             <div className="features">
-              ✅ Better stabilizers stock<br />
-              ✅ South-facing RGB<br />
+              ✅ Better stabilizers (stock)<br />
+              ✅ South-facing RGB (better sound)<br />
               ✅ PBT keycaps (more durable)<br />
-              ❌ Wireless implementation less reliable<br />
-              ❌ Software is clunky
+              ⚠️ Wireless less reliable than Keychron
             </div>
-            <a href="/?keyboard=epomaker-th80" className="cta-button">Compare Prices</a>
+            <a href="https://epomaker.com/products/1-reservation-card-for-epomaker-th80-v2-pro?sca_ref=10691179.cOO0hJ6jvi" className="cta-button" target="_blank" rel="noopener noreferrer">Check Price on Epomaker →</a>
           </div>
         </div>
 
-        <div className="product-card">
-          <div className="product-card-image" style={{background: '#ddd'}}></div>
-          <div className="product-card-info">
-            <h4>Glorious GMMK Pro</h4>
-            <div className="price">$169</div>
-            <div className="features">
-              ✅ Aluminum case (actual premium feel)<br />
-              ✅ Rotary encoder (volume knob)<br />
-              ✅ Better stock stabs than Keychron Q-series<br />
-              ❌ Wired only<br />
-              ❌ 75% only, no TKL option
-            </div>
-            <a href="/?keyboard=glorious-gmmk-pro" className="cta-button">Compare Prices</a>
-          </div>
-        </div>
+        <p><a href="/?vendor=Keychron" className="cta-button">Browse All Keychron Products →</a></p>
 
         <h2>Who Should Buy Keychron?</h2>
 

@@ -203,9 +203,9 @@ export default function GroupBuysGuide() {
           </section>
 
           <section className="cta-section">
-            <h2>Ready to explore group buys?</h2>            
-            <p>Browse our live dashboard for current group buys and in-stock alternatives.</p>            
-            <a href="/" className="cta-button">Browse All Products →</a>
+            <h2>Not Ready for a Group Buy?</h2>            
+            <p>We get it — waiting 6-12 months isn't for everyone. <a href="/?status=in-stock">Browse our in-stock keyboard collection</a> for options you can buy today. From entry-level hotswap boards to premium customs, we track availability across all major vendors.</p>            
+            <p><a href="/?status=in-stock" className="cta-button">See In-Stock Now →</a></p>
           </section>
         </div>
       </article>

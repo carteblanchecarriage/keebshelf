@@ -317,13 +317,15 @@ export default function SwitchGuide() {
         <section className="cta-section">
           <h2>Find Keyboards With Your Perfect Switch</h2>
           <p>
-            Use our wizard to find keyboards with the switches you want, or browse by switch type.
+            Use our wizard to find keyboards with the switches you want, or <a href="/?category=switches">browse our switch database</a> with live pricing.
           </p>
-          <a href="/" className="cta-button">Browse All Keyboards →</a>
+          <p><a href="/?category=switches" className="cta-button">Browse All Switches →</a></p>
           <p className="related-links">
-            Related: <a href="/learn/beginners-guide">Beginner's Guide</a> • 
-            <a href="/learn/keycap-profiles">Keycap Profiles Guide</a> • 
-            <a href="/learn/best-gaming">Best Gaming Keyboards</a>
+            Popular: <a href="/?search=Cherry+MX+Red">Cherry MX Red</a> • 
+            <a href="/?search=Gateron+Yellow">Gateron Yellow</a> • 
+            <a href="/?search=Cherry+MX+Brown">Cherry MX Brown</a> •
+            <a href="/?search=Cherry+MX+Blue">Cherry MX Blue</a> •
+            <a href="/?search=Holy+Panda">Holy Panda</a>
           </p>
         </section>
       </div>

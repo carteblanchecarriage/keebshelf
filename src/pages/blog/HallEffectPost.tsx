@@ -121,47 +121,19 @@ export default function HallEffectPost() {
         <div className="product-card">
           <div className="product-card-image" style={{background: '#ddd'}}></div>
           <div className="product-card-info">
-            <h4>Wooting 60HE</h4>
-            <div className="price">$175</div>
-            <div className="features">
-              • First hall effect keyboard<br />
-              • Lekker switches (custom)<br />
-              • Full analog input (gradual pressing)<br />
-              • Best-in-class software
-            </div>
-            <a href="/?keyboard=wooting-60he" className="cta-button">Compare Prices</a>
-          </div>
-        </div>
-
-        <div className="product-card">
-          <div className="product-card-image" style={{background: '#ddd'}}></div>
-          <div className="product-card-info">
             <h4>Keychron C4 HE</h4>
             <div className="price">$139</div>
             <div className="features">
-              • Gateron hall effect switches<br />
-              • More affordable entry point<br />
-              • 75% layout option<br />
-              • Good software support
+              ✅ Gateron hall effect switches<br />
+              ✅ 8K polling rate (lowest latency)<br />
+              ✅ More affordable than Wooting<br />
+              ✅ 75% layout with arrow keys
             </div>
-            <a href="/?keyboard=keychron-c4-he" className="cta-button">Compare Prices</a>
+            <a href="https://keychron.com/products/keychron-c4-he-magnetic-switch-keyboard?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on Keychron →</a>
           </div>
         </div>
 
-        <div className="product-card">
-          <div className="product-card-image" style={{background: '#ddd'}}></div>
-          <div className="product-card-info">
-            <h4>NuPhy Halo75</h4>
-            <div className="price">$189</div>
-            <div className="features">
-              • 75% compact layout<br />
-              • Strong RGB implementation<br />
-              • Pre-lubed from factory<br />
-              • Hot-swappable
-            </div>
-            <a href="/?keyboard=nuphy-halo75" className="cta-button">Compare Prices</a>
-          </div>
-        </div>
+        <p><a href="/?search=hall+effect" className="cta-button">Browse All Hall Effect Keyboards →</a></p>
 
         <h2>Who Should Get a Hall Effect Keyboard?</h2>
 

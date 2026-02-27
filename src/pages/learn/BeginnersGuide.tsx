@@ -261,12 +261,16 @@ export default function BeginnersGuide() {
           </section>
 
           <section className="cta-section">
-            <h2>Ready for Your First Board?</h2>
-            <p>Start with something reliable and affordable. You can always upgrade later.</p>
+            <h2>Ready for Your First Keyboard?</h2>
+            <p>Start with something reliable from a reputable brand. Browse our database for keyboards with hot-swap switches (so you can change them later) and quality builds under $100.</p>
             
-            <a href="/learn/best-budget" className="cta-button">
-              See Best Budget Keyboards
-            </a>
+            <p>
+              <a href="/?status=in-stock&priceMax=100" className="cta-button">Browse In-Stock Under $100 →</a>
+            </p>
+            <p className="related-links">
+              Not sure which switch? <a href="/learn/switch-guide">Read the Switch Guide →</a> • 
+              Want our top picks? <a href="/learn/best-budget">See Best Budget Keyboards →</a>
+            </p>
           </section>
         </div>
       </article>

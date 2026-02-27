@@ -88,12 +88,14 @@ export default function FAQ() {
           ))}
 
           <section className="cta-section">
-            <h2>Still have questions?</h2>
-            <p>Check out our Beginner's Guide for a complete introduction.</p>
-            
-            <a href="/learn/beginners-guide" className="cta-button">
-              Read Beginner's Guide →
-            </a>
+            <h2>Ready to find your keyboard?</h2>
+            <p>Browse our database of 1400+ keyboards, switches, and keycaps. Compare prices across vendors and find the best deals.</p>
+            <p>
+              <a href="/?status=in-stock" className="cta-button">Browse In-Stock Keyboards →</a>
+            </p>
+            <p className="related-links">
+              New here? <a href="/learn/beginners-guide">Read the Beginner's Guide →</a>
+            </p>
           </section>
         </div>
       </article>
