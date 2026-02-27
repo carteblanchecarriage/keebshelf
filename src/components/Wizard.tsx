@@ -240,6 +240,14 @@ export default function Wizard({ products, onFilterChange, activeFilters }: Wiza
   // Check if we're about to have 0 results
   const willHaveZeroResults = currentMatches === 0;
 
+  // Real-time filtering: apply filters as user makes selections
+  useEffect(() => {
+    if (isOpen && isWizardActive) {
+      const filtered = applyFilter(products, selections);
+      onFilterChange(filtered, selections);
+    }
+  }, [products, selections, isOpen, isWizardActive]);
+
   const handleSelect = (optionId: string) => {
     const stepId = steps[currentStep].id;
     const newSelections = { ...selections, [stepId]: optionId };
@@ -256,12 +264,8 @@ export default function Wizard({ products, onFilterChange, activeFilters }: Wiza
     
     if (currentStep < steps.length - 1) {
       setCurrentStep(prev => prev + 1);
-    } else {
-      // Apply final filter
-      setIsOpen(false);
-      const filtered = applyFilter(products, newSelections);
-      onFilterChange(filtered, newSelections);
     }
+    // Note: We don't auto-apply filters on final step anymore - user must click "See Results"
   };
 
   const applyFilters = () => {
@@ -462,12 +466,13 @@ export default function Wizard({ products, onFilterChange, activeFilters }: Wiza
                   ← Back
                 </button>
               )}
-              {currentStep === steps.length - 1 && currentMatches > 0 && (
+              {/* Always show "See Results" button when we have matches */}
+              {currentMatches > 0 && (
                 <button 
                   className="nav-btn primary"
                   onClick={applyFilters}
                 >
-                  Show {currentMatches} Results
+                  See {currentMatches} Results →
                 </button>
               )}
             </div>
