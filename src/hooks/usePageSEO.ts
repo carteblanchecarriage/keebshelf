@@ -90,6 +90,28 @@ export function usePageSEO(config: Partial<SEOConfig> = {}) {
       document.title = defaultConfig.title;
     };
   }, [title, description, keywords, canonical, ogImage, ogType, noIndex]);
+
+  // Ensure favicon is always set (for consistency across all pages)
+  useEffect(() => {
+    // Make sure favicon links exist
+    const faviconSvg = document.querySelector('link[rel="icon"][type="image/svg+xml"]');
+    if (!faviconSvg) {
+      const link = document.createElement('link');
+      link.rel = 'icon';
+      link.type = 'image/svg+xml';
+      link.href = '/favicon.svg';
+      document.head.appendChild(link);
+    }
+    
+    const faviconIco = document.querySelector('link[rel="alternate icon"]');
+    if (!faviconIco) {
+      const link = document.createElement('link');
+      link.rel = 'alternate icon';
+      link.type = 'image/x-icon';
+      link.href = '/favicon.ico';
+      document.head.appendChild(link);
+    }
+  }, []);
 }
 
 // Helper to update or create meta tags
