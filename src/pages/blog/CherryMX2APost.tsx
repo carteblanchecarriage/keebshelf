@@ -167,8 +167,9 @@ export default function CherryMX2APost() {
 
         <h2>Our Recommendations by Use Case</h2>
 
-        <p>Still interested in MX2A? Here's where to buy and what to expect:</p>
+        <p>Based on our testing, here are the best options for different priorities:</p>
 
+        <h3>🏆 If You Specifically Want Cherry</h3>
         <div className="product-card">
           <div className="product-card-image" style={{background: '#ddd'}}></div>
           <div className="product-card-info">
@@ -183,9 +184,9 @@ export default function CherryMX2APost() {
             <a href="https://keychron.com/products/cherry-mx2a-switch-set?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on Keychron →</a>
           </div>
         </div>
+        <p><em>Alternative:</em> <a href="/?search=Cherry+MX2A">Compare prices across all vendors in our database →</a></p>
 
-        <p><strong>Better value alternatives:</strong> Looking at the data, Gateron is the enthusiast's choice for smoothness per dollar:</p>
-
+        <h3>💰 Best Value: Smooth Linear on a Budget</h3>
         <div className="product-card">
           <div className="product-card-image" style={{background: '#ddd'}}></div>
           <div className="product-card-info">
@@ -200,6 +201,58 @@ export default function CherryMX2APost() {
             <a href="https://kbdfans.com/products/gateron-g-pro-3-0-yellow-linear-switches?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on KBDfans →</a>
           </div>
         </div>
+        <p><em>Browse more:</em> <a href="/?search=Gateron+Yellow">See all Gateron Yellow options →</a></p>
+
+        <h3>🛡️ Dust-Proof & Stable Stem</h3>
+        <div className="product-card">
+          <div className="product-card-image" style={{background: '#ddd'}}></div>
+          <div className="product-card-info">
+            <h4>Kailh Box Red</h4>
+            <div className="price">$22.00</div>
+            <div className="features">
+              ✅ IP56 dust/water resistant rating<br />
+              ✅ Box stem design (wobble-free)<br />
+              ✅ 45g actuation force<br />
+              ✅ Great for travel or dusty environments
+            </div>
+            <a href="https://dangkeebs.com/products/kailh-box-red-linear-switches" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on Dangkeebs →</a>
+          </div>
+        </div>
+        <p><em>Shop locally:</em> <a href="/?search=Kailh+Box">Find Kailh Box switches from our tracked vendors →</a></p>
+
+        <h3>⚡ Speed Switches for Gaming</h3>
+        <div className="product-card">
+          <div className="product-card-image" style={{background: '#ddd'}}></div>
+          <div className="product-card-info">
+            <h4>Akko CS Silver</h4>
+            <div className="price">$14.99</div>
+            <div className="features">
+              ✅ 1.0mm actuation (vs 2.0mm standard)<br />
+              ✅ 43g light force<br />
+              ✅ Budget-friendly speed switches<br />
+              ✅ Good for competitive gaming
+            </div>
+            <a href="https://epomaker.com/products/akko-cs-silver?sca_ref=10691179.cOO0hJ6jvi" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on Epomaker →</a>
+          </div>
+        </div>
+        <p><em>More options:</em> <a href="/?search=Akko+CS">Browse Akko switches in our database →</a></p>
+
+        <h3>🥛 Premium Budget: Pre-Lubed Excellence</h3>
+        <div className="product-card">
+          <div className="product-card-image" style={{background: '#ddd'}}></div>
+          <div className="product-card-info">
+            <h4>Gateron Oil King</h4>
+            <div className="price">$35.00</div>
+            <div className="features">
+              ✅ Factory lubed with GPL 205g0<br />
+              ✅ 55g actuation (medium)<br />
+              ✅ Deep "thocky" sound profile<br />
+              ✅ Premium feel, mid-tier price
+            </div>
+            <a href="https://kbdfans.com/products/gateron-oil-king-linear-switches?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on KBDfans →</a>
+          </div>
+        </div>
+        <p><em>Or browse:</em> <a href="/?search=Gateron+Oil+King">Compare Gateron Oil King prices →</a></p>
 
         <p><a href="/?category=switches" className="cta-button">Browse All Switches →</a></p>
 
