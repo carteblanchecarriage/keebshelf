@@ -295,11 +295,30 @@ export default function App() {
     if (category === 'all') {
       return baseProducts;
     } else if (category === 'keyboard') {
+      // Keywords that indicate non-keyboard items to exclude
+      const nonKeyboardKeywords = [
+        'puller', 'opener', 'plate', 'knob', 'storage box', 'single key',
+        'mouse', 'cable', 'despak mat', 'dust cover', 'keychain', 'wood siding',
+        'acoustic upgrade', 'travel pouch', 'bundle', 'reservation card',
+        'wireless module', 'game console', 'lube kit', 'lubricant', 'wrist rest',
+        'adaptor', 'product protection', 'mini display', 'shipping protection',
+        'lowball', 'spring', 'stabilizer', 'case', 'carrying case', 'travel case',
+        'sticker', 'switch puller', 'keycap puller', 'lubing station',
+        'switch opener', 'spring', 'switch', 'plate', 'mod', 'foam', 'pad',
+        'adapter', 'converter', 'pouch', 'case', 'cover', 'bag', 'coiled'
+      ];
+      
       return baseProducts.filter(p => {
         const cat = p.category || 'keyboard';
-        const isCarryingCase = p.name?.toLowerCase().includes('carrying case') || 
-                               p.name?.toLowerCase().includes('travel case');
-        return (cat === 'keyboard' || cat === 'accessories') && !isCarryingCase;
+        const nameLower = p.name?.toLowerCase() || '';
+        const descLower = p.description?.toLowerCase() || '';
+        
+        // Exclude items with non-keyboard keywords
+        const isNonKeyboard = nonKeyboardKeywords.some(kw => 
+          nameLower.includes(kw) || descLower.includes(kw)
+        );
+        
+        return cat === 'keyboard' && !isNonKeyboard;
       });
     } else if (category === 'artisan') {
       return baseProducts.filter(p => 
