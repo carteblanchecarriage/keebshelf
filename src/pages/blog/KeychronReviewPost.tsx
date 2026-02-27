@@ -136,7 +136,7 @@ export default function KeychronReviewPost() {
           </div>
         </div>
 
-        <p><a href="/?vendor=Keychron" className="cta-button">Browse All Keychron Products →</a></p>
+        <p><a href="/?vendor=Keychron" onClick={(e) => { e.preventDefault(); window.history.pushState({}, "", "?vendor=Keychron"); window.dispatchEvent(new PopStateEvent("popstate")); }} className="cta-button">Browse All Keychron Products →</a></p>
 
         <h2>Who Should Buy Keychron?</h2>
 

@@ -133,7 +133,7 @@ export default function HallEffectPost() {
           </div>
         </div>
 
-        <p><a href="/?search=hall+effect" className="cta-button">Browse All Hall Effect Keyboards →</a></p>
+        <p><a href="/?search=hall+effect" onClick={(e) => { e.preventDefault(); window.history.pushState({}, "", "?search=hall+effect"); window.dispatchEvent(new PopStateEvent("popstate")); }} className="cta-button">Browse All Hall Effect Keyboards →</a></p>
 
         <h2>Who Should Get a Hall Effect Keyboard?</h2>
 

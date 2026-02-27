@@ -184,7 +184,7 @@ export default function CherryMX2APost() {
             <a href="https://keychron.com/products/cherry-mx2a-switch-set?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on Keychron →</a>
           </div>
         </div>
-        <p><em>Alternative:</em> <a href="/?search=Cherry+MX2A">Compare prices across all vendors in our database →</a></p>
+        <p><em>Alternative:</em> <a href="/?search=Cherry+MX2A" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/?search=Cherry+MX2A'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{color: '#6366f1', textDecoration: 'underline', cursor: 'pointer'}}>Compare prices across all vendors in our database →</a></p>
 
         <h3>💰 Best Value: Smooth Linear on a Budget</h3>
         <div className="product-card">
@@ -201,7 +201,7 @@ export default function CherryMX2APost() {
             <a href="https://kbdfans.com/products/gateron-g-pro-3-0-yellow-linear-switches?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on KBDfans →</a>
           </div>
         </div>
-        <p><em>Browse more:</em> <a href="/?search=Gateron+Yellow">See all Gateron Yellow options →</a></p>
+        <p><em>Browse more:</em> <a href="/?search=Gateron+Yellow" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/?search=Gateron+Yellow'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{cursor: "pointer", color: '#6366f1'}}>See all Gateron Yellow options →</a></p>
 
         <h3>🛡️ Dust-Proof & Stable Stem</h3>
         <div className="product-card">
@@ -218,7 +218,7 @@ export default function CherryMX2APost() {
             <a href="https://dangkeebs.com/products/kailh-box-red-linear-switches" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on Dangkeebs →</a>
           </div>
         </div>
-        <p><em>Shop locally:</em> <a href="/?search=Kailh+Box">Find Kailh Box switches from our tracked vendors →</a></p>
+        <p><em>Shop locally:</em> <a href="/?search=Kailh+Box" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/?search=Kailh+Box'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{cursor: "pointer", color: '#6366f1'}}>Find Kailh Box switches from our tracked vendors →</a></p>
 
         <h3>⚡ Speed Switches for Gaming</h3>
         <div className="product-card">
@@ -235,7 +235,7 @@ export default function CherryMX2APost() {
             <a href="https://epomaker.com/products/akko-cs-silver?sca_ref=10691179.cOO0hJ6jvi" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on Epomaker →</a>
           </div>
         </div>
-        <p><em>More options:</em> <a href="/?search=Akko+CS">Browse Akko switches in our database →</a></p>
+        <p><em>More options:</em> <a href="/?search=Akko+CS" onClick={(e) => { e.preventDefault(); window.history.pushState({}, "", "?search=Akko+CS"); window.dispatchEvent(new PopStateEvent("popstate")); }} style={{cursor: "pointer", color: '#6366f1'}}>Browse Akko switches in our database →</a></p>
 
         <h3>🥛 Premium Budget: Pre-Lubed Excellence</h3>
         <div className="product-card">
@@ -252,9 +252,9 @@ export default function CherryMX2APost() {
             <a href="https://kbdfans.com/products/gateron-oil-king-linear-switches?ref=switchyard" className="cta-button" target="_blank" rel="noopener noreferrer">Buy on KBDfans →</a>
           </div>
         </div>
-        <p><em>Or browse:</em> <a href="/?search=Gateron+Oil+King">Compare Gateron Oil King prices →</a></p>
+        <p><em>Or browse:</em> <a href="/?search=Gateron+Oil+King" onClick={(e) => { e.preventDefault(); window.history.pushState({}, "", "?search=Gateron+Oil+King"); window.dispatchEvent(new PopStateEvent("popstate")); }} style={{cursor: "pointer", color: '#6366f1'}}>Compare Gateron Oil King prices →</a></p>
 
-        <p><a href="/?category=switches" className="cta-button">Browse All Switches →</a></p>
+        <p><a href="/?category=switches" onClick={(e) => { e.preventDefault(); window.history.pushState({}, "", "?category=switches"); window.dispatchEvent(new PopStateEvent("popstate")); }} className="cta-button">Browse All Switches →</a></p>
 
         <h2>Final Verdict: Cherry's Comeback, But Not Victory</h2>
 
