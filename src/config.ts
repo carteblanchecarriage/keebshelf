@@ -1,10 +1,10 @@
 // Switchyard Configuration
 
-// Vendors with active affiliate programs (sorted by priority - confirmed working first)
+// Vendors with active affiliate programs (sorted by display priority)
 export const AFFILIATE_VENDORS = [
-  'Keychron',    // 8% commission, 405 products, high volume
-  'Qwerkywriter', // Unique products, confirmed working
-  'Epomaker'     // 6% commission, Shopify partner
+  'Keychron',     // 8% commission, 405 products
+  'Epomaker',     // 6% commission, 88 products
+  'Qwerkywriter'  // Unique products, 9 products
 ] as const;
 
 // All configured vendors (for reference)
@@ -25,9 +25,9 @@ export const ALL_AFFILIATE_VENDORS = [
 // Vendor display order (affiliate vendors first - sorted by confirmed referral value)
 export const VENDOR_SORT_ORDER: Record<string, number> = {
   // Top priority - confirmed working affiliate programs
-  'Keychron': 0,      // 8% commission, 405 products, confirmed working
-  'Qwerkywriter': 1,  // Unique products, 9 products, confirmed working
-  'Epomaker': 2,      // 6% commission, 88 products, confirmed working
+  'Keychron': 0,      // 8% commission, 405 products, prioritized
+  'Epomaker': 1,      // 6% commission, 88 products, promoted
+  'Qwerkywriter': 2,  // Unique products, 9 products, specialty
   
   // Secondary priority - has affiliates but lower volume/commission
   'KBDfans': 10,
