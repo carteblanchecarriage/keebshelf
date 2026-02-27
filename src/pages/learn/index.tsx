@@ -24,7 +24,6 @@ const guideCategories = [
       { path: '/blog/hot-swap-vs-soldered-keyboards', title: 'Hot-Swap vs Soldered', desc: 'Which should you choose? The pros, cons, and real talk.', difficulty: 'Easy' },
       { path: '/blog/cherry-mx2a-vs-original', title: 'Cherry MX2A vs Original', desc: 'Is the new Cherry actually better? Side-by-side analysis.', difficulty: 'Medium' },
       { path: '/blog/are-keychron-keyboards-worth-it', title: 'Are Keychron Worth It?', desc: 'Brutally honest review: which models to buy and skip.', difficulty: 'Easy' },
-      { path: '/blog/what-are-group-buys', title: 'What Are Group Buys?', desc: 'Understanding the GB ecosystem and how to participate.', difficulty: 'Medium' },
       { path: '/blog/hall-effect-keyboards-2026', title: 'Hall Effect Keyboards', desc: 'Is rapid trigger cheating? The complete gaming breakdown.', difficulty: 'Medium' },
     ]
   },
