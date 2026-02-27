@@ -151,10 +151,10 @@ const steps: Step[] = [
     question: 'What will you use this for?',
     subtitle: 'This helps us find the right features',
     options: [
-      { id: 'gaming', label: 'Gaming', desc: 'Fast response, RGB, macro keys' },
-      { id: 'work', label: 'Work', desc: 'Comfortable, ergonomic, quiet' },
-      { id: 'creative', label: 'Creative', desc: 'Media controls, macros, precision' },
-      { id: 'general', label: 'General', desc: 'All-around performer' },
+      { id: 'gaming', label: 'Gaming', desc: 'Fast response, colorful lighting, extra buttons' },
+      { id: 'work', label: 'Work', desc: 'Comfortable for long hours, quiet typing' },
+      { id: 'creative', label: 'Creative work', desc: 'Media controls, shortcuts, precise navigation' },
+      { id: 'general', label: 'General use', desc: 'Good for everything - browsing, emails, occasional gaming' },
     ]
   },
   {
@@ -170,32 +170,32 @@ const steps: Step[] = [
   {
     id: 'size',
     question: 'Preferred size?',
-    subtitle: 'Full-size to compact',
+    subtitle: 'Full-size to compact (number of keys)',
     options: [
-      { id: 'fullsize', label: 'Full Size', desc: 'With numpad (100%)' },
-      { id: 'tkl', label: 'TKL', desc: 'No numpad (80%)' },
-      { id: '75percent', label: '75%', desc: 'Compact F-row, no numpad (75-84%)' },
-      { id: 'compact', label: 'Compact', desc: 'Small and portable (40-69%)' },
+      { id: 'fullsize', label: 'Full Size', desc: '100-108 keys | Includes number pad (numpad)' },
+      { id: 'tkl', label: 'TKL (Tenkeyless)', desc: '87-88 keys | No numpad, keeps F-row' },
+      { id: '75percent', label: '75%', desc: '82-84 keys | Compact, no numpad' },
+      { id: 'compact', label: 'Compact', desc: '60-69 keys | Small and portable' },
     ]
   },
   {
     id: 'hotswap',
-    question: 'Customize later?',
-    subtitle: 'Hot-swap vs soldered switches',
+    question: 'Want to change switches later?',
+    subtitle: 'Hot-swap lets you swap switches without tools',
     options: [
-      { id: 'hotswap', label: 'Hot-swap Only', desc: 'Easy switch changes' },
-      { id: 'soldered', label: 'Soldered is OK', desc: 'Often cheaper, permanent' },
-      { id: 'any', label: 'Any', desc: 'Show both options' },
+      { id: 'hotswap', label: 'Yes, hot-swap please', desc: 'Change switches any time - no soldering required' },
+      { id: 'soldered', label: 'No, soldered is fine', desc: 'Fixed switches - often cheaper, great first board' },
+      { id: 'any', label: 'Not sure - show both', desc: 'See all options' },
     ]
   },
   {
     id: 'budget',
     question: 'What is your budget?',
-    subtitle: 'We will find the best value',
+    subtitle: 'Great keyboards at every price point',
     options: [
-      { id: 'budget', label: 'Under $100', desc: 'Entry level' },
-      { id: 'mid', label: '$100-200', desc: 'Mid-range quality' },
-      { id: 'premium', label: '$200+', desc: 'Premium builds' },
+      { id: 'budget', label: 'Under $100', desc: 'Entry level - perfect for beginners, solid quality' },
+      { id: 'mid', label: '$100-200', desc: 'Mid-range - better build quality, more features' },
+      { id: 'premium', label: '$200+', desc: 'Premium - enthusiast-grade materials and customization' },
     ]
   },
 ];
