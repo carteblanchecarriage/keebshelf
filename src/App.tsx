@@ -172,7 +172,7 @@ export default function App() {
   const [displayLimit, setDisplayLimit] = useState(12);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [wizardFilters, setWizardFilters] = useState<Product[] | null>(null);
-  const [sortBy, setSortBy] = useState<string>('newest');
+  const [sortBy, setSortBy] = useState<string>('affiliate');
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -362,15 +362,10 @@ export default function App() {
         return sorted.sort((a, b) => a.name.localeCompare(b.name));
       case 'name-za':
         return sorted.sort((a, b) => b.name.localeCompare(a.name));
-      case 'newest':
+      case 'affiliate':
       default:
-        return sorted.sort((a, b) => {
-          const dateA = a.scrapedAt ? new Date(a.scrapedAt).getTime() : 0;
-          const dateB = b.scrapedAt ? new Date(b.scrapedAt).getTime() : 0;
-          return dateB - dateA;
-        });
-    }
-  };
+        // Preserve affiliate priority order (already sorted by sortByAffiliatePriority)
+        return sorted;
 
   const displayedProducts = sortProducts(filteredProducts).slice(0, displayLimit);
   const hasMore = filteredProducts.length > displayLimit;
@@ -510,6 +505,7 @@ export default function App() {
             className="sort-select"
             aria-label="Sort products"
           >
+            <option value="affiliate">Featured (Affiliate Partners)</option>
             <option value="newest">Newest First</option>
             <option value="price-low">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
