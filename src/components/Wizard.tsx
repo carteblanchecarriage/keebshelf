@@ -72,22 +72,76 @@ const applyFilter = (products: KeyboardProduct[], selections: WizardState, stepI
     }
   }
 
-  // Size filtering - fixed keywords to be more accurate
+  // Size filtering - enhanced with model numbers for better detection
   if (selections.size && stepId !== 'size') {
     const sizeKeywords: Record<string, string[]> = {
-      fullsize: ['full', '100%', 'numpad', '104-key', '104key', '108-key', '108key', '96%', '96-key', '96key', '98%', '98-key', '98key', '1800-compact', '1800compact'],
-      tkl: ['tkl', 'tenkeyless', '80%', '87-key', '87key', '88-key', '88key', '84-key', '84key'],
-      '75percent': ['75%', '75-key', '75key', '82-key', '82key', '84-key', '84key', '80-key', '80key'],
-      compact: ['60%', '65%', 'mini', '40%', '68-key', '68key', '69-key', '69key', '67-key', '67key', '61-key', '61key', '64-key', '64key', '75-key'], // 75-key only, not 75%
+      // Full size with numpad - 100%+ keyboards
+      fullsize: [
+        'full', '100%', 'numpad', '104-key', '104key', '108-key', '108key', 
+        '96%', '96', '96-key', '96key', '98%', '98-key', '98key', 
+        '104%', '108%', 'full size', 'full-size', 'fullsize',
+        // Keychron models
+        'k4', 'k10', 'k14', 'q5', 'q6', 'v5', 'v6',
+        // Other brands
+        'womier', 'akko', 'ducky', 'logitech', 'corsair', 'razer',
+        '1800', '96%', '98%'
+      ],
+      // TKL - 80-88 keys, no numpad, has F-row
+      tkl: [
+        'tkl', 'tenkeyless', '87', '88', '80%', '80-key', '80key',
+        '87-key', '87key', '88-key', '88key', '84-key', '84key',
+        // Keychron models
+        'k1', 'k3', 'k5', 'k8', 'k9', 'q3', 'v3', 'k1 pro', 'k3 pro', 'k8 pro',
+        // Other brands
+        'drop', 'ctrl', 'alt', 'entertainment', 'gmmk pro'
+      ],
+      // 75% - 82-84 keys, compact with F-row
+      '75percent': [
+        '75%', '75', '75-key', '75key', '82-key', '82key', '80-key', '80key',
+        '75 percent', '75percent', 'seventy-five',
+        // Keychron models (most popular 75%)
+        'k2', 'q1', 'v1', 'k2 pro', 'k2 max', 'q1 pro', 'q1 max', 'v1 max',
+        'k2 he', 'k2e', 'c1', 'c1 pro',
+        // Epomaker
+        'th80', 'th80 se', 'th80 pro', 'epomaker th80',
+        'gk68', 'gk68xs', 'skyloong', 'gk75',
+        // Other popular 75%
+        'nj80', 'keydous', 'feker', 'ik75', 'ik75 pro'
+      ],
+      // Compact - 60-69 keys, no numpad, no F-row or compact
+      compact: [
+        '60%', '65%', '60', '65', '40%', '68', '69', '64', '61', '67',
+        '60-key', '60key', '65-key', '65key', '68-key', '68key', 
+        '69-key', '69key', '67-key', '67key', '61-key', '61key', '64-key', '64key',
+        '60 percent', '65 percent', 'compact', 'mini',
+        // Keychron models
+        'k12', 'q2', 'q4', 'v2', 'v4', 'c2', 'c3', 'k6', 'k6 pro',
+        'k12 pro', 'q2 pro', 'q4 pro', 'c2 pro', 'c3 pro',
+        // Other brands
+        'gk61', 'gk64', 'rk61', 'anne pro', 'poker', 'dz60', 'ymdk'
+      ],
     };
     const keywords = sizeKeywords[selections.size] || [];
     if (keywords.length > 0) {
-      filtered = filtered.filter(p => 
-        keywords.some(k => 
-          p.name?.toLowerCase().includes(k) ||
-          p.description?.toLowerCase().includes(k)
-        )
-      );
+      filtered = filtered.filter(p => {
+        const name = p.name?.toLowerCase() || '';
+        const desc = p.description?.toLowerCase() || '';
+        const combined = name + ' ' + desc;
+        
+        // Check for exact model matches (e.g., "k2" should match "keychron k2" but not "k20")
+        const hasKeywordMatch = keywords.some(k => {
+          // For short model codes (k2, q1, etc.), ensure word boundaries
+          if (k.length <= 3 && /^[a-z0-9]+$/.test(k)) {
+            // Model code - require word boundary or common separators
+            const pattern = new RegExp(`(\\b|keychron\\s|epomaker\\s|\\s)${k}(\\b|\\s|pro|max|he|\\-)`, 'i');
+            return pattern.test(combined);
+          }
+          // Standard keyword match
+          return combined.includes(k);
+        });
+        
+        return hasKeywordMatch;
+      });
     }
   }
 
