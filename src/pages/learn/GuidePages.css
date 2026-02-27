@@ -1531,3 +1531,213 @@ gaming-cta {
     grid-template-columns: 1fr;
   }
 }
+
+/* Gaming Guide Specific Styles */
+.gaming-hero {
+  background: linear-gradient(135deg, var(--accent, #c4a35a) 0%, #8b7b52 100%);
+  color: white;
+}
+
+.gaming-hero h1,
+.gaming-hero .guide-intro {
+  color: white;
+}
+
+.game-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.game-type-card {
+  background: var(--paper-dark, #f7f6f2);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.game-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.game-examples {
+  font-size: 0.875rem;
+  color: var(--faded, #6b6b6b);
+  margin: 0.5rem 0;
+}
+
+.game-needs {
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+}
+
+.gaming-pick-card {
+  background: var(--paper-dark, #f7f6f2);
+  borderRadius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.pick-header {
+  margin-bottom: 1rem;
+}
+
+.gaming-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gaming-badge:has-text("BEST OVERALL") {
+  background: linear-gradient(135deg, #c4a35a, #8b7b52);
+  color: white;
+}
+
+.gaming-badge:has-text("BEST VALUE") {
+  background: #22c55e;
+  color: white;
+}
+
+.gaming-badge:has-text("MMO PICK") {
+  background: #8b5cf6;
+  color: white;
+}
+
+.gaming-desc {
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  line-height: 1.7;
+}
+
+.specs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.spec-pill {
+  background: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  border: 1px solid var(--border, #e8e8e8);
+}
+
+.pros-cons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.pros-box, .cons-box {
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.pros-box {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.cons-box {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.pros-box h4 {
+  color: #166534;
+  margin-bottom: 1rem;
+}
+
+.cons-box h4 {
+  color: #991b1b;
+  margin-bottom: 1rem;
+}
+
+.pros-box ul, .cons-box ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.best-for {
+  background: #fefce8;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  border-left: 4px solid #eab308;
+}
+
+.gaming-cta {
+  background: linear-gradient(135deg, #1a1a1a, #333);
+  color: white;
+  padding: 3rem 2rem;
+}
+
+.gaming-cta h2,
+.gaming-cta p {
+  color: white;
+}
+
+/* Keycap comparison styles for BeginnersGuide */
+.keycap-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.keycap-type {
+  background: var(--paper-dark, #f7f6f2);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.keycap-type h4 {
+  color: var(--accent, #c4a35a);
+  margin-bottom: 1rem;
+}
+
+.mistakes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.mistake-item {
+  background: #fef2f2;
+  border-left: 4px solid #ef4444;
+  padding: 1.5rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.mistake-item h4 {
+  color: #991b1b;
+  margin-bottom: 0.75rem;
+}
+
+.buyer-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.buyer-type {
+  background: var(--paper-dark, #f7f6f2);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.buyer-type h4 {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
