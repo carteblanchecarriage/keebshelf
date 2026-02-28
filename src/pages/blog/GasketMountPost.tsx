@@ -1,5 +1,6 @@
 import React from 'react';
 import BlogPostLayout from './BlogPostLayout';
+import BlogProductCard from '../../components/BlogProductCard';
 
 export default function GasketMountPost() {
   return (
@@ -128,21 +129,29 @@ export default function GasketMountPost() {
 
         <h2>Our Recommendations</h2>
 
-        <div className="product-cards">
-          <div className="product-card">
-            <h3>Entry Point: Keychron Q Series</h3>
-            <p>The Keychron Q1, Q2, Q3, etc. brought gasket mount to the masses at $150-180. Aluminum body, VIA software support, and genuinely good gasket implementation. The Q1 Pro even adds wireless. <a href="/?search=Keychron+Q1&category=keyboard">Find Keychron Q →</a></p>
-          </div>
+        <h2>Our Gasket Mount Recommendations</h2>
+
+        <div className="product-cards-row">
+          <BlogProductCard
+            productName="Keychron Q1 Pro"
+            vendor="Keychron"
+            description="Full aluminum body with VIA support and wireless"
+            features={["Gasket mount", "VIA software", "Wireless", "75% layout"]}
+          />
           
-          <div className="product-card">
-            <h3>Mid-Range: Keychron V Series</h3>
-            <p>Plastic body version at $80-100. Same gasket mount, same VIA support, just not aluminum. The best value gasket mount entry point. <a href="/?search=Keychron+V1&category=keyboard">Find Keychron V →</a></p>
-          </div>
+          <BlogProductCard
+            productName="Keychron V1"
+            vendor="Keychron"
+            description="Best value gasket mount - plastic body, same internals"
+            features={["Gasket mount", "VIA software", "75% layout", "Under $100"]}
+          />
           
-          <div className="product-card">
-            <h3>Premium: Drop keyboards</h3>
-            <p>Drop's Sense75 and newer offerings include gasket mount implementations. Higher price, but excellent build quality and unique designs. <a href="/?search=Drop+Sense75&category=keyboard">Find Drop →</a></p>
-          </div>
+          <BlogProductCard
+            productName="Drop Sense75"
+            vendor="Drop"
+            description="Premium gasket mount with unique design"
+            features={["Gasket mount", "75% layout", "Premium build"]}
+          />
         </div>
 
         <h2>Bottom Line</h2>
