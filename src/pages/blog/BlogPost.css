@@ -88,6 +88,17 @@
 .blog-content {
   line-height: 1.8;
   font-size: 1.125rem;
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-x: hidden;
+}
+
+.blog-content > * {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .blog-content img {
@@ -97,12 +108,21 @@
   margin: 1.5rem 0;
 }
 
+.blog-content pre,
+.blog-content code {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 .blog-content h2 {
   font-size: 1.75rem;
   font-weight: 700;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
   color: var(--text-primary);
+  max-width: 100%;
 }
 
 .blog-content h3 {
@@ -111,16 +131,19 @@
   margin-top: 2rem;
   margin-bottom: 0.75rem;
   color: var(--text-primary);
+  max-width: 100%;
 }
 
 .blog-content p {
   margin-bottom: 1.5rem;
+  max-width: 100%;
 }
 
 .blog-content ul,
 .blog-content ol {
   margin-bottom: 1.5rem;
   padding-left: 1.5rem;
+  max-width: 100%;
 }
 
 .blog-content li {
@@ -136,6 +159,8 @@
   padding: 1.5rem;
   margin: 2rem 0;
   border-radius: 0 8px 8px 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .tldr-box {
@@ -154,12 +179,20 @@
 }
 
 /* Tables */
+.blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  max-width: 100%;
+}
+
 .comparison-table,
 .verdict-table {
   width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
   font-size: 1rem;
+  max-width: 100%;
+  table-layout: fixed;
 }
 
 .comparison-table th,
@@ -207,6 +240,8 @@
   margin: 1.5rem 0;
   border: 1px solid var(--border);
   transition: transform 0.2s, box-shadow 0.2s;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .product-card:hover {
